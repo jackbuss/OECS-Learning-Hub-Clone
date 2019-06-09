@@ -1,0 +1,57 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using ClientDependency.Core.Mvc
+
+@{
+    //Html.RequiresCss("/css/core-header-navigation.css");
+    var homeNode = Model.AncestorOrSelf(1);
+
+    var headerLinks = homeNode.Value<IEnumerable<IPublishedContent>>("headerLinks");
+}
+
+<div class="row">
+    <div class="col">
+        <nav id="main-nav" class="container navbar fixed-bottom navbar-expand navbar-light bg-light">
+            <ul class="navbar-nav mt-3 mt-lg-0 mr-auto nav-fill w-100">
+                <li class="nav-item@((homeNode.Id == Model.Id ? " active" : ""))">
+                    @{Html.RenderPartial("Core/Link", (IPublishedContent)homeNode, new ViewDataDictionary { { "removeClass", true }, { "classes", "nav-link" }, { "attrs", (homeNode.Id == Model.Id ? " data-current=\"1\"" : "") } }); }
+                </li>
+                @foreach (var node in homeNode.Children.Where(x => !x.Value<bool>("hideFromNavigation")))
+                {
+                    var active = (node.Id == Model.Id ? " active" : "");
+                    var nodeChildren = node.Children.Where(x => !x.Value<bool>("hideFromNavigation"));
+                    <li class="nav-item@(active)@(nodeChildren.Any()?" dropdown":"")">
+                        @{
+                            if (nodeChildren.Any())
+                            {
+                                Html.RenderPartial("Core/Link", (IPublishedContent)node, new ViewDataDictionary { { "removeClass", true }, { "classes", "nav-link" }, { "attrs", (node.Id == Model.Id ? " data-current=\"1\"" : "") } });
+                                <a class="dropdown-toggle" href="#" id="dropdown@(node.Key)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">@(node.Name)</span>
+                                </a>
+                                <div class="dropdown-menu mega-menu" aria-labelledby="@(node.Key)">
+                                    <div class="row">
+                                        <div class="col-12 d-none d-lg-block">
+                                            <span class="trailing-heading-bottom h1">@(node.Name)</span>
+                                        </div>
+                                        @foreach (var childNode in nodeChildren)
+                                        {
+                                            <div class="col-lg-4">
+                                                <p>
+                                                    @{Html.RenderPartial("Core/Link", (IPublishedContent)childNode, new ViewDataDictionary { { "removeClass", true }, { "attrs", (node.Id == Model.Id ? " data-current=\"1\"" : "") } });}
+                                                </p>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                Html.RenderPartial("Core/Link", (IPublishedContent)node, new ViewDataDictionary { { "removeClass", true }, { "classes", "nav-link" }, { "attrs", (node.Id == Model.Id ? " data-current=\"1\"" : "") } });
+                            }
+                        }
+
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+    Layout = "vMaster.cshtml";
+    var pageTitle = Model.Name;
+    // override page name if we have a longer title
+    if (Model.HasValue("pageTitle"))
+    {
+        pageTitle = Model.Value<string>("pageTitle");
+    }
+}
+
+<main>
+    <div class="row">
+        <div class="col">
+            @{ Html.RenderPartial("Core/BannerImages");}
+        </div>
+    </div>    
+    <div>
+        <header class="py-3">
+            <div class="row">
+                <div class="col-auto mr-auto">
+                    <h1 class="trailing-heading-middle">@pageTitle</h1>
+                </div>                
+            </div>
+        </header>        
+        @RenderBody()
+    </div>
+</main>

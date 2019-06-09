@@ -1,0 +1,68 @@
+{
+  "DefaultTemplate": null,
+  "AllowedTemplates": [],
+  "Icon": "icon-document color-orange",
+  "Thumbnail": "folder.png",
+  "Description": null,
+  "IsContainer": false,
+  "Permissions": {
+    "AllowVaryingByCulture": false,
+    "AllowVaryingBySegment": false,
+    "AllowedAtRoot": false,
+    "IsElementType": true,
+    "AllowedChildContentTypes": []
+  },
+  "Parent": "umb://document-type-container/450a6332a63341918630d8395cbc99de",
+  "CompositionContentTypes": [],
+  "PropertyGroups": [
+    {
+      "Key": "5ea7211d-98da-484f-ba43-560f76c5d3c1",
+      "Name": "Visibility",
+      "SortOrder": 90,
+      "PropertyTypes": [
+        {
+          "Key": "4b44e637-91da-4f0b-aed6-c746d1455887",
+          "Alias": "hideFromNavigation",
+          "DataType": "umb://data-type/92897bc6a5f34ffeae27f2e7e33dda49",
+          "Description": null,
+          "Mandatory": false,
+          "Name": "Hide from Navigation",
+          "SortOrder": 0,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        },
+        {
+          "Key": "b9d9a904-fc3e-4a65-a9ee-1704943d10dd",
+          "Alias": "hideFromSearch",
+          "DataType": "umb://data-type/92897bc6a5f34ffeae27f2e7e33dda49",
+          "Description": null,
+          "Mandatory": false,
+          "Name": "Hide from Search",
+          "SortOrder": 1,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        }
+      ]
+    }
+  ],
+  "PropertyTypes": [],
+  "Udi": "umb://document-type/06ef76a52eb64783b1eccbb983613a8e",
+  "Dependencies": [
+    {
+      "Udi": "umb://data-type/92897bc6a5f34ffeae27f2e7e33dda49",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://document-type-container/450a6332a63341918630d8395cbc99de",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "Visibility",
+  "Alias": "visibility",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
+  "__version": "3.0.1"
+}

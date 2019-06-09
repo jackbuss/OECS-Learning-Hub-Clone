@@ -1,0 +1,9 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.DtHomePage>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+    Layout = "vMaster.cshtml";
+
+}
+
+@Html.Partial("Layout/Search")
+@Html.Partial("Content/List")

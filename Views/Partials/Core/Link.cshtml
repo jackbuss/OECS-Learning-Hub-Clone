@@ -1,0 +1,88 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using System.Text
+@using ContentModels = Umbraco.Web.PublishedModels
+
+@*
+    **    Consistently render links to nodes
+    **    - accepts overrides via the viewData
+    **    @{Html.RenderPartial("Core/Link", (IPublishedContent)item,
+    new ViewDataDictionary { { "hideTitle", true }
+    , { "linkText" , "Read more"}
+    , {"classes", "one two three"}
+    , {"attrs", @"data-current=""1"""} });}
+
+     typed helpers declare how to render an item with the alias of resource *@
+
+@*@helper RenderContent(ContentModels.ExternalLink node, bool versions, string attrTitle, string attrClass, string attrs, string linkText, bool respectHideInNavigation)
+{
+    <a href="@(node.ExternalUrl)" @Html.Raw(attrTitle.TrimEnd("\"") + " (opens in a new window)\"") target="_blank" @Html.Raw(attrClass.ToString()) @Html.Raw(attrs)>@(linkText)</a>
+}*@
+
+@helper RenderContent(IPublishedContent node, bool versions, string attrTitle, string attrClass, string attrs, string linkText, bool respectHideInNavigation)
+{
+    <a href="@(node.Url)" @Html.Raw(attrTitle) @Html.Raw(attrClass.ToString()) @Html.Raw(attrs)>@(linkText)</a>
+}
+
+
+@{
+    var node = Model;
+
+    @*viewdata overrides*@
+    @*Don't include the title attribute*@
+    bool hideTitle = false;
+    try
+    {
+        hideTitle = (bool)ViewData["hideTitle"];
+    }
+    catch { }
+
+    @*Use a replacement link text*@
+    string linkText = node.Name;
+    if (!String.IsNullOrWhiteSpace((string)ViewData["linkText"]))
+    {
+        linkText = (string)ViewData["linkText"];
+        linkText = linkText.Replace("$$", "");
+    }
+
+    @*Links for multiple presentation modes (eg pdf/online ar)*@
+    bool versions = false;
+    try
+    {
+        versions = (bool)ViewData["versions"];
+    }
+    catch { }
+
+    @**if submenu should hide no navigational items*@
+    bool respectHideInNavigation = false;
+    try
+    {
+        respectHideInNavigation = (bool)ViewData["respectHideInNavigation"];
+    }
+    catch { }
+
+
+    List<string> classes = new List<string>();
+
+    if (!String.IsNullOrWhiteSpace((string)ViewData["classes"]))
+    {
+        classes.Add(ViewData["classes"].ToString().Trim());
+    }
+
+    StringBuilder attrClass = new StringBuilder();
+    if (classes.Count() > 0)
+    {
+        attrClass.Append(@" class=""");
+        foreach (string c in classes)
+        {
+            attrClass.AppendFormat(@"{0} ", c);
+        }
+        attrClass.Remove(attrClass.Length - 1, 1);
+        attrClass.Append(@"""");
+    }
+
+    string attrs = String.IsNullOrWhiteSpace((string)ViewData["attrs"]) ? "" : (string)ViewData["attrs"].ToString();
+
+    string attrTitle = hideTitle ? "" : String.Format(@" title=""{0}""", node.Name);
+
+    @RenderContent((dynamic)Model, versions, attrTitle, attrClass.ToString(), attrs, linkText, respectHideInNavigation)
+}

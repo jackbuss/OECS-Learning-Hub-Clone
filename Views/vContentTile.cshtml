@@ -1,0 +1,26 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<DtContentTile>
+@{
+    if (Request.QueryString["m"] == "1")
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "vCommon.cshtml";
+    }
+}
+
+@* the fun starts here *@
+
+<h1>@(Model.Name)</h1>
+<img class="img-fluid" src="@(Model.BannerImage.GetCropUrl(cropAlias:"Landscape", width:1200))" />
+
+@if (Model.Topics.Any())
+{
+    <ul>
+        @foreach (var topic in Model.Topics)
+        {
+            <li>@(topic)</li>
+        }
+    </ul>
+}

@@ -1,0 +1,33 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web
+
+
+@*702f7185-50cb-49ff-9df0-b123d93b2874*@
+
+@{ var selection = Model.Descendants<DtContentTile>().Where(x => !x.HideFromNavigation).OrderByDescending(x => x.CreateDate).ToArray();
+
+}
+
+@if (selection.Length > 0)
+{
+    <div class="row">
+        @foreach (DtContentTile item in selection)
+        {
+            <div class="col-md-4">
+                <div class="card mb-2">
+                    <div class="card-header">
+                        @(item.Name)
+                    </div>
+                    <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@(item.Name)</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">View More</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

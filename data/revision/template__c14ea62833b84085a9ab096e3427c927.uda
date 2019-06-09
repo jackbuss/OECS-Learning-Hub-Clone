@@ -1,0 +1,21 @@
+{
+  "File": "umb://template-file/vStandardPage.cshtml",
+  "Master": "umb://template/49a5b112ceee4f7dbcee3f374fa6e5e7",
+  "Udi": "umb://template/c14ea62833b84085a9ab096e3427c927",
+  "Dependencies": [
+    {
+      "Udi": "umb://template/49a5b112ceee4f7dbcee3f374fa6e5e7",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://template-file/vStandardPage.cshtml",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "Standard Page",
+  "Alias": "vStandardPage",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.TemplateArtifact",
+  "__version": "3.0.1"
+}

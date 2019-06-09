@@ -1,0 +1,18 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title property="schema:name">@(Model.Value<string>("metaTitle", fallback: Fallback.ToDefaultValue, defaultValue: Model.Name))</title>
+
+    <meta name="description" property="schema:description" content="@(Model.Value<string>("metaDescription"))">
+@{
+    try
+    {
+        string str = String.Join(",", Model.Value<string[]>("metaKeywords"));
+    <meta name="keywords" content="@(str)" />
+    }
+    catch { }
+}
+    

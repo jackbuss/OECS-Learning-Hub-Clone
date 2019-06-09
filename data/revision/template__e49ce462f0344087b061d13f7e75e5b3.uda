@@ -1,0 +1,21 @@
+{
+  "File": "umb://template-file/vContentTile.cshtml",
+  "Master": "umb://template/49a5b112ceee4f7dbcee3f374fa6e5e7",
+  "Udi": "umb://template/e49ce462f0344087b061d13f7e75e5b3",
+  "Dependencies": [
+    {
+      "Udi": "umb://template/49a5b112ceee4f7dbcee3f374fa6e5e7",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://template-file/vContentTile.cshtml",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "Content Tile",
+  "Alias": "vContentTile",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.TemplateArtifact",
+  "__version": "3.0.1"
+}

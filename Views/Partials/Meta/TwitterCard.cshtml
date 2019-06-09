@@ -1,0 +1,30 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web
+@{
+    string img = Request.Url.GetLeftPart(UriPartial.Authority) + "/images/g400152_n90.jpg?anchor=center&amp;mode=crop&amp;width=480&amp;height=480&amp;rnd=131971069800000000";
+    var mediaNodes = Model.Value<IEnumerable<IPublishedContent>>("bannerImage", fallback:Fallback.ToAncestors);
+
+    if (mediaNodes != null)
+    {
+        if (mediaNodes.Any())
+        {
+            var bannerImg = mediaNodes.FirstOrDefault();
+            if (bannerImg != null)
+            {
+                img = Request.Url.GetLeftPart(UriPartial.Authority) + bannerImg.GetCropUrl("Square");
+            }
+        }
+    }
+}   
+    <!-- Twitter Card-->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@("@ThinkBlue")">@*<meta name="twitter:creator" content="individual_account">*@
+    <meta name="twitter:url" content="@(Model.UrlAbsolute())">
+    <meta name="twitter:title" content="@(Model.Value<string>("metaTitle", fallback:Fallback.ToDefaultValue, defaultValue: Model.Name))">
+    <!-- desc less than 200 chars-->
+    <meta name="twitter:description" content="@(Model.Value<string>("metaDescription"))">
+    @if (img != null)
+    {
+    <meta name="twitter:image" content="@(img)">
+    }
+    <!-- /Twitter Card-->

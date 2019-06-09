@@ -1,0 +1,16 @@
+{
+  "File": "umb://template-file/vMaster.cshtml",
+  "Master": null,
+  "Udi": "umb://template/def05cf7929d40f1a187daecadd399e7",
+  "Dependencies": [
+    {
+      "Udi": "umb://template-file/vMaster.cshtml",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "_Master",
+  "Alias": "vMaster",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.TemplateArtifact",
+  "__version": "3.0.1"
+}

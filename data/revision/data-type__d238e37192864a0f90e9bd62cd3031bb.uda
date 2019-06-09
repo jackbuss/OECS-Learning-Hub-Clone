@@ -1,0 +1,18 @@
+{
+  "EditorAlias": "Umbraco.Tags",
+  "DatabaseType": 1,
+  "Configuration": {"group":"Topics","storageType":1,"Delimiter":"\u0000"},
+  "Parent": "umb://data-type-container/688c53790e464b73ace78323f46ffc86",
+  "Udi": "umb://data-type/d238e37192864a0f90e9bd62cd3031bb",
+  "Dependencies": [
+    {
+      "Udi": "umb://data-type-container/688c53790e464b73ace78323f46ffc86",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "Topics - Tags",
+  "Alias": null,
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
+  "__version": "3.0.1"
+}

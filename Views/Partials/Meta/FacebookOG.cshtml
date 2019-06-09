@@ -1,0 +1,37 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web
+@{
+    string img = Request.Url.GetLeftPart(UriPartial.Authority) + "/images/g400152_n90.jpg?anchor=center&amp;mode=crop&amp;width=480&amp;height=480&amp;rnd=131971069800000000";
+
+    var mediaNodes = Model.Value<IEnumerable<IPublishedContent>>("bannerImage", fallback:Fallback.ToAncestors);
+
+    if (mediaNodes != null)
+    {
+        if (mediaNodes.Any())
+        {
+            var bannerImg = mediaNodes.FirstOrDefault();
+            if (bannerImg != null)
+            {
+                img = Request.Url.GetLeftPart(UriPartial.Authority) + bannerImg.GetCropUrl("Square");
+            }
+        }
+    }
+
+    //var absoluteUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+    var absoluteUrl = Model.UrlAbsolute();
+}
+    <!-- Facebook OG-->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="@(absoluteUrl)">
+    <meta property="og:title" content="@(Model.Value<string>("metaTitle", fallback:Fallback.ToDefaultValue, defaultValue:Model.Name))">
+    @if (img != null)
+    {
+    <meta property="og:image" content="@(img)">
+    <!-- Next tags are optional but recommended -->
+    <meta property="og:image:width" content="480">
+    <meta property="og:image:height" content="480">
+    }
+    <meta property="og:description" content="@(Model.Value<string>("metaDescription"))">
+    <meta property="og:site_name" content="Think Blue">
+    <meta property="og:locale" content="en_GB">
+    <!-- /Facebook OG-->

@@ -1,0 +1,21 @@
+{
+  "File": "umb://template-file/vCommon.cshtml",
+  "Master": "umb://template/def05cf7929d40f1a187daecadd399e7",
+  "Udi": "umb://template/49a5b112ceee4f7dbcee3f374fa6e5e7",
+  "Dependencies": [
+    {
+      "Udi": "umb://template/def05cf7929d40f1a187daecadd399e7",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://template-file/vCommon.cshtml",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "_Common",
+  "Alias": "vCommon",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.TemplateArtifact",
+  "__version": "3.0.1"
+}

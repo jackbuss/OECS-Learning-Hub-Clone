@@ -1,0 +1,21 @@
+{
+  "File": "umb://template-file/vHomePage.cshtml",
+  "Master": "umb://template/def05cf7929d40f1a187daecadd399e7",
+  "Udi": "umb://template/0c848d3fddf3483c8bbe62d2fa8d70ec",
+  "Dependencies": [
+    {
+      "Udi": "umb://template/def05cf7929d40f1a187daecadd399e7",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://template-file/vHomePage.cshtml",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "Home Page",
+  "Alias": "vHomePage",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.TemplateArtifact",
+  "__version": "3.0.1"
+}

@@ -1,0 +1,85 @@
+{
+  "DefaultTemplate": null,
+  "AllowedTemplates": [],
+  "Icon": "icon-presentation color-orange",
+  "Thumbnail": "folder.png",
+  "Description": null,
+  "IsContainer": false,
+  "Permissions": {
+    "AllowVaryingByCulture": false,
+    "AllowVaryingBySegment": false,
+    "AllowedAtRoot": false,
+    "IsElementType": true,
+    "AllowedChildContentTypes": []
+  },
+  "Parent": "umb://document-type-container/450a6332a63341918630d8395cbc99de",
+  "CompositionContentTypes": [],
+  "PropertyGroups": [
+    {
+      "Key": "b926b8a9-28fa-4ac3-97e0-c8f7c539f640",
+      "Name": "SEO",
+      "SortOrder": 100,
+      "PropertyTypes": [
+        {
+          "Key": "65fdd916-99c7-4afb-8be2-d5c49fc67de2",
+          "Alias": "metaDescription",
+          "DataType": "umb://data-type/0cc0eba1996042c9bf9b60e150b429ae",
+          "Description": "Page meta description (max. 155 characters recommended).",
+          "Mandatory": true,
+          "Name": "Description",
+          "SortOrder": 1,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        },
+        {
+          "Key": "aa7c8528-5d0b-447a-b6b3-689cef4aad2d",
+          "Alias": "metaKeywords",
+          "DataType": "umb://data-type/e4b2829e8c274704bde70ed3ba2b8fc6",
+          "Description": "Page meta keywords (no more than 10 keyword phrases)",
+          "Mandatory": true,
+          "Name": "Keywords",
+          "SortOrder": 2,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        },
+        {
+          "Key": "b4c7cf2a-e4d3-4b38-9074-d88afaff02fb",
+          "Alias": "metaTitle",
+          "DataType": "umb://data-type/0cc0eba1996042c9bf9b60e150b429ae",
+          "Description": "Shown in the browser title bar",
+          "Mandatory": true,
+          "Name": "Title",
+          "SortOrder": 0,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        }
+      ]
+    }
+  ],
+  "PropertyTypes": [],
+  "Udi": "umb://document-type/ba85ac7eec3b45c48b3e9ad8b211b31c",
+  "Dependencies": [
+    {
+      "Udi": "umb://data-type/0cc0eba1996042c9bf9b60e150b429ae",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://data-type/e4b2829e8c274704bde70ed3ba2b8fc6",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://document-type-container/450a6332a63341918630d8395cbc99de",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "Seo",
+  "Alias": "dtcSeo",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
+  "__version": "3.0.1"
+}
