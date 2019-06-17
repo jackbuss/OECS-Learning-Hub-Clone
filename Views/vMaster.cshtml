@@ -4,13 +4,13 @@
 @{
     Layout = null;
 
-    Html.RequiresCss(new CssFile("~/styles/bootstrap-4.3.0.min.css") { ForceProvider = "HeadRenderer", Priority = 1});
+    Html.RequiresCss(new CssFile("~/styles/bootstrap-4.3.1.min.css") { ForceProvider = "HeadRenderer", Priority = 1});
     Html.RequiresCss(new CssFile("~/styles/cookieconsent-3.1.0.min.css") { ForceProvider = "HeadRenderer", Priority = 2 });
     Html.RequiresCssFolder("/css", "core-*.css", 10, 1, null, "HeadRenderer");
 
     Html.RequiresJs(new JavascriptFile("~/js/vendor/jquery-3.3.1.min.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 })
         .RequiresJs(new JavascriptFile("~/js/vendor/popper-1.14.7.min.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 })
-        .RequiresJs(new JavascriptFile("~/js/vendor/bootstrap-4.3.0.min.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 })
+        .RequiresJs(new JavascriptFile("~/js/vendor/bootstrap-4.3.1.min.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 })
         .RequiresJs(new JavascriptFile("~/js/vendor/picturefill-3.0.2.min.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 })       
         .RequiresJs(new JavascriptFile("~/js/vendor/js.cookie-2.2.0.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 });
 
@@ -29,8 +29,6 @@
     @{Html.RenderPartial("Meta/FacebookOG");}
     @{Html.RenderPartial("Meta/TwitterCard");}
     @{Html.RenderPartial("Meta/FavIcons");}
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <!-- Core Css -->
     @Html.RenderCssHere("HeadRenderer")
     <!-- Additional Css -->
@@ -45,7 +43,6 @@
     </div>
     @Html.Partial("Layout/MainNavigation")
     
-
     <!-- js frameworks etc -->
     @Html.RenderJsHere("FootRenderer")
     <!-- Include all compiled plugins (below) -->
