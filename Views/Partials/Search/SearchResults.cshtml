@@ -25,11 +25,11 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row card-deck">
             @foreach (IPublishedContent result in Model.Results)
             {
                 var item = result as DtContentTile;
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-6 p-sm-0">
                     <div class="card mb-2">
                         <div class="card-header">
                             @(item.Name)
