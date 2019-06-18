@@ -725,17 +725,18 @@
 
     angular
         .module('umbraco.deploy.components')
-        .directive('udChunkDecodingError', udChunkDecodingErrorComponent);
+        .directive('udBusyError', udBusyErrorComponent);
 
-    function udChunkDecodingErrorComponent() {
+    function udBusyErrorComponent() {
         function link(scope, element, attr, ctrl) {
         }
 
         var directive = {
             restrict: 'E',
             replace: true,
-            templateUrl: '/App_Plugins/Deploy/views/components/errors/udchunkdecodingerror/udchunkdecodingerror.html',
+            templateUrl: '/App_Plugins/Deploy/views/components/errors/udbusyerror/udbusyerror.html',
             scope: {
+                'exception': "=",
                 'feedbackMessageLevel': "=",
             },
             link: link
@@ -749,18 +750,17 @@
 
     angular
         .module('umbraco.deploy.components')
-        .directive('udBusyError', udBusyErrorComponent);
+        .directive('udChunkDecodingError', udChunkDecodingErrorComponent);
 
-    function udBusyErrorComponent() {
+    function udChunkDecodingErrorComponent() {
         function link(scope, element, attr, ctrl) {
         }
 
         var directive = {
             restrict: 'E',
             replace: true,
-            templateUrl: '/App_Plugins/Deploy/views/components/errors/udbusyerror/udbusyerror.html',
+            templateUrl: '/App_Plugins/Deploy/views/components/errors/udchunkdecodingerror/udchunkdecodingerror.html',
             scope: {
-                'exception': "=",
                 'feedbackMessageLevel': "=",
             },
             link: link
@@ -1054,16 +1054,18 @@
 
     angular
         .module('umbraco.deploy.components')
-        .directive('udRestoreComplete', udRestoreCompleteComponent);
+        .directive('udRestoreProgress', udRestoreProgressComponent);
 
-    function udRestoreCompleteComponent() {
+    function udRestoreProgressComponent() {
 
         var directive = {
             restrict: 'E',
             replace: true,
-            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestorecomplete/udrestorecomplete.html',
+            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestoreprogress/udrestoreprogress.html',
             scope: {
-                'onBack': "&",
+                'targetName': "=",
+                'progress': "=",
+                'currentActivity': "=",
                 'timestamp': "=",
                 'serverTimestamp': "="
             }
@@ -1079,18 +1081,16 @@
 
     angular
         .module('umbraco.deploy.components')
-        .directive('udRestoreProgress', udRestoreProgressComponent);
+        .directive('udRestoreComplete', udRestoreCompleteComponent);
 
-    function udRestoreProgressComponent() {
+    function udRestoreCompleteComponent() {
 
         var directive = {
             restrict: 'E',
             replace: true,
-            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestoreprogress/udrestoreprogress.html',
+            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestorecomplete/udrestorecomplete.html',
             scope: {
-                'targetName': "=",
-                'progress': "=",
-                'currentActivity': "=",
+                'onBack': "&",
                 'timestamp': "=",
                 'serverTimestamp': "="
             }
