@@ -1,0 +1,18 @@
+{
+  "EditorAlias": "Umbraco.Grid",
+  "DatabaseType": 0,
+  "Configuration": {"items":{"styles":[],"config":[{"label":"Class","description":"Set a css class","key":"class","view":"textstring"}],"columns":12,"templates":[{"name":"1 column layout","sections":[{"grid":12}]}],"layouts":[{"name":"Full Row","areas":[{"grid":12,"allowAll":false,"allowed":["rte","headline","quote"]}]}]},"rte":{"toolbar":["ace","styleselect","bold","italic","link","umbmediapicker","bullist","removeformat","subscript","superscript"],"stylesheets":[],"maxImageSize":500,"mode":"distraction-free"}},
+  "Parent": "umb://data-type-container/688c53790e464b73ace78323f46ffc86",
+  "Udi": "umb://data-type/894c270570c94674a30d36a07e8c006c",
+  "Dependencies": [
+    {
+      "Udi": "umb://data-type-container/688c53790e464b73ace78323f46ffc86",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "Content - Grid",
+  "Alias": null,
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
+  "__version": "3.0.1"
+}

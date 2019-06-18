@@ -1,0 +1,12 @@
+{
+  "EditorAlias": "Umbraco.Tags",
+  "DatabaseType": 1,
+  "Configuration": {"group":"Tile Keywords","storageType":1,"Delimiter":"\u0000"},
+  "Parent": null,
+  "Udi": "umb://data-type/93b2e408253d41cea3905c6dfa4c9973",
+  "Dependencies": [],
+  "Name": "Tile Keywords - Tags",
+  "Alias": null,
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
+  "__version": "3.0.1"
+}

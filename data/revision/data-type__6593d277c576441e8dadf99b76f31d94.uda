@@ -1,0 +1,18 @@
+{
+  "EditorAlias": "Umbraco.DropDown.Flexible",
+  "DatabaseType": 1,
+  "Configuration": {"multiple":false,"items":[{"id":9,"value":"Content"},{"id":1,"value":"Audio Book"},{"id":2,"value":"Course"},{"id":3,"value":"E-Book"},{"id":4,"value":"Event"},{"id":5,"value":"Mission"},{"id":6,"value":"Network"},{"id":7,"value":"News"},{"id":10,"value":"Video"},{"id":8,"value":"Webinar"}]},
+  "Parent": "umb://data-type-container/688c53790e464b73ace78323f46ffc86",
+  "Udi": "umb://data-type/6593d277c576441e8dadf99b76f31d94",
+  "Dependencies": [
+    {
+      "Udi": "umb://data-type-container/688c53790e464b73ace78323f46ffc86",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "Tile Content Types",
+  "Alias": null,
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
+  "__version": "3.0.1"
+}

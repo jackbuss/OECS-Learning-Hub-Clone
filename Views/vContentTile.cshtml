@@ -12,15 +12,68 @@
 
 @* the fun starts here *@
 
-<h1>@(Model.Name)</h1>
-<img class="img-fluid" src="@(Model.BannerImage.GetCropUrl(cropAlias:"Landscape", width:1200))" />
+@(Model.TileType)
 
-@if (Model.Topics.Any())
+@if (Model.TileExternalVideo != null)
 {
-    <ul>
-        @foreach (var topic in Model.Topics)
-        {
-            <li>@(topic)</li>
-        }
-    </ul>
+    <div class="embed-responsive embed-responsive-16by9">
+        @Html.Raw(Model.TileExternalVideo.EmbedCode.ToHtmlString().Replace("<iframe", "<iframe class=\"embed-responsive-item\"").Replace("?feature=oembed", "?feature=oembed&rel=0"))
+    </div>
 }
+else if (Model.BannerImage != null)
+{
+    <img class="img-fluid" src="@(Model.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 1200))" />
+}
+
+
+
+
+@if (Model.ContentGrid != null)
+{
+    <div class="card mt-1">
+        <div class="card-body">
+            @Html.GetGridHtml(Model, "contentGrid")
+            @if (Model.TileExternalUrl != null)
+            {
+                <a href="@Model.TileExternalUrl" class="card-link" title="Full Content (opens in a new window)" _target="_blank">Card link</a>
+            }
+        </div>
+    </div>
+}
+
+@if (Model.TileTopics.Any())
+{
+    <div class="card mt-1">
+
+        <div class="card-body">
+            <div class="card-title">
+                <h5>Topics</h5>
+            </div>
+            <ul class="list-group">
+                @foreach (var topic in Model.TileTopics)
+                {
+                    <li class="list-group-item">@(topic)</li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+@if (Model.TileKeywords.Any())
+{
+    <div class="card mt-1">
+
+        <div class="card-body">
+            <div class="card-title">
+                <h5>Keywords</h5>
+            </div>
+            <ul class="list-group">
+                @foreach (var keyword in Model.TileKeywords)
+                {
+                    <li class="list-group-item">@(keyword)</li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+

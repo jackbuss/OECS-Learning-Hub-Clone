@@ -1,9 +1,9 @@
 {
-  "EditorAlias": "Umbraco.Tags",
-  "DatabaseType": 1,
-  "Configuration": {"group":"Tile Topics","storageType":1,"Delimiter":"\u0000"},
+  "EditorAlias": "Dawoe.OEmbedPickerPropertyEditor",
+  "DatabaseType": 0,
+  "Configuration": {"allowmultiple":false},
   "Parent": "umb://data-type-container/688c53790e464b73ace78323f46ffc86",
-  "Udi": "umb://data-type/d238e37192864a0f90e9bd62cd3031bb",
+  "Udi": "umb://data-type/35175e4fa73348048c2f867a19098204",
   "Dependencies": [
     {
       "Udi": "umb://data-type-container/688c53790e464b73ace78323f46ffc86",
@@ -11,7 +11,7 @@
       "Mode": 0
     }
   ],
-  "Name": "Tile Topics - Tags",
+  "Name": "OEmbed",
   "Alias": null,
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
   "__version": "3.0.1"

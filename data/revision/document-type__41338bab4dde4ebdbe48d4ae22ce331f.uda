@@ -1,7 +1,7 @@
 {
   "DefaultTemplate": null,
   "AllowedTemplates": [],
-  "Icon": "icon-tags color-orange",
+  "Icon": "icon-script-alt color-deep-orange",
   "Thumbnail": "folder.png",
   "Description": null,
   "IsContainer": false,
@@ -16,29 +16,29 @@
   "CompositionContentTypes": [],
   "PropertyGroups": [
     {
-      "Key": "09dd6d78-64ae-4b2c-89e9-1f99f0b33d15",
-      "Name": "Taxonomy",
-      "SortOrder": 80,
+      "Key": "fe65f177-97ea-48e4-a6ce-3bb4b6330a60",
+      "Name": "Content",
+      "SortOrder": 0,
       "PropertyTypes": [
         {
-          "Key": "80247196-497c-4bdb-9544-bd6f1c111c9c",
-          "Alias": "tileKeywords",
-          "DataType": "umb://data-type/93b2e408253d41cea3905c6dfa4c9973",
+          "Key": "a530a6e3-a366-4c27-821e-b6af6eb39aff",
+          "Alias": "contentGrid",
+          "DataType": "umb://data-type/894c270570c94674a30d36a07e8c006c",
           "Description": null,
           "Mandatory": false,
-          "Name": "Tile Keywords",
+          "Name": "Content",
           "SortOrder": 1,
           "Validation": null,
           "VariesByCulture": false,
           "VariesBySegment": false
         },
         {
-          "Key": "a8bcb255-0280-403c-ba26-1deee5b83211",
-          "Alias": "tileTopics",
-          "DataType": "umb://data-type/d238e37192864a0f90e9bd62cd3031bb",
+          "Key": "b1da6232-bf5f-4296-80c4-b423cfdb88bf",
+          "Alias": "contentTitle",
+          "DataType": "umb://data-type/0cc0eba1996042c9bf9b60e150b429ae",
           "Description": null,
           "Mandatory": false,
-          "Name": "Tile Topics",
+          "Name": "Title",
           "SortOrder": 0,
           "Validation": null,
           "VariesByCulture": false,
@@ -48,15 +48,15 @@
     }
   ],
   "PropertyTypes": [],
-  "Udi": "umb://document-type/d29f501e8acd4dcb9177bd11aa7e1fa5",
+  "Udi": "umb://document-type/41338bab4dde4ebdbe48d4ae22ce331f",
   "Dependencies": [
     {
-      "Udi": "umb://data-type/93b2e408253d41cea3905c6dfa4c9973",
+      "Udi": "umb://data-type/0cc0eba1996042c9bf9b60e150b429ae",
       "Ordering": true,
       "Mode": 0
     },
     {
-      "Udi": "umb://data-type/d238e37192864a0f90e9bd62cd3031bb",
+      "Udi": "umb://data-type/894c270570c94674a30d36a07e8c006c",
       "Ordering": true,
       "Mode": 0
     },
@@ -66,8 +66,8 @@
       "Mode": 0
     }
   ],
-  "Name": "Taxonomy",
-  "Alias": "dtcTaxonomy",
+  "Name": "Common Content",
+  "Alias": "dtcCommonContent",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
   "__version": "3.0.1"
 }
