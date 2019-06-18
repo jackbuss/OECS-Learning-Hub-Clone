@@ -32,7 +32,7 @@
                 <div class="col-md-4 col-sm-6 p-sm-0">
                     <div class="card mb-2">
                         <div class="card-header">
-                            @(item.Name)
+                            @(item.Parent.Name) - @(item.TileType)
                         </div>
                         <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
                         <div class="card-body">
