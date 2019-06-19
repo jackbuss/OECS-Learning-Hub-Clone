@@ -10,7 +10,15 @@
 
 <div class="row">
     <div class="col">
-        @{ Html.RenderAction("RenderSearchForm", "Search", new { docTypeAliases = "dtContentTile", fieldPropertyAliases = "nodeName,metaTitle,metaKeywords,metaDescription,tileTopics,tileKeywords,contentTitle", pageSize = 6, pagingGroupSize = 3 }); }
+        @{ Html.RenderAction("RenderSearchForm", "Search",
+                 new
+                 {
+                     docTypeAliases = "dtContentTile",
+                     fieldPropertyAliases = "nodeName,metaTitle,metaKeywords,metaDescription,tileTheme,tileTopics,tileKeywords,contentTitle",
+                     pageSize = 6,
+                     pagingGroupSize = 3
+                 });
+        }
     </div>
 </div>
 
