@@ -41,7 +41,7 @@ else if (Model.BannerImage != null)
             @if (!String.IsNullOrWhiteSpace(Model.TileExternalUrl))
             {
                 <div class="alert alert-success" role="alert">
-                    <cite title="Source"><a href="@Model.TileExternalUrl" class="card-link alert-link" title="Source Content (opens in a new window)" _target="_blank">View source - @Model.TileExternalUrl</a></cite>
+                    <cite title="Source"><a href="@Model.TileExternalUrl" class="card-link alert-link" title="Source Content (opens in a new window)" target="_blank">View source - @Model.TileExternalUrl</a></cite>
                 </div>                
             }
         </div>
