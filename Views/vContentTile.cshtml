@@ -38,7 +38,7 @@ else if (Model.BannerImage != null)
     <div class="card mt-1">
         <div class="card-body">
             @Html.GetGridHtml(Model, "contentGrid")
-            @if (Model.TileExternalUrl != null)
+            @if (!String.IsNullOrWhiteSpace(Model.TileExternalUrl))
             {
                 <div class="alert alert-success" role="alert">
                     <cite title="Source"><a href="@Model.TileExternalUrl" class="card-link alert-link" title="Source Content (opens in a new window)" _target="_blank">View source - @Model.TileExternalUrl</a></cite>
