@@ -34,7 +34,10 @@
                         <div class="card-header">
                             @(item.Parent.Name) - @(item.TileType)
                         </div>
+                        @if (item.BannerImage != null)
+                        {
                         <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
+                        }
                         <div class="card-body">
                             <h5 class="card-title">@(item.Name)</h5>
                             <p class="card-text">@(item.MetaDescription)</p>

@@ -25,7 +25,7 @@
           "Alias": "bannerImage",
           "DataType": "umb://data-type/135d60e064d949edab08893c9ba44ae5",
           "Description": null,
-          "Mandatory": false,
+          "Mandatory": true,
           "Name": "Banner Image",
           "SortOrder": 0,
           "Validation": null,
