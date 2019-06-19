@@ -17,6 +17,7 @@
   "Parent": null,
   "CompositionContentTypes": [
     "umb://document-type/06ef76a52eb64783b1eccbb983613a8e",
+    "umb://document-type/41338bab4dde4ebdbe48d4ae22ce331f",
     "umb://document-type/ba85ac7eec3b45c48b3e9ad8b211b31c"
   ],
   "PropertyGroups": [],
@@ -25,6 +26,11 @@
   "Dependencies": [
     {
       "Udi": "umb://document-type/06ef76a52eb64783b1eccbb983613a8e",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://document-type/41338bab4dde4ebdbe48d4ae22ce331f",
       "Ordering": true,
       "Mode": 0
     },
@@ -42,5 +48,5 @@
   "Name": "Standard Page",
   "Alias": "dtStandardPage",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.0.1"
+  "__version": "3.0.2"
 }
