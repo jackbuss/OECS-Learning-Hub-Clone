@@ -8,20 +8,12 @@
             <div class="col">
                 @if (Model.Suggestions)
                 {
-                    <p>Your search for <strong>@Model.SearchTerm</strong> returned no results</p>
-                    <p>Showing Suggestions</p>
+                    <p>Your search for <strong>@Model.SearchTerm</strong> returned no results, why not try &hellip;</p>
                 }
                 else if (!string.IsNullOrWhiteSpace(Model.SearchTerm))
                 {
                     <p>Your search for <strong>@Model.SearchTerm</strong> returned @Model.TotalItemCount result@(Model.TotalItemCount != 1 ? "s" : null)</p>
                 }
-            </div>
-        </div>
-
-
-        <div class="row mb-2 mt-2">
-            <div class="col">
-                @RenderPagingButtons(Model.PagingBounds, Model.PageNumber, Model.PageCount)
             </div>
         </div>
 
@@ -48,6 +40,12 @@
                     </div>
                 </div>
             }
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="col">
+                @RenderPagingButtons(Model.PagingBounds, Model.PageNumber, Model.PageCount)
+            </div>
         </div>
     }
     else
