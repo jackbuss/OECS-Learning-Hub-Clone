@@ -31,8 +31,8 @@
                 var item = result as DtContentTile;
                 <div class="col-md-4 col-sm-6 p-sm-0">
                     <div class="card mb-2">
-                        <div class="card-header">
-                            @renderThemeIcon(item.TileType)@(item.Parent.Name)
+                        <div class="card-header d-flex justify-content-between">
+                            @(item.Parent.Name)@renderThemeIcon(item.TileType)
                         </div>
                         @if (item.BannerImage != null)
                         {
