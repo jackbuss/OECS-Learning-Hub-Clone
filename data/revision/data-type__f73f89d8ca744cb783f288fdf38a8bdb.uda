@@ -1,0 +1,12 @@
+{
+  "EditorAlias": "Umbraco.MultiNodeTreePicker",
+  "DatabaseType": 0,
+  "Configuration": {"startNode":{"type":"content","query":null,"id":"umb://document/702f718550cb49ff9df0b123d93b2874"},"filter":"dtContentTile","minNumber":0,"maxNumber":0,"showOpenButton":false},
+  "Parent": null,
+  "Udi": "umb://data-type/f73f89d8ca744cb783f288fdf38a8bdb",
+  "Dependencies": [],
+  "Name": "Multinode Treepicker - Tiles",
+  "Alias": null,
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
+  "__version": "3.0.2"
+}

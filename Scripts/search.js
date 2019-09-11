@@ -7,6 +7,13 @@
             $(form).submit();
         });
 
+        $(document).on("click", "#next-button", function (e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+            $(this).closest("ul").remove();
+            $(form).submit();
+        });
+
         $(document).on("keyup", "#SearchTerm", tbSearch.debounce(function (e) {
             e.preventDefault();
             var form = $(e.target).closest('form');

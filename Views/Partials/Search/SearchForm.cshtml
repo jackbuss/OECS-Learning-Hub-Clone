@@ -14,7 +14,7 @@
 @using (Ajax.BeginForm("SubmitSearchForm", "Search", null, new AjaxOptions
 {
     HttpMethod = "POST",
-    InsertionMode = InsertionMode.Replace,
+    InsertionMode = InsertionMode.InsertAfter,
     UpdateTargetId = "search-results"
 }, new Dictionary<string, object> { { "id", "menu-search-form" }, { "class", "mt-2 mb-3" } }))
 {
