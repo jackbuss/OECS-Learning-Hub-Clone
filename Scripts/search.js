@@ -2,12 +2,31 @@
     //private
     $(function () {
         $(document).on("click", "#submit-button", function (e) {
+            $("div#search-results").empty();
             e.preventDefault();
             var form = $(this).closest('form');
             $(form).submit();
         });
 
+        $(document).on("click", "#top-search-button", function (e) {
+            $("div#search-results").empty();
+        });
+
+        $(document).on("click", "#next-button", function (e) { // "Load More" press
+            e.preventDefault();
+            var form = $(this).closest('form');
+            $(form).submit();
+            $(this).closest("ul").remove(); // Remove load more afetr so avoidng page jumping
+        });
+
+        window.onscroll = function (e) { // Scroll to bottom
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                $("button#next-button").click(); // Click "Load More" button
+            }
+        };
+
         $(document).on("keyup", "#SearchTerm", tbSearch.debounce(function (e) {
+            $("div#search-results").empty();
             e.preventDefault();
             var form = $(e.target).closest('form');
             $(form).submit();

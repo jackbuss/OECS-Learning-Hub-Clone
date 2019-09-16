@@ -22,10 +22,35 @@
     "umb://document-type/06ef76a52eb64783b1eccbb983613a8e",
     "umb://document-type/ba85ac7eec3b45c48b3e9ad8b211b31c"
   ],
-  "PropertyGroups": [],
+  "PropertyGroups": [
+    {
+      "Key": "bd8383f7-3d46-4fbf-87bc-ed1e96ed7aa7",
+      "Name": "Site Settings",
+      "SortOrder": 101,
+      "PropertyTypes": [
+        {
+          "Key": "94654738-45e5-4a40-a73f-49bbbd4922fc",
+          "Alias": "featuredTiles",
+          "DataType": "umb://data-type/f73f89d8ca744cb783f288fdf38a8bdb",
+          "Description": "Select featured content to be displayed at the top of results",
+          "Mandatory": false,
+          "Name": "Featured Tiles",
+          "SortOrder": 0,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        }
+      ]
+    }
+  ],
   "PropertyTypes": [],
   "Udi": "umb://document-type/d011919a70824849b88b452b05173c89",
   "Dependencies": [
+    {
+      "Udi": "umb://data-type/f73f89d8ca744cb783f288fdf38a8bdb",
+      "Ordering": true,
+      "Mode": 0
+    },
     {
       "Udi": "umb://document-type/06ef76a52eb64783b1eccbb983613a8e",
       "Ordering": true,
@@ -55,5 +80,5 @@
   "Name": "Home Page",
   "Alias": "dtHomePage",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.0.1"
+  "__version": "3.0.2"
 }

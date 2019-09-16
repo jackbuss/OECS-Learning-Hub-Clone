@@ -17,11 +17,16 @@
             </div>
         </div>
 
+
+
+
+
         <div class="row card-deck">
+            @*Initial hero content*@
             @foreach (IPublishedContent result in Model.Results)
             {
                 var item = result as DtContentTile;
-                <div class="col-md-4 col-sm-6 p-sm-0">
+                <div class="col-md-4 col-sm-6 p-sm-0 col-xs-6">
                     <div class="card mb-2">
                         <div class="card-header d-flex justify-content-between">
                             @(item.Parent.Name)@renderThemeIcon(item.TileType)
@@ -44,7 +49,7 @@
 
         <div class="row mb-2 mt-2">
             <div class="col">
-                @RenderPagingButtons(Model.PagingBounds, Model.PageNumber, Model.PageCount)
+                @RenderLoadMore(Model.PagingBounds, Model.PageNumber, Model.PageCount)
             </div>
         </div>
     }
@@ -53,6 +58,22 @@
         // need to show suggested results.
         <p>No results to display</p>
     }
+}
+
+@helper RenderLoadMore(TWS.ThinkBlue.Models.PagingBoundsModel pagingBounds, int pageNumber, int pageCount)
+{
+    <nav aria-label="paged navigation">
+        <ul class="pagination justify-content-center">
+            @if (pageNumber < pageCount)
+            {
+                <li class="page-item">
+                    <button id="next-button" class="page-link" name="page-@(pageNumber + 1)" aria-label="Next"><span aria-hidden="true">Load More</span><span class="sr-only">Load More</span></button>
+                </li>
+
+            }
+        </ul>
+    </nav>
+
 }
 
 @helper RenderPagingButtons(TWS.ThinkBlue.Models.PagingBoundsModel pagingBounds, int pageNumber, int pageCount)
