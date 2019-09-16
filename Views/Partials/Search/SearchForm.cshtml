@@ -28,11 +28,15 @@
     <div class="input-group">
         @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search ThinkBlue...", @class = "form-control", autocomplete = "off" })
         <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <button id="top-search-button" class="btn btn-outline-secondary" type="submit">Search</button>
         </div>
     </div>
 
     <div id="search-results">
         @{ Html.RenderAction("RenderSearchResults", "Search", new { Model = Model.SearchResults });}
+    </div>
+
+    <div id="bottom-scroll" data-spy="scroll" data-target="#bottom-scroll">
+
     </div>
 }

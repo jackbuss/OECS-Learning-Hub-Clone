@@ -21,7 +21,7 @@
                     var nodeChildren = node.Children.Where(x => !x.Value<bool>("hideFromNavigation"));
                     <li class="nav-item@(active)@(nodeChildren.Any()?" dropdown":"")">
                         @{
-                            if (nodeChildren.Any())
+                            if (nodeChildren .Any())
                             {
                                 Html.RenderPartial("Core/Link", (IPublishedContent)node, new ViewDataDictionary { { "removeClass", true }, { "classes", "nav-link" }, { "attrs", (node.Id == Model.Id ? " data-current=\"1\"" : "") } });
                                 <a class="dropdown-toggle" href="#" id="dropdown@(node.Key)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
