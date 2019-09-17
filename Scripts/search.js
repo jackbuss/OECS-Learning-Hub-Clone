@@ -1,22 +1,23 @@
 ﻿; (function (tbSearch, undefined) {
     //private
     $(function () {
-        $(document).on("click", "#submit-button", function (e) {
+        $(document).on("click", "#search-button", function (e) {
             $("div#search-results").empty();
             e.preventDefault();
             var form = $(this).closest('form');
             $(form).submit();
         });
 
-        $(document).on("click", "#top-search-button", function (e) {
-            $("div#search-results").empty();
-        });
+
+        //$(document).on("click", "#top-search-button", function (e) { // Clear search results div when form submit to load results
+        //    $("div#search-results").empty();
+        //});
 
         $(document).on("click", "#next-button", function (e) { // "Load More" press
             e.preventDefault();
             var form = $(this).closest('form');
             $(form).submit();
-            $(this).closest("ul").remove(); // Remove load more afetr so avoidng page jumping
+            $(this).closest("ul").remove(); // Remove load more after so avoidng page jumping
         });
 
         window.onscroll = function (e) { // Scroll to bottom

@@ -20,10 +20,9 @@
 
 
 
-
         <div class="row card-deck">
             @*Initial hero content*@
-            @foreach (IPublishedContent result in Model.Results)
+        @foreach (IPublishedContent result in Model.Results)
             {
                 var item = result as DtContentTile;
                 <div class="col-md-4 col-sm-6 p-sm-0 col-xs-6">
@@ -45,7 +44,8 @@
                     </div>
                 </div>
             }
-        </div>
+            </div>
+
 
         <div class="row mb-2 mt-2">
             <div class="col">
