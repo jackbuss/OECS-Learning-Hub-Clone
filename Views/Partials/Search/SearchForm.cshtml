@@ -1,10 +1,11 @@
-﻿@model TWS.ThinkBlue.Models.SearchViewModel
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<TWS.ThinkBlue.Models.SearchViewModel>
 @using ClientDependency.Core.Mvc
 
 @{
     Html.RequiresJs("~/js/vendor/jquery.validate-1.19.0.min.js")
         .RequiresJs("~/js/vendor/jquery.validate.unobtrusive-3.2.11.min.js")
         .RequiresJs("~/js/vendor/jquery.unobtrusive-ajax-3.2.6.min.js")
+        .RequiresJs("~/js/vendor/isInViewport-3.0.4.js")
      .RequiresJs("~/Scripts/search.js");
 
     Html.EnableClientValidation();
@@ -29,14 +30,13 @@
         @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search ThinkBlue...", @class = "form-control", autocomplete = "off" })
         <div class="input-group-append">
             <button id="search-button" class="btn btn-outline-secondary" type="submit">Search</button>
+
         </div>
+
     </div>
 
     <div id="search-results">
         @{ Html.RenderAction("RenderSearchResults", "Search", new { Model = Model.SearchResults });}
     </div>
 
-    <div id="bottom-scroll" data-spy="scroll" data-target="#bottom-scroll">
-
-    </div>
 }

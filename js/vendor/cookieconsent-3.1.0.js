@@ -250,8 +250,8 @@
                 dismiss: 'Got it!',
                 allow: 'Allow cookies',
                 deny: 'Decline',
-                link: 'Learn more',
-                href: 'https://cookiesandyou.com',
+                link: 'Set preferences',
+                href: '#',
                 close: '&#x274c;',
                 target: '_blank',
                 policy: 'Cookie Policy'
@@ -267,7 +267,7 @@
                 message:
                     '<span id="cookieconsent:desc" class="cc-message">{{message}}</span>',
                 messagelink:
-                    '<span id="cookieconsent:desc" class="cc-message">{{message}} <a aria-label="learn more about cookies" role=button tabindex="0" class="cc-link" href="{{href}}" rel="noopener noreferrer nofollow" target="{{target}}">{{link}}</a></span>',
+                    '<span id="cookieconsent:desc" class="cc-message">{{message}} <a aria-label="learn more about cookies" role=button tabindex="0" data-toggle="modal" data-target="#cookieModal" class="cc-link" href="{{href}}" rel="noopener noreferrer nofollow" target="{{target}}">{{link}}</a></span>',
                 dismiss:
                     '<a aria-label="dismiss cookie message" role=button tabindex="0" class="cc-btn cc-dismiss">{{dismiss}}</a>',
                 allow:
@@ -850,6 +850,9 @@
                     this.setStatus(match);
                     this.close(true);
                 }
+            }
+            if (util.hasClass(btn, 'cc-link')) {
+                this.close(true);
             }
             if (util.hasClass(btn, 'cc-close')) {
                 this.setStatus(cc.status.dismiss);
@@ -1755,9 +1758,6 @@
                 "background": "#c41214",
                 "text": "#ffffff"
             }
-        },
-        "content": {
-            "href": "https://www.lovell.co.uk/your-lovell-home/customer-care/privacy-policy/"
         }
     });
 

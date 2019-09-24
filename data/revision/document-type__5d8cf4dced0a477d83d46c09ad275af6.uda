@@ -1,0 +1,33 @@
+{
+  "DefaultTemplate": null,
+  "AllowedTemplates": [],
+  "Icon": "icon-info color-pink",
+  "Thumbnail": "folder.png",
+  "Description": null,
+  "IsContainer": false,
+  "Permissions": {
+    "AllowVaryingByCulture": false,
+    "AllowVaryingBySegment": false,
+    "AllowedAtRoot": true,
+    "IsElementType": false,
+    "AllowedChildContentTypes": [
+      "umb://document-type/e0680db28e3e4f94bdd1f583b670fdfb"
+    ]
+  },
+  "Parent": null,
+  "CompositionContentTypes": [],
+  "PropertyGroups": [],
+  "PropertyTypes": [],
+  "Udi": "umb://document-type/5d8cf4dced0a477d83d46c09ad275af6",
+  "Dependencies": [
+    {
+      "Udi": "umb://document-type/e0680db28e3e4f94bdd1f583b670fdfb",
+      "Ordering": false,
+      "Mode": 0
+    }
+  ],
+  "Name": "Info Pages",
+  "Alias": "dtInfoPages",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
+  "__version": "3.0.2"
+}

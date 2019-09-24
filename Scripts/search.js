@@ -20,11 +20,17 @@
             $(this).closest("ul").remove(); // Remove load more after so avoidng page jumping
         });
 
-        window.onscroll = function (e) { // Scroll to bottom
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                $("button#next-button").click(); // Click "Load More" button
+        //window.onscroll = function (e) { // Scroll to bottom
+        //    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        //        $("button#next-button").click(); // Click "Load More" button
+        //    }
+        //};
+
+        $(window).on('scroll resize', tbSearch.debounce(function (e) {
+            if ($('button#next-button').is(':in-viewport')) { // Check if visible on the screen
+                $('button#next-button').trigger('click'); // Click button
             }
-        };
+        }, 500));
 
         $(document).on("keyup", "#SearchTerm", tbSearch.debounce(function (e) {
             $("div#search-results").empty();

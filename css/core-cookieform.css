@@ -1,0 +1,12 @@
+﻿form.cookieForm{
+    width: 100%;
+    display: inline-flex;
+}
+
+form.cookieForm p {
+    padding-left: 20px;
+}
+
+input[class="cookieCheckbox"]{
+    padding-right: 20px;
+}

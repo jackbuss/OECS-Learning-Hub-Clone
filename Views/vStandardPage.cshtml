@@ -1,7 +1,14 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.DtStandardPage>
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
 @using ContentModels = Umbraco.Web.PublishedModels;
 @{
-    Layout = "vCommon.cshtml";
+    if (Request.QueryString["m"] == "1")
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "vCommon.cshtml";
+    }
 }
 
 @Html.GetGridHtml(Model, "contentGrid")

@@ -29,6 +29,18 @@
       "SortOrder": 0,
       "PropertyTypes": [
         {
+          "Key": "15594a10-7389-4c17-9b82-1a39b2a6ea06",
+          "Alias": "featured",
+          "DataType": "umb://data-type/4a69d436ff144770905533919a72653c",
+          "Description": null,
+          "Mandatory": false,
+          "Name": "Featured",
+          "SortOrder": 5,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        },
+        {
           "Key": "81c08708-bc4e-4c70-adce-ebee0ce61487",
           "Alias": "tileExternalUrl",
           "DataType": "umb://data-type/0cc0eba1996042c9bf9b60e150b429ae",
@@ -77,6 +89,11 @@
     },
     {
       "Udi": "umb://data-type/35175e4fa73348048c2f867a19098204",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://data-type/4a69d436ff144770905533919a72653c",
       "Ordering": true,
       "Mode": 0
     },

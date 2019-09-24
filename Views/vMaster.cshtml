@@ -36,11 +36,16 @@
     @Html.RenderJsHere("HeadRenderer")
 </head>
 <body>
+    @Html.Partial("Layout/MainNavigation")
+
+
+    @*@Html.Partial("Layout/BurgerMenu")*@
+
     @Html.Partial("Layout/Modal")
+    @Html.Partial("Layout/CookiePreference")
     <div class="container mb-5 pb-3">
         @RenderBody()
     </div>
-    @Html.Partial("Layout/MainNavigation")
 
     <!-- js frameworks etc -->
     @Html.RenderJsHere("FootRenderer")
@@ -48,6 +53,37 @@
     @Html.RenderJsHere()
     <!-- lazy load JS renderer-->
     @Html.RenderJsHere("LazyLoadRenderer")
+
+    @*<script src="https://cc.cdn.civiccomputing.com/8/cookieControl-8.x.min.js"></script>
+        <script>
+            var config = {
+                apiKey: '3c499c000ebb870de697163583ec79eba9802b5c',
+                product: 'COMMUNITY',
+                optionalCookies: [
+                    {
+                        name: 'analytics',
+                        label: 'Analytics',
+                        description: 'We use analytics cookies to see how our site is used...',
+                        cookies: [],
+                        onAccept: function () { },
+                        onRevoke: function () { }
+                    }
+                ],
+
+                position: 'LEFT',
+                theme: 'DARK'
+            };
+
+            CookieControl.load(config);
+        </script>*@
+
+    @{ 
+        @*if(Request.Cookies["cookie"].Value == "Value")
+        {
+            @Html.Partial("Meta/GoogleAnalytics")
+        }*@
+    }
+
 
 </body>
 </html>

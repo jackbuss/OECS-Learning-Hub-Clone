@@ -1,0 +1,12 @@
+{
+  "EditorAlias": "Umbraco.TrueFalse",
+  "DatabaseType": 2,
+  "Configuration": {"default":"0","labelOn":null},
+  "Parent": null,
+  "Udi": "umb://data-type/4a69d436ff144770905533919a72653c",
+  "Dependencies": [],
+  "Name": "Content Tile - Featured - Checkbox (1)",
+  "Alias": null,
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
+  "__version": "3.0.2"
+}

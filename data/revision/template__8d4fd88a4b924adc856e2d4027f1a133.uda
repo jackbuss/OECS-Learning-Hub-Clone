@@ -1,0 +1,16 @@
+{
+  "File": "umb://template-file/MenuItem.cshtml",
+  "Master": null,
+  "Udi": "umb://template/8d4fd88a4b924adc856e2d4027f1a133",
+  "Dependencies": [
+    {
+      "Udi": "umb://template-file/MenuItem.cshtml",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "MenuItem",
+  "Alias": "MenuItem",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.TemplateArtifact",
+  "__version": "3.0.2"
+}
