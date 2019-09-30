@@ -23,41 +23,26 @@
                 @foreach (IPublishedContent result in Model.Results)
                 {
                     var item = result as DtContentTile;
-                    if (item.Featured == true) // Check featured item
-                    {
-                        <div class="col-md-4 col-sm-6 p-sm-0 col-xs-6">
-                            <div class="card mb-2 img-overlap">
-                                @if (item.BannerImage != null)
-                                {
-                                    <div class="card-body">
-                                        <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
-                                        <h5 class="card-title">@(item.Name)</h5>
-                                    </div>
-                                }
+
+                    <div class="col-md-4 col-sm-6 p-sm-0 col-xs-6">
+                        <div class="card mb-2">
+                            <div class="card-header d-flex justify-content-between">
+                                @(item.Parent.Name)@renderThemeIcon(item.TileType)
+                            </div>
+                            @if (item.BannerImage != null)
+                            {
+                                <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
+                            }
+                            <div class="card-body">
+                                <h5 class="card-title">@(item.Name)</h5>
+                                <p class="card-text">@(item.MetaDescription)</p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-primary" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">View More</a>
                             </div>
                         </div>
-                    }
-                    else
-                    {
-                        <div class="col-md-4 col-sm-6 p-sm-0 col-xs-6">
-                            <div class="card mb-2">
-                                <div class="card-header d-flex justify-content-between">
-                                    @(item.Parent.Name)@renderThemeIcon(item.TileType)
-                                </div>
-                                @if (item.BannerImage != null)
-                                {
-                                    <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
-                                }
-                                <div class="card-body">
-                                    <h5 class="card-title">@(item.Name)</h5>
-                                    <p class="card-text">@(item.MetaDescription)</p>
-                                </div>
-                                <div class="card-footer">
-                                    <a class="btn btn-primary" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    }
+                    </div>
+
                 }
             </div>
 
