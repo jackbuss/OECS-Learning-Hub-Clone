@@ -19,7 +19,7 @@
     <!-- Twitter Card-->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@("@ThinkBlue")">@*<meta name="twitter:creator" content="individual_account">*@
-    <meta name="twitter:url" content="@(Model.UrlAbsolute())">
+    @*<meta name="twitter:url" content="@(Model.UrlAbsolute())">*@
     <meta name="twitter:title" content="@(Model.Value<string>("metaTitle", fallback:Fallback.ToDefaultValue, defaultValue: Model.Name))">
     <!-- desc less than 200 chars-->
     <meta name="twitter:description" content="@(Model.Value<string>("metaDescription"))">

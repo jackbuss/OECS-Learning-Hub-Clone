@@ -24,7 +24,7 @@
     <!-- Common meta tags -->
     @{ Html.RenderPartial("Meta/CommonMetaTags"); }
     <!-- Additional Meta -->
-    <link rel="canonical" href="@(Model.UrlAbsolute())">
+    @*<link rel="canonical" href="@(Model.UrlAbsolute())">*@
     @{Html.RenderPartial("Meta/FacebookOG");}
     @{Html.RenderPartial("Meta/TwitterCard");}
     @{Html.RenderPartial("Meta/FavIcons");}

@@ -22,7 +22,7 @@
 }
     <!-- Facebook OG-->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="@(absoluteUrl)">
+    @*<meta property="og:url" content="@(absoluteUrl)">*@
     <meta property="og:title" content="@(Model.Value<string>("metaTitle", fallback:Fallback.ToDefaultValue, defaultValue:Model.Name))">
     @if (img != null)
     {
