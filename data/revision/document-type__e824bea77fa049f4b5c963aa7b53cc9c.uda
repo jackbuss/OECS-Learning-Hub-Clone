@@ -32,7 +32,7 @@
           "Key": "81c08708-bc4e-4c70-adce-ebee0ce61487",
           "Alias": "tileExternalUrl",
           "DataType": "umb://data-type/0cc0eba1996042c9bf9b60e150b429ae",
-          "Description": null,
+          "Description": "please include http(s)://",
           "Mandatory": false,
           "Name": "Tile External Url",
           "SortOrder": 4,
@@ -56,7 +56,7 @@
           "Key": "c52797e5-6860-4dcd-8ae2-b12d91cf7620",
           "Alias": "tileExternalVideo",
           "DataType": "umb://data-type/35175e4fa73348048c2f867a19098204",
-          "Description": null,
+          "Description": "optional",
           "Mandatory": false,
           "Name": "Tile External Video",
           "SortOrder": 3,
@@ -119,5 +119,5 @@
   "Name": "Content Tile",
   "Alias": "dtContentTile",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.0.2"
+  "__version": "3.1.2"
 }
