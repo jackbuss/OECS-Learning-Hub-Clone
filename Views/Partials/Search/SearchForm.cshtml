@@ -23,10 +23,8 @@
     @Html.HiddenFor(m => m.PageSize)
     @Html.AntiForgeryToken();
 
-    <div class="input-group">
-        @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search ThinkBlue...", @class = "form-control", autocomplete = "off" })
-        <div class="input-group-append">
-            <button id="search-button" class="btn btn-outline-secondary" type="submit">Search</button>
-        </div>
+    <div class="input-group bg-info p-2">
+        @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search", @class = "form-control", autocomplete = "off" })
     </div>
+    <button id="search-button" class="btn btn-primary float-right mt-2 mb-2" type="submit">GO</button>
 }

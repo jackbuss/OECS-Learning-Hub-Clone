@@ -16,8 +16,8 @@
     };
 }
 
-<div id="topNavigation">
-    <div class="navbar navbar-dark bg-primary box-shadow">
+<div id="topNavigation" class="mb-2">
+    <div class="navbar">
         <a href="/" class="navbar-brand"><strong>Think Blue</strong></a>
         <div class="justify-content-end">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#search-form-wrapper" aria-controls="search-form-wrapper" aria-expanded="false" aria-label="Toggle Search">
@@ -29,24 +29,22 @@
         </div>
     </div>
 
-    <div class="collapse bg-primary text-white" id="search-form-wrapper" data-parent="#topNavigation">
-        <div class="bg-dark p-4">
-            @{ Html.RenderAction("RenderSearchForm", "Search", searchParams);}
-        </div>
+    <div class="collapse text-primary" id="search-form-wrapper" data-parent="#topNavigation">
+            @{ Html.RenderAction("RenderSearchForm", "Search", searchParams);}        
     </div>
 
-    <div class="collapse bg-primary text-white" id="info-menu" data-parent="#topNavigation">
+    <div class="collapse text-primary" id="info-menu" data-parent="#topNavigation">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4 py-4">
-                    <ul class="list-unstyled">
-                        <li><a class="underline text-white w-100" href="#" data-toggle="modal" data-target="#cookieModal" title="Set Cookie Preferences"><u>Set Cookie Preferences</u></a></li>
+                <div class="col p-0">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a class="w-100" href="#" data-toggle="modal" data-target="#cookieModal" title="Set Cookie Preferences">Set Cookie Preferences</a></li>
 
                         @if (infoPages != null)
                         {
                             foreach (var node in infoPages.Children)
                             {
-                                <li><a class="underline text-white w-100" href="@node.Url" data-toggle="modal" data-target="#modal" title="@(node.Name)"><u>@node.Name</u></a></li>
+                                <li class="list-group-item"><a class="color-blue" href="@node.Url" data-toggle="modal" data-target="#modal" title="@(node.Name)">@node.Name</a></li>
                             }
                         }
                     </ul>
