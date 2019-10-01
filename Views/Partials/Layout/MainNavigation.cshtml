@@ -1,40 +1,56 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
 @using ClientDependency.Core.Mvc
+@using TWS.ThinkBlue.Models;
 
 @{
-    //Html.RequiresCss("/css/core-header-navigation.css");
     var homeNode = Model.AncestorOrSelf(1);
 
     var headerLinks = homeNode.Value<IEnumerable<IPublishedContent>>("headerLinks");
     var infoPages = Umbraco.ContentAtXPath("//dtInfoPages").FirstOrDefault();
+
+    var searchParams = new SearchViewModel()
+    {
+        DocTypeAliases = "dtContentTile",
+        FieldPropertyAliases = "nodeName,metaTitle,metaKeywords,metaDescription,tileTheme,tileTopics,tileKeywords,contentTitle",
+        PageSize = 6
+    };
 }
 
-<div class="navbar navbar-dark bg-primary box-shadow">
-    <div class="container d-flex justify-content-between">
-        <a href="/" class="navbar-brand d-flex align-items-center">
-            <strong>Think Blue</strong>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<div id="topNavigation">
+    <div class="navbar navbar-dark bg-primary box-shadow">
+        <a href="/" class="navbar-brand"><strong>Think Blue</strong></a>
+        <div class="justify-content-end">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#search-form-wrapper" aria-controls="search-form-wrapper" aria-expanded="false" aria-label="Toggle Search">
+                <span class="">?</span>
+            </button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#info-menu" aria-controls="info-menu" aria-expanded="false" aria-label="Toggle Info">
+                <span class="">i</span>
+            </button>
+        </div>
     </div>
-</div>
 
-<div class="collapse bg-primary text-white" id="navbarHeader">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4 py-4">
-                <ul class="list-unstyled">
-                    <li><a class="underline text-white w-100" href="#" data-toggle="modal" data-target="#cookieModal" title="Set Cookie Preferences"><u>Set Cookie Preferences</u></a></li>
+    <div class="collapse bg-primary text-white" id="search-form-wrapper" data-parent="#topNavigation">
+        <div class="bg-dark p-4">
+            @{ Html.RenderAction("RenderSearchForm", "Search", searchParams);}
+        </div>
+    </div>
 
-                    @if (infoPages != null)
-                    {
-                        foreach (var node in infoPages.Children)
+    <div class="collapse bg-primary text-white" id="info-menu" data-parent="#topNavigation">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 py-4">
+                    <ul class="list-unstyled">
+                        <li><a class="underline text-white w-100" href="#" data-toggle="modal" data-target="#cookieModal" title="Set Cookie Preferences"><u>Set Cookie Preferences</u></a></li>
+
+                        @if (infoPages != null)
                         {
-                            <li><a class="underline text-white w-100" href="@node.Url" data-toggle="modal" data-target="#modal" title="@(node.Name)"><u>@node.Name</u></a></li>
+                            foreach (var node in infoPages.Children)
+                            {
+                                <li><a class="underline text-white w-100" href="@node.Url" data-toggle="modal" data-target="#modal" title="@(node.Name)"><u>@node.Name</u></a></li>
+                            }
                         }
-                    }
-                </ul>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

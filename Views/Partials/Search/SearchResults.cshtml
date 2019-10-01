@@ -1,130 +1,66 @@
-﻿@inherits UmbracoViewPage<TWS.ThinkBlue.Models.SearchResultsModel>
-<div id="search-results">
-
-    @if (Model != null)
+﻿@inherits UmbracoViewPage<TWS.ThinkBlue.Models.SearchViewModel>
+@{
+    Html.EnableUnobtrusiveJavaScript();
+}
+@if (Model.SearchResults != null)
+{
+    if (Model.SearchResults.HasResults)
     {
-        if (Model.HasResults)
-        {
-            <div class="row mb-2 mt-2">
-                <div class="col">
-                    @if (Model.Suggestions)
-                    {
-                        <p>Your search for <strong>@Model.SearchTerm</strong> returned no results, why not try &hellip;</p>
-                    }
-                    else if (!string.IsNullOrWhiteSpace(Model.SearchTerm))
-                    {
-                        <p>Your search for <strong>@Model.SearchTerm</strong> returned @Model.TotalItemCount result@(Model.TotalItemCount != 1 ? "s" : null)</p>
-                    }
-                </div>
-            </div>
-
-            <div class="row card-deck">
-                @*Initial hero content*@
-                @foreach (IPublishedContent result in Model.Results)
-                {
-                    var item = result as DtContentTile;
-
-                    <div class="col-md-4 col-sm-6 p-sm-0 col-xs-6">
-                        <div class="card mb-2">
-                            <div class="card-header d-flex justify-content-between">
-                                @(item.Parent.Name)@renderThemeIcon(item.TileType)
-                            </div>
-                            @if (item.BannerImage != null)
-                            {
-                                <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
-                            }
-                            <div class="card-body">
-                                <h5 class="card-title">@(item.Name)</h5>
-                                <p class="card-text">@(item.MetaDescription)</p>
-                            </div>
-                            <div class="card-footer">
-                                <a class="btn btn-primary" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">View More</a>
-                            </div>
+        <div class="row card-deck">
+            @*Initial hero content*@
+            @foreach (IPublishedContent result in Model.SearchResults.Results)
+            {
+                var item = result as DtContentTile;
+                <div class="col-md-4 col-sm-6 p-sm-0 col-xs-6">
+                    <div class="card mb-2">
+                        <div class="card-header d-flex justify-content-between">
+                            @(item.Parent.Name) @renderThemeIcon(item.TileType)
+                        </div>
+                        @if (item.BannerImage != null)
+                        {
+                            <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@(item.Name)</h5>
+                            <p class="card-text">@(item.MetaDescription)</p>
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-primary" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">View More</a>
                         </div>
                     </div>
-
-                }
-            </div>
-
-
-            <div class="row mb-2 mt-2">
-                <div class="col">
-                    @RenderLoadMore(Model.PagingBounds, Model.PageNumber, Model.PageCount)
                 </div>
-            </div>
-        }
-        else
+            }
+        </div>
+
+        using (Ajax.BeginForm("SubmitSearchForm", "Search", null, new AjaxOptions
         {
-            // need to show suggested results.
-            <p>No results to display</p>
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.InsertAfter,
+            UpdateTargetId = "search-results",
+            OnSuccess = "tbSearch.loadMoreSuccess",
+            OnBegin = "tbSearch.loadMoreBegin"
+        }, new Dictionary<string, object> { { "id", "pagination-form" }, { "class", "" } }))
+        {
+            @Html.HiddenFor(m => m.DocTypeAliases)
+            @Html.HiddenFor(m => m.FieldPropertyAliases)
+            @Html.HiddenFor(m => m.PageSize)
+            @Html.HiddenFor(m => m.SearchTerm)
+            @Html.AntiForgeryToken();
+
+            if (Model.SearchResults.PageNumber < Model.SearchResults.PageCount)
+            {
+                <button id="load-more" class="btn btn-primary" name="page-@(Model.SearchResults.PageNumber + 1)" aria-label="Load More Results">
+                    Load More
+                </button>
+            }
         }
     }
-
-</div>
-@helper RenderLoadMore(TWS.ThinkBlue.Models.PagingBoundsModel pagingBounds, int pageNumber, int pageCount)
-{
-    <nav aria-label="paged navigation">
-        <ul class="pagination justify-content-center">
-            @if (pageNumber < pageCount)
-            {
-                <li class="page-item">
-                    <button id="next-button" class="page-link" name="page-@(pageNumber + 1)" aria-label="Next"><span aria-hidden="true">Load More</span><span class="sr-only">Load More</span></button>
-                </li>
-
-            }
-        </ul>
-    </nav>
-
+    else
+    {
+        // need to show suggested results.
+        <p>No results to display</p>
+    }
 }
-
-@helper RenderPagingButtons(TWS.ThinkBlue.Models.PagingBoundsModel pagingBounds, int pageNumber, int pageCount)
-{
-    <nav aria-label="paged navigation">
-        <ul class="pagination justify-content-center">
-            @if (pagingBounds.ShowFirstButton)
-            {
-                <li class="page-item">
-                    <button class="page-link" name="page-1" aria-label="First"><span aria-hidden="true">&laquo;</span><span class="sr-only">First</span></button>
-                </li>
-            }
-
-            @if (pageNumber > 1)
-            {
-                <li class="page-item">
-                    <button class="page-link" name="page-@(pageNumber - 1)" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span><span class="sr-only">Previous</span></button>
-                </li>
-            }
-
-            @if (pagingBounds.StartPage != pagingBounds.EndPage)
-            {
-                for (int i = pagingBounds.StartPage; i <= pagingBounds.EndPage; i++)
-                {
-                    <li class="page-item@(i == pageNumber ? " active" : null)">
-                        <button name="page-@i" class="page-link" aria-label="page @(i)">
-                            @i@if (i == pageNumber)
-                            {<span class="sr-only">(current)</span>}
-                        </button>
-                    </li>
-                }
-            }
-
-            @if (pageNumber < pageCount)
-            {
-                <li class="page-item">
-                    <button class="page-link" name="page-@(pageNumber + 1)" aria-label="Next"><span aria-hidden="true">&rsaquo;</span><span class="sr-only">Next</span></button>
-                </li>
-            }
-
-            @if (pagingBounds.ShowLastButton)
-            {
-                <li class="page-item">
-                    <button class="page-link" name="page-@(pageCount)" aria-label="Last"><span aria-hidden="true">&raquo;</span><span class="sr-only">Last</span></button>
-                </li>
-            }
-        </ul>
-    </nav>
-}
-
 @helper renderThemeIcon(string TileType)
 {
     <svg width="24" height="24" class="octicon" viewBox="0 0 16 16" version="1.1" aria-hidden="true">

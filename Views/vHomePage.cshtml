@@ -1,27 +1,22 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
-@using ContentModels = Umbraco.Web.PublishedModels;
-
-
+﻿@inherits UmbracoViewPage
+@using TWS.ThinkBlue.Models;
 @{
     Layout = "vMaster.cshtml";
 
+    var searchParams = new SearchViewModel()
+    {
+        DocTypeAliases = "dtContentTile",
+        FieldPropertyAliases = "nodeName,metaTitle,metaKeywords,metaDescription,tileTheme,tileTopics,tileKeywords,contentTitle",
+        PageSize = 6
+    };
 }
-
-@*@Html.Partial("Layout/SearchForm")*@
-
-
 <div class="row">
     <div class="col">
-        @{ Html.RenderAction("RenderSearchForm", "Search",
-                 new
-                 {
-                     docTypeAliases = "dtContentTile",
-                     fieldPropertyAliases = "nodeName,metaTitle,metaKeywords,metaDescription,tileTheme,tileTopics,tileKeywords,contentTitle",
-                     pageSize = 6,
-                     pagingGroupSize = 3
-                 });
-        }
+        @Html.Partial("Layout/MainNavigation")
     </div>
 </div>
-
-@*@Html.Partial("Content/List")*@
+<div class="row">
+    <div class="col" id="search-results">
+        @{ Html.RenderAction("SubmitSearchForm", "Search", searchParams);}
+    </div>
+</div>

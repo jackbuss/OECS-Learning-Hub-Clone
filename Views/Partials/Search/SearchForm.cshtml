@@ -1,6 +1,5 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<TWS.ThinkBlue.Models.SearchViewModel>
+﻿@model TWS.ThinkBlue.Models.SearchViewModel
 @using ClientDependency.Core.Mvc
-
 @{
     Html.RequiresJs("~/js/vendor/jquery.validate-1.19.0.min.js")
         .RequiresJs("~/js/vendor/jquery.validate.unobtrusive-3.2.11.min.js")
@@ -15,28 +14,19 @@
 @using (Ajax.BeginForm("SubmitSearchForm", "Search", null, new AjaxOptions
 {
     HttpMethod = "POST",
-    InsertionMode = InsertionMode.InsertAfter,
+    InsertionMode = InsertionMode.Replace,
     UpdateTargetId = "search-results"
 }, new Dictionary<string, object> { { "id", "menu-search-form" }, { "class", "mt-2 mb-3" } }))
 {
     @Html.HiddenFor(m => m.DocTypeAliases)
     @Html.HiddenFor(m => m.FieldPropertyAliases)
     @Html.HiddenFor(m => m.PageSize)
-    @Html.HiddenFor(m => m.PagingGroupSize)
     @Html.AntiForgeryToken();
-
 
     <div class="input-group">
         @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search ThinkBlue...", @class = "form-control", autocomplete = "off" })
         <div class="input-group-append">
             <button id="search-button" class="btn btn-outline-secondary" type="submit">Search</button>
-
         </div>
-
     </div>
-
-    <div id="search-results">
-        @{ Html.RenderAction("RenderSearchResults", "Search", new { Model = Model.SearchResults });}
-    </div>
-
 }
