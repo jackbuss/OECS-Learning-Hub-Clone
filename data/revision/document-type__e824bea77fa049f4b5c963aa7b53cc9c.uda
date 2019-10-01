@@ -24,6 +24,37 @@
   ],
   "PropertyGroups": [
     {
+      "Key": "5dd6b16b-1665-4a9a-84bb-5944e515e118",
+      "Name": "Taxonomy",
+      "SortOrder": 80,
+      "PropertyTypes": [
+        {
+          "Key": "493c7fb0-3471-4e16-9c5e-ce1e31ed9fe4",
+          "Alias": "tileContentOrigination",
+          "DataType": "umb://data-type/fc44a2df49fc4472b88ed516049399eb",
+          "Description": null,
+          "Mandatory": false,
+          "Name": "Tile Content Origination",
+          "SortOrder": 2,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        },
+        {
+          "Key": "694e64e5-8a42-4eb3-b525-824ac9159b40",
+          "Alias": "tilePersonna",
+          "DataType": "umb://data-type/bdc8c3843aff4fe8a677085633d839a2",
+          "Description": "The tile is most appropriate for...",
+          "Mandatory": false,
+          "Name": "Tile Personna",
+          "SortOrder": 3,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        }
+      ]
+    },
+    {
       "Key": "8c20667c-e409-4355-ac3b-106ddb835199",
       "Name": "Content",
       "SortOrder": 0,
@@ -82,6 +113,16 @@
     },
     {
       "Udi": "umb://data-type/6593d277c576441e8dadf99b76f31d94",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://data-type/bdc8c3843aff4fe8a677085633d839a2",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://data-type/fc44a2df49fc4472b88ed516049399eb",
       "Ordering": true,
       "Mode": 0
     },

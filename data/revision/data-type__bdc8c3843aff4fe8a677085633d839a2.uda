@@ -1,0 +1,12 @@
+{
+  "EditorAlias": "Umbraco.CheckBoxList",
+  "DatabaseType": 1,
+  "Configuration": {"items":[{"id":1,"value":"Head of State"},{"id":2,"value":"Government Minister"},{"id":3,"value":"Civil Servant"},{"id":4,"value":"NGO Worker"},{"id":5,"value":"Teacher"},{"id":6,"value":"Student"},{"id":7,"value":"General Public"}]},
+  "Parent": null,
+  "Udi": "umb://data-type/bdc8c3843aff4fe8a677085633d839a2",
+  "Dependencies": [],
+  "Name": "Tile Personas",
+  "Alias": null,
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
+  "__version": "3.1.2"
+}
