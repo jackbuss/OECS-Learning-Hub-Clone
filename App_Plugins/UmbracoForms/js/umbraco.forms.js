@@ -5260,28 +5260,67 @@ angular.module('umbraco.services').factory('formService', formService);
 
 })();
 
-angular.module('umbraco.filters').filter('truncate', function() {
-    
-    return function(input, noOfChars, appendDots) {
-        
-        //Check the length of the text we are filtering
-        //If its greater than noOfChars param
-        if(input.length > noOfChars){
-            //Trim the text to the length of the param
-            input = input.substr(0, noOfChars);
-            
-            //Only append the dots if we truncated
-            //Append Dots is a bool
-            if(appendDots){
-                input = input + "...";
-            }
-        }
-        
-        return input;
-    };
-  
-})
-.filter('fileName', function() {
+
+// Testing if filter already exists, otherwise we will create it. 
+angular.module("umbraco.filters").config(function($injector, $provide) {
+	if($injector.has('truncateFilter')) {
+		// Yep, we already got the filter!
+	} else {
+		
+        // injecting the filter on the provider, notice we need to add 'Filter' to the name for it to be a filter.
+        $provide.provider('truncateFilter', function() {
+    		return {
+                $get: function () {
+                    
+                    // Filter code
+                    return function (value, wordwise, max, tail) {
+						
+                        if (!value) return '';
+						
+                        /* 
+						Overload-fix to support Forms Legacy Version:
+						
+						We are making this hack to support the old version of the truncate filter.
+						The old version took different attributes, this code block checks if the first argument isnt a boolean, meaning its not the new version, meaning that the filter is begin used in the old way.
+						Therefor we use the second argument(max) to indicate wether we want a tail (…) and using the first argument(wordwise) as the second argument(max amount of characters)
+						*/
+                        if (typeof(wordwise) !== 'boolean') {
+                            // switch arguments around to fit Forms version.
+                            if (max !== true) {
+                                tail = '';
+                            }
+                            max = wordwise;
+                            wordwise = false;
+                        }
+                        // !end of overload fix.
+
+                        max = parseInt(max, 10);
+                        if (!max) return value;
+                        if (value.length <= max) return value;
+
+                        tail = (!tail && tail !== '') ? '…' : tail;
+
+                        if (wordwise && value.substr(max, 1) === ' ') {
+                          max++;
+                        }
+                        value = value.substr(0, max);
+
+                        if (wordwise) {
+                          var lastspace = value.lastIndexOf(' ');
+                          if (lastspace !== -1) {
+                              value = value.substr(0, lastspace+1);
+                          }
+                        }
+
+                        return value + tail;
+                    };
+                }
+    		}
+    	});
+    }
+});
+
+angular.module('umbraco.filters').filter('fileName', function() {
     
     return function(input) {
         

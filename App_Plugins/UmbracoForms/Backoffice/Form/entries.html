@@ -205,9 +205,9 @@
                                     <div ng-switch-default>
                                         <a class="umb-table-body__link" href=""
                                            ng-click="vm.viewEntryDetails(records.schema, row, $event)"
-                                           ng-if="$index === 0"> {{(field || "&#x3C;Empty&#x3E;") | truncate:20:true
+                                           ng-if="$index === 0"> {{(field || "&#x3C;Empty&#x3E;") | truncate:false:20
                                             }}</a>
-                                        <span ng-if="$index > 0">{{(field || "&#x3C;Empty&#x3E;") | truncate:20:true }}</span>
+                                        <span ng-if="$index > 0">{{(field || "&#x3C;Empty&#x3E;") | truncate:false:20 }}</span>
                                     </div>
                                 </div>
 
