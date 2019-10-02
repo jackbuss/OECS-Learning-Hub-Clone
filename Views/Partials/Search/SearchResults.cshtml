@@ -1,36 +1,43 @@
 ﻿@inherits UmbracoViewPage<TWS.ThinkBlue.Models.SearchViewModel>
 @{
     Html.EnableUnobtrusiveJavaScript();
+    var styles = new List<string> { "primary", "secondary", "info", "success", "warning", "danger" };
+    var rnd = new Random();
 }
 @if (Model.SearchResults != null)
 {
     if (Model.SearchResults.HasResults)
     {
-        <div class="row card-deck">
-            @*Initial hero content*@
-            @foreach (IPublishedContent result in Model.SearchResults.Results)
-            {
-                var item = result as DtContentTile;
-                <div class="col-md-4 col-sm-6 p-sm-0 col-xs-6">
-                    <div class="card mb-2">
-                        <div class="card-header d-flex justify-content-between">
-                            @(item.Parent.Name) @renderThemeIcon(item.TileType)
-                        </div>
-                        @if (item.BannerImage != null)
-                        {
-                            <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
-                        }
-                        <div class="card-body">
-                            <h5 class="card-title">@(item.Name)</h5>
-                            <p class="card-text">@(item.MetaDescription)</p>
-                        </div>
-                        <div class="card-footer">
-                            <a class="btn btn-primary" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">View More</a>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
+<div class="row card-columns">
+    @*Initial hero content*@
+    @foreach (IPublishedContent result in Model.SearchResults.Results)
+    {
+        var item = result as DtContentTile;
+        var randomIndex = rnd.Next(styles.Count);
+        var style = styles[randomIndex];
+        styles.RemoveAt(randomIndex);
+        if (styles.Count == 0)
+        {
+            styles = new List<string> { "primary", "secondary", "info", "success", "warning", "danger" };
+        }
+        @*@renderTile(item, style)*@
+        var layout = rnd.Next(3);
+        switch (layout)
+        {
+            case 0:
+                @renderFeaturedTile(item, style)
+                break;
+            case 1:
+                @renderPrimaryTile(item, style)
+                break;
+            case 2:
+                @renderExternalTile(item, style)
+                break;
+            default:
+                break;
+        }        
+    }
+</div>
 
         using (Ajax.BeginForm("SubmitSearchForm", "Search", null, new AjaxOptions
         {
@@ -95,4 +102,81 @@
         }
     </svg>
     <span class="sr-only">@(TileType)</span>
+}
+
+@helper renderTile(DtContentTile item, string style)
+{
+
+    <div class="col-md-4 col-sm-6 p-sm-0 col-xs-6">
+        <div class="card mb-2 bg-@(style)">
+            <div class="card-header d-flex justify-content-between">
+                @(item.Parent.Name) @renderThemeIcon(item.TileType)
+            </div>
+            @if (item.BannerImage != null)
+            {
+                <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
+            }
+            <div class="card-body">
+                <h5 class="card-title">@(item.Name)</h5>
+                <p class="card-text">@(item.MetaDescription)</p>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">View More</a>
+            </div>
+        </div>
+    </div>
+
+}
+
+@helper renderFeaturedTile(DtContentTile item, string style)
+{
+    <div class="col-12 col-lg-6">
+        <div class="card mb-2 bg-@(style) border-0">
+            @if (item.BannerImage != null)
+            {
+                <img class="card-img-top rounded" src="@(item.BannerImage.GetCropUrl("Square"))" alt="@(item.BannerImage.Name)">
+            }
+            <div class="card-img-overlay d-flex flex-column justify-content-end text-white p-2">
+                @*<div class="bg-@(style)-2 p-2 w-100 rounded-bottom text-@(style)">*@
+                <p class="card-text">@(item.TileType.ToUpper())</p>
+                <h3 class="card-title"><a class="text-white" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h3>
+                @*</div>*@
+            </div>
+        </div>
+    </div>
+}
+
+@helper renderPrimaryTile(DtContentTile item, string style)
+{
+    <div class="col-md-4 col-sm-6 col-xs-6">
+        <div class="card mb-2 border-1">
+            @if (item.BannerImage != null)
+            {
+                <img class="bg-@(style) card-img-top rounded" src="@(item.BannerImage.GetCropUrl("Square"))" alt="Card image cap">
+            }
+            <div class="card-body p-2">
+                <small class="card-text text-info mb-0">@(item.TileType.ToUpper())</small>
+                <h5 class="card-title"><a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h5>
+            </div>
+        </div>
+    </div>
+}
+
+@helper renderExternalTile(DtContentTile item, string style)
+{
+    <div class="col-12">
+        <div class="card mb-3 border-0">
+            <div class="row no-gutters">
+                <div class="col-4 bg-@(style)-1 rounded p-1">
+                    <img src="@(item.BannerImage.GetCropUrl("Landscape"))" class="card-img rounded" alt="@(item.BannerImage.Name)">
+                </div>
+                <div class="col-8">
+                    <div class="card-body">
+                        <small class="card-text text-info  mb-0">@(item.TileType.ToUpper())</small>
+                        <h5 class="card-title text-primary"><a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
