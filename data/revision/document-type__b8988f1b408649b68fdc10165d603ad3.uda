@@ -25,7 +25,7 @@
           "Alias": "bannerImage",
           "DataType": "umb://data-type/135d60e064d949edab08893c9ba44ae5",
           "Description": null,
-          "Mandatory": true,
+          "Mandatory": false,
           "Name": "Banner Image",
           "SortOrder": 0,
           "Validation": null,
@@ -52,5 +52,5 @@
   "Name": "Common Images",
   "Alias": "dtcCommonImages",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.0.1"
+  "__version": "3.1.2"
 }
