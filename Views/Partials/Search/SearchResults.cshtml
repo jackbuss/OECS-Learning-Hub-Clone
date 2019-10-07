@@ -167,10 +167,13 @@
     <div class="col-12">
         <div class="card mb-3 border-0">
             <div class="row no-gutters">
-                <div class="col-4 bg-@(style)-1 rounded p-1">
-                    <img src="@(item.BannerImage.GetCropUrl("Landscape"))" class="card-img rounded" alt="@(item.BannerImage.Name)">
-                </div>
-                <div class="col-8">
+                @if (item.BannerImage != null)
+                {
+                    <div class="col-4 bg-@(style)-1 rounded p-1">
+                        <img src="@(item.BannerImage.GetCropUrl("Landscape"))" class="card-img rounded" alt="@(item.BannerImage.Name)">
+                    </div>
+                }
+                <div class="@(item.BannerImage != null ? "col-8" : "col-12")">
                     <div class="card-body">
                         <small class="card-text text-info  mb-0">@(item.TileType.ToUpper())</small>
                         <h5 class="card-title text-primary"><a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h5>
