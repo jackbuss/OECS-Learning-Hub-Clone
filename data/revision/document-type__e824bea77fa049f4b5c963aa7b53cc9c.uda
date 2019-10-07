@@ -87,7 +87,7 @@
           "Key": "c52797e5-6860-4dcd-8ae2-b12d91cf7620",
           "Alias": "tileExternalVideo",
           "DataType": "umb://data-type/35175e4fa73348048c2f867a19098204",
-          "Description": "optional",
+          "Description": "Optional",
           "Mandatory": false,
           "Name": "Tile External Video",
           "SortOrder": 3,
