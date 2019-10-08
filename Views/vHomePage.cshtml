@@ -11,12 +11,13 @@
     };
 }
 <div class="row">
-    <div class="col">
+    <div class="col p-1">
         @Html.Partial("Layout/MainNavigation")
     </div>
 </div>
-<div class="row">
-    <div class="col" id="search-results">
-        @{ Html.RenderAction("SubmitSearchForm", "Search", searchParams);}
-    </div>
+
+<div class="row" id="search-results">
+    @{ Html.RenderAction("SubmitSearchForm", "Search", searchParams);}
 </div>
+
+
