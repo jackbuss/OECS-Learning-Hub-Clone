@@ -7,12 +7,10 @@ angular.module('umbraco.deploy')
             var vm = this;
 
             vm.config = deployConfiguration;
-            vm.showStarterKitSelector = true;
 
             vm.openProject = openProject;
             vm.openPayment = openPayment;
             vm.openDocumentation = openDocumentation;
-            vm.selectStarterKit = selectStarterKit;
             vm.feedbackMessageLevel = '';
             vm.dropDownOpen = false;
 
@@ -20,7 +18,6 @@ angular.module('umbraco.deploy')
 
                 assetsService.load(["lib/moment/moment.min.js"], $scope);
 
-                openStarterKitSelector();
                 if(deployService.feedbackMessageLevel) {
                     deployService.feedbackMessageLevel().then(function(data) {
                         vm.feedbackMessageLevel = data.FeedbackMessageLevel;
@@ -40,35 +37,6 @@ angular.module('umbraco.deploy')
             function openDocumentation() {
                 $window.open("https://our.umbraco.org/Documentation/Umbraco-Cloud/");
             };
-
-            function openStarterKitSelector() {
-                if ($location.search().dashboard !== "starter") {
-                    vm.showStarterKitSelector = false;
-                    return;
-                }
-
-                //Check localStorage for selected starterKit even though
-                //the ?dashboard=starter querystring is present
-                if (localStorage.starterKit) {
-                    vm.showStarterKitSelector = false;
-                } else {
-                    //only show the message if there is no content
-                    contentResource.getChildren(-1).then(function (response) {
-                        if (!response.items || response.items.length === 0) {
-                            vm.showStarterKitSelector = true;
-                        }
-                    });
-                }
-            }
-
-            function selectStarterKit(starterkitName) {
-                //Set the starterkit name in localStorage so we know
-                //not to show the overlay/selector again.
-                localStorage.starterKit = starterkitName;
-                //TODO Fix this - currently doesn't seem to remove the querystring
-                $location.search('dashboard', null);
-                window.location.reload(true);
-            }
 
             init();
 
