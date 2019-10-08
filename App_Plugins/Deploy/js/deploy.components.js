@@ -389,147 +389,6 @@
 
 })();
 
-(function () {
-    'use strict';
-
-    angular
-        .module('umbraco.deploy.components')
-        .directive('udStarterKitSelector', udStarterKitSelectorComponent);
-
-    function udStarterKitSelectorComponent($compile, packageResource, $timeout, $q) {
-
-        function link(scope, el, attr, ctrl) {
-
-            scope.installStarterKit = false;
-            scope.installStatus = "";
-            scope.starterkitName = "";
-
-            scope.selectStarterKit = function (starterKitName) {
-                scope.starterkitName = starterKitName;
-            };
-
-            scope.startInstall = function () {
-                var starterKitName = scope.starterkitName;
-
-                if (starterKitName !== "blank") {
-                    installStarterKit(starterKitName);
-                } else {
-
-                    if (scope.onSelectStarterKit) {
-                        scope.onSelectStarterKit(starterKitName);
-                    }
-
-                }
-            };
-
-            function installStarterKit(starterKitName) {
-
-                scope.installStarterKit = true;
-                scope.installStatus = "Downloading starterkit...";
-                scope.installProgress = "10";
-                scope.starterkitName = starterKitName;
-
-                packageResource
-                    .fetch(starterKitName)
-                    .then(function (pack) {
-                        scope.installStatus = "Importing starterkit...";
-                        scope.installProgress = "30";
-                        return packageResource.import(pack);
-                    }, installError)
-                    .then(function (pack) {
-                        scope.installStatus = "Installing starterkit...";
-                        scope.installProgress = "40";
-                        return packageResource.installFiles(pack);
-                    }, installError)
-
-                    .then(function (pack) {
-                        scope.installStatus = "Restarting, please wait...";
-                        scope.installProgress = "60";
-                        var deferred = $q.defer();
-
-                        //check if the app domain is restarted every 2 seconds
-                        var count = 0;
-                        function checkRestart() {
-                            $timeout(function () {
-                                packageResource.checkRestart(pack).then(function (d) {
-                                        count++;
-                                        //if there is an id it means it's not restarted yet but we'll limit it to only check 10 times
-                                        if (d.isRestarting && count < 10) {
-                                            checkRestart();
-                                        }
-                                        else {
-                                            //it's restarted!
-                                            deferred.resolve(d);
-                                        }
-                                    },
-                                    installError);
-                            }, 2000);
-                        }
-
-                        checkRestart();
-
-                        return deferred.promise;
-                    }, installError)
-
-                    .then(function (pack) {
-                        scope.installStatus = "Restarting, please wait...";
-                        scope.installProgress = "80";
-                        return packageResource.installData(pack);
-                    }, installError)
-                    .then(function (pack) {
-                        scope.installStatus = "All done, your browser will now refresh";
-                        scope.installProgress = "100";
-                        return packageResource.cleanUp(pack);
-                    }, installError)
-                    .then(installComplete, installError);
-            }
-
-            function installComplete(result) {
-                if (scope.onSelectStarterKit) {
-                    scope.onSelectStarterKit(scope.starterkitName);
-                }
-            };
-
-            function installError(err){
-                scope.installStatus = undefined;
-                scope.installError = err;
-                //This will return a rejection meaning that the promise change above will stop
-                return $q.reject();
-            };
-
-            // hack: move element to body to make it full-screen
-            // we cannot make an element full screen because of overflow hidden on content
-            if (attr.hasOwnProperty("show")) {
-                scope.$watch("show", function(value) {
-                    if (value === true) {
-                        el.appendTo("body");
-						$compile(el)(scope);
-                    } else {
-                        el.remove();
-                    }
-                });
-            }
-
-        }
-
-        var directive = {
-            restrict: 'E',
-            transclude: true,
-            replace: true,
-            templateUrl: '/App_Plugins/Deploy/views/components/udstarterkitselector/udstarterkitselector.html',
-            link: link,
-            scope: {
-                onSelectStarterKit: "=",
-                show: "="
-            }
-        };
-
-        return directive;
-
-    }
-
-})();
-
 (function() {
     'use strict';
 
@@ -720,6 +579,58 @@
     }
 })();
 
+(function() {
+    'use strict';
+
+    angular
+        .module('umbraco.deploy.components')
+        .directive('udRestoreComplete', udRestoreCompleteComponent);
+
+    function udRestoreCompleteComponent() {
+
+        var directive = {
+            restrict: 'E',
+            replace: true,
+            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestorecomplete/udrestorecomplete.html',
+            scope: {
+                'onBack': "&",
+                'timestamp': "=",
+                'serverTimestamp': "="
+            }
+        };
+
+        return directive;
+
+    }
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('umbraco.deploy.components')
+        .directive('udRestoreProgress', udRestoreProgressComponent);
+
+    function udRestoreProgressComponent() {
+
+        var directive = {
+            restrict: 'E',
+            replace: true,
+            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestoreprogress/udrestoreprogress.html',
+            scope: {
+                'targetName': "=",
+                'progress': "=",
+                'currentActivity': "=",
+                'timestamp': "=",
+                'serverTimestamp': "="
+            }
+        };
+
+        return directive;
+
+    }
+
+})();
 (function() {
     'use strict';
 
@@ -1049,58 +960,6 @@
     }
 })();
 
-(function() {
-    'use strict';
-
-    angular
-        .module('umbraco.deploy.components')
-        .directive('udRestoreComplete', udRestoreCompleteComponent);
-
-    function udRestoreCompleteComponent() {
-
-        var directive = {
-            restrict: 'E',
-            replace: true,
-            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestorecomplete/udrestorecomplete.html',
-            scope: {
-                'onBack': "&",
-                'timestamp': "=",
-                'serverTimestamp': "="
-            }
-        };
-
-        return directive;
-
-    }
-
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('umbraco.deploy.components')
-        .directive('udRestoreProgress', udRestoreProgressComponent);
-
-    function udRestoreProgressComponent() {
-
-        var directive = {
-            restrict: 'E',
-            replace: true,
-            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestoreprogress/udrestoreprogress.html',
-            scope: {
-                'targetName': "=",
-                'progress': "=",
-                'currentActivity': "=",
-                'timestamp': "=",
-                'serverTimestamp': "="
-            }
-        };
-
-        return directive;
-
-    }
-
-})();
 (function() {
     'use strict';
 
