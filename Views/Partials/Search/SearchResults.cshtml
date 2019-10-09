@@ -3,41 +3,85 @@
     Html.EnableUnobtrusiveJavaScript();
     var styles = new List<string> { "primary", "secondary", "info", "success", "warning", "danger" };
     var rnd = new Random();
+    var tileCount = 0;
+    var requiredTiles = 1;
+    var layoutCount = 0;
+    var layout = 0;
+    var previousLayout = 0;
 }
 @if (Model.SearchResults != null)
 {
     if (Model.SearchResults.HasResults)
     {
-<div class="row card-columns">
-    @*Initial hero content*@
-    @foreach (IPublishedContent result in Model.SearchResults.Results)
-    {
-        var item = result as DtContentTile;
-        var randomIndex = rnd.Next(styles.Count);
-        var style = styles[randomIndex];
-        styles.RemoveAt(randomIndex);
-        if (styles.Count == 0)
+        @*<div class="card-deck">*@
+        @*Initial hero content*@
+        foreach (IPublishedContent result in Model.SearchResults.Results)
         {
-            styles = new List<string> { "primary", "secondary", "info", "success", "warning", "danger" };
-        }
-        @*@renderTile(item, style)*@
-        var layout = rnd.Next(3);
-        switch (layout)
-        {
-            case 0:
+            var item = result as DtContentTile;
+            var randomIndex = rnd.Next(styles.Count);
+            var style = styles[randomIndex];
+            styles.RemoveAt(randomIndex);
+            if (styles.Count == 0)
+            {
+                styles = new List<string> { "primary", "secondary", "info", "success", "warning", "danger" };
+            }
+
+            @*@renderTile(item, style)*@
+            if (result == Model.SearchResults.Results.First() && Model.SearchResults.PageNumber == 1)
+            {
                 @renderFeaturedTile(item, style)
-                break;
-            case 1:
-                @renderPrimaryTile(item, style)
-                break;
-            case 2:
-                @renderExternalTile(item, style)
-                break;
-            default:
-                break;
-        }        
-    }
-</div>
+
+            }
+            else
+            {
+                if (requiredTiles == tileCount)
+                {
+                    layout = rnd.Next(2);
+                    // track repetitions of layouts.
+                    if (layout == previousLayout)
+                    {
+                        layoutCount++;
+                    }
+                    else
+                    {
+                        layoutCount = 0;
+                    }
+
+                    // allow each layout twice before forcing an alternative
+                    if (layoutCount == 2)
+                    {
+                        do
+                        {
+                            layout = rnd.Next(2);
+                        } while (layout == previousLayout);
+                        layoutCount = 0;
+                    }
+
+                    tileCount = 0;
+
+                }
+
+                switch (layout)
+                {
+                    case 0:
+                        @*if (tileCount == 0) { @Html.Raw("<!-- start card-deck --><div class=\"card-deck\">") }*@
+                        @renderPrimaryTile(item, style)
+                        @*if (tileCount == 1) { @Html.Raw("</div><!--/ end card-deck -->") }*@
+                        requiredTiles = 2;
+                        break;
+                    case 1:
+                        @renderExternalTile(item, style)
+                        requiredTiles = 4;
+                        break;
+                    default:
+                        break;
+                }
+                tileCount++;
+            }
+        }
+
+
+        @*</div>*@
 
         using (Ajax.BeginForm("SubmitSearchForm", "Search", null, new AjaxOptions
         {
@@ -70,7 +114,7 @@
 }
 @helper renderThemeIcon(string TileType)
 {
-    <svg width="24" height="24" class="octicon" viewBox="0 0 16 16" version="1.1" aria-hidden="true">
+    <svg width="12" height="12" class="octicon" viewBox="0 0 16 16" version="1.1" aria-hidden="true">
         <title>@(TileType)</title>
         @{ switch (TileType.ToLower())
             {
@@ -107,22 +151,21 @@
 @helper renderTile(DtContentTile item, string style)
 {
 
-    <div class="col-md-4 col-sm-6 p-sm-0 col-xs-6">
-        <div class="card mb-2 bg-@(style)">
-            <div class="card-header d-flex justify-content-between">
-                @(item.Parent.Name) @renderThemeIcon(item.TileType)
-            </div>
-            @if (item.BannerImage != null)
-            {
-                <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
-            }
-            <div class="card-body">
-                <h5 class="card-title">@(item.Name)</h5>
-                <p class="card-text">@(item.MetaDescription)</p>
-            </div>
-            <div class="card-footer">
-                <a class="btn btn-primary" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">View More</a>
-            </div>
+
+    <div class="card mb-2 bg-@(style)">
+        <div class="card-header d-flex justify-content-between">
+            @(item.Parent.Name) @renderThemeIcon(item.TileType)
+        </div>
+        @if (item.BannerImage != null)
+        {
+            <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
+        }
+        <div class="card-body">
+            <h5 class="card-title">@(item.Name)</h5>
+            <p class="card-text">@(item.MetaDescription)</p>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">View More</a>
         </div>
     </div>
 
@@ -130,17 +173,18 @@
 
 @helper renderFeaturedTile(DtContentTile item, string style)
 {
-    <div class="col-12 col-lg-6">
-        <div class="card mb-2 bg-@(style) border-0">
+    var textColor = style == "warning" ? "primary" : "white";
+    <div class="col-12 col-xs-12 col-md-8 col-lg-6 p-1">
+        <div class="card bg-@(style) border-0">
             @if (item.BannerImage != null)
             {
                 <img class="card-img-top rounded" src="@(item.BannerImage.GetCropUrl("Square"))" alt="@(item.BannerImage.Name)">
             }
-            <div class="card-img-overlay d-flex flex-column justify-content-end text-white p-2">
-                @*<div class="bg-@(style)-2 p-2 w-100 rounded-bottom text-@(style)">*@
-                <p class="card-text">@(item.TileType.ToUpper())</p>
-                <h3 class="card-title"><a class="text-white" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h3>
-                @*</div>*@
+            <div class="card-img-overlay d-flex flex-column justify-content-end text-@(textColor) p-0">
+                <div class="bg-@(style)-0-overlay p-2 w-100 rounded-bottom text-@(textColor)">
+                    <p class="card-text">@renderThemeIcon(item.TileType) @(item.Parent.Name.ToUpper())</p>
+                    <h3 class="card-title"><a class="text-@(textColor)" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h3>
+                </div>
             </div>
         </div>
     </div>
@@ -148,14 +192,14 @@
 
 @helper renderPrimaryTile(DtContentTile item, string style)
 {
-    <div class="col-md-4 col-sm-6 col-xs-6">
-        <div class="card mb-2 border-1">
+    <div class="col-6 col-xs-6 col-md-4 col-lg-3 p-1">
+        <div class="card">
             @if (item.BannerImage != null)
             {
                 <img class="bg-@(style) card-img-top rounded" src="@(item.BannerImage.GetCropUrl("Square"))" alt="Card image cap">
             }
             <div class="card-body p-2">
-                <small class="card-text text-info mb-0">@(item.TileType.ToUpper())</small>
+                <small class="card-text text-info mb-0">@renderThemeIcon(item.TileType) @(item.Parent.Name.ToUpper())</small>
                 <h5 class="card-title"><a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h5>
             </div>
         </div>
@@ -164,18 +208,18 @@
 
 @helper renderExternalTile(DtContentTile item, string style)
 {
-    <div class="col-12">
-        <div class="card mb-3 border-0">
+    <div class="col-12 col-xs-12 col-md-6 p-1">
+        <div class="card">
             <div class="row no-gutters">
                 @if (item.BannerImage != null)
                 {
-                    <div class="col-4 bg-@(style)-1 rounded p-1">
-                        <img src="@(item.BannerImage.GetCropUrl("Landscape"))" class="card-img rounded" alt="@(item.BannerImage.Name)">
+                    <div class="col-4 rounded p-0">
+                        <img src="@(item.BannerImage.GetCropUrl("Square"))" class="card-img rounded" alt="@(item.BannerImage.Name)">
                     </div>
                 }
-                <div class="@(item.BannerImage != null ? "col-8" : "col-12")">
-                    <div class="card-body">
-                        <small class="card-text text-info  mb-0">@(item.TileType.ToUpper())</small>
+                <div class="@(item.BannerImage != null ? "col-8" : "col-12") p-0">
+                    <div class="card-body p-2">
+                        <small class="card-text text-info  mb-0">@renderThemeIcon(item.TileType) @(item.Parent.Name.ToUpper())</small>
                         <h5 class="card-title text-primary"><a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h5>
                     </div>
                 </div>
