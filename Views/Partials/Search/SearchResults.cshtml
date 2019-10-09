@@ -18,6 +18,7 @@
         foreach (IPublishedContent result in Model.SearchResults.Results)
         {
             var item = result as DtContentTile;
+        
             var randomIndex = rnd.Next(styles.Count);
             var style = styles[randomIndex];
             styles.RemoveAt(randomIndex);
