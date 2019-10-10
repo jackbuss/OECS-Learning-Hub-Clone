@@ -46,16 +46,13 @@
         cookiePolicyAgree(checked);
 
         if (checked.includes("googleAnalytics")) {
-            console.log("I see you google");
             $("body").append("<script id=\"gAnalytics1\" async src=\"https://www.googletagmanager.com/gtag/js?id=UA-148482803-1\"></script><script id=\"gAnalytics2\" language=\"javascript\" src=\"~/Scripts/GoogleAnalytics.js\"></script>");
-            console.log("Appended google analytics to body");
         } else {
             $('#gAnalytics1').remove();
             $('#gAnalytics2').remove();
         }
 
         if (checked.includes("hotjar")) {
-            console.log("I see you hotjar");
             // Inject hotjar content
         } else {
             // Remove hotjar content (if there)
