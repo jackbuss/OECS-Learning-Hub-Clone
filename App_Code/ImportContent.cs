@@ -56,6 +56,9 @@ public class ImportContentController : UmbracoApiController
 
         IContent node;
 
+        if (title.Contains("\\"))
+            title = title.Replace("\\", ",");
+
         if (children.Any())
         {
             node = children.First();
@@ -66,8 +69,6 @@ public class ImportContentController : UmbracoApiController
             node = cs.Create(title, parentId, DtContentTile.ModelTypeAlias);
             toPrint.Add(new[] { $"created {node.Name}" });
         }
-        if (title.Contains("\\"))
-            title = title.Replace("\\", ",");
 
         node.SetValue("MetaDescription", title);
         node.SetValue("MetaTitle", title);
@@ -104,7 +105,7 @@ public class ImportContentController : UmbracoApiController
         {
             while (true)
             {
-
+                // s
 
                 line = reader.ReadLine();
                 if (line == null || line == "")
@@ -118,8 +119,33 @@ public class ImportContentController : UmbracoApiController
                 try
                 {
                     String[] split = line.Split(',');
+
                     string theme = split[0];
+
                     caseTheme = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(theme);
+
+                    var node = Umbraco.ContentSingleAtXPath("//dtListPage[@nodeName='" + caseTheme + "']");
+
+
+                    if (node == null)
+                    {
+                        var newParent = cs.Create(caseTheme, Umbraco.ContentSingleAtXPath("//dtListPage[@nodeName='Tiles']").Id
+                            , DtListPage.ModelTypeAlias);
+
+                        newParent.SetValue("HideFromNavigation", true);
+                        newParent.SetValue("HideFromSearch", true);
+
+                        newParent.SetValue("MetaTitle", caseTheme);
+                        newParent.SetValue("MetaDescription", caseTheme);
+
+                        string[] keywords = new string[] { caseTheme };
+                        newParent.AssignTags("MetaKeywords", keywords);
+
+                        cs.SaveAndPublish(newParent);
+
+                    }
+
+                    
                     createContent(theme, Umbraco.ContentSingleAtXPath("//dtListPage[@nodeName='" + caseTheme + "']").Id, split);
                 }
                 catch (Exception e)
