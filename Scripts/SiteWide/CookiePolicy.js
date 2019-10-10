@@ -14,11 +14,13 @@
 
     $('#cookieModal').on('show.bs.modal', function (event) {
         var modal = $(this);
-        if (checkConsentedCookies().includes("googleAnalytics")) {
-            $('#googleAnalytics').prop('checked', true);
-        }
-        if (checkConsentedCookies().includes("hotjar")) {
-            $('#hotjar').prop('checked', true);
+        if (checkConsentedCookies() != null) {
+            if (checkConsentedCookies().includes("googleAnalytics")) {
+                $('#googleAnalytics').prop('checked', true);
+            }
+            if (checkConsentedCookies().includes("hotjar")) {
+                $('#hotjar').prop('checked', true);
+            }
         }
     });
 
