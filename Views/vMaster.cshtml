@@ -49,12 +49,21 @@
     <!-- lazy load JS renderer-->
     @Html.RenderJsHere("LazyLoadRenderer")
 
-    @*{
-            if(Request.Cookies["cookie"].Value == "Value")
-                {
-                    @Html.Partial("Meta/GoogleAnalytics")
-                }
-        }*@
+    @{
+        if (Request.Cookies["cookies"] != null)
+        {
+            if (Request.Cookies["cookies"].Value.Contains("googleAnalytics"))
+            {
+                @Html.Partial("Meta/GoogleAnalytics")
+            }
+
+            if (Request.Cookies["cookies"].Value.Contains("hotjar"))
+            {
+                @Html.Partial("Meta/Hotjar")
+            }
+
+        }
+    }
 
 
 </body>

@@ -8,13 +8,17 @@
                 </button>*@
             </div>
             <div class="modal-body">
+                <h3>We value your privacy.</h3>
+                <p>This website uses cookies to provide the best experience to our users, the site also feeds back analytical data regarding the site's usage. </p>
+
                 <form class="cookieForm">
-                    <label><input type="checkbox" id="googleAnalytics" class="cookieCheckbox">Google Analytics</label>
+                    <label><input type="checkbox" id="googleAnalytics" class="cookieCheckbox"> Google Analytics</label><br />
+                    <label><input type="checkbox" id="hotjar" class="cookieCheckbox"> Hotjar</label>
                 </form>
+
             </div>
-            <div class="modal-footer">
-                @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
-                <button type="button" id="submitCookiePreference" class="btn btn-primary cookie-accept" @*onClick="cookiePolicyAgree();"*@ data-dismiss="modal">Save changes &amp; Accept</button>
+            <div class="modal-footer"> 
+                <button type="button" id="submitCookiePreference" class="btn btn-primary cookie-accept" data-dismiss="modal">Save changes &amp; Accept</button>
             </div>
         </div>
     </div>
