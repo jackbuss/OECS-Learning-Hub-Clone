@@ -1,7 +1,7 @@
 {
   "EditorAlias": "Umbraco.DropDown.Flexible",
   "DatabaseType": 1,
-  "Configuration": {"multiple":false,"items":[{"id":3,"value":"External"},{"id":2,"value":"Partner"},{"id":1,"value":"Original"}]},
+  "Configuration": {"multiple":false,"items":[{"id":3,"value":"External"},{"id":2,"value":"Partner"},{"id":1,"value":"Originator"}]},
   "Parent": null,
   "Udi": "umb://data-type/fc44a2df49fc4472b88ed516049399eb",
   "Dependencies": [],
