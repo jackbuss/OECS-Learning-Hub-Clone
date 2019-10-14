@@ -6,7 +6,7 @@
     var homeNode = Model.AncestorOrSelf(1);
 
     //var headerLinks = homeNode.Value<IEnumerable<IPublishedContent>>("headerLinks");
-    var infoPages = null;//Umbraco.ContentAtXPath("//dtInfoPages").FirstOrDefault();
+    IPublishedContent infoPages = null;//Umbraco.ContentAtXPath("//dtInfoPages").FirstOrDefault();
 
     var searchParams = new SearchViewModel()
     {
