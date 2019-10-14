@@ -25,6 +25,7 @@
     @Html.AntiForgeryToken();
 
     <div class="input-group bg-info p-2">
+        @Html.LabelFor(m => m.SearchTerm, "What would you like to search for?", new { @class = "sr-only" })
         @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search", @class = "form-control", autocomplete = "off" })
     </div>
 
