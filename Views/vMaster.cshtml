@@ -57,11 +57,6 @@
                 @Html.Partial("Meta/GoogleAnalytics")
             }
 
-            if (Request.Cookies["cookies"].Value.Contains("hotjar"))
-            {
-                @Html.Partial("Meta/Hotjar")
-            }
-
         }
     }
 

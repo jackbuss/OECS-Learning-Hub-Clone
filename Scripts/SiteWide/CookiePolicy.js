@@ -18,9 +18,6 @@
             if (checkConsentedCookies().includes("googleAnalytics")) {
                 $('#googleAnalytics').prop('checked', true);
             }
-            if (checkConsentedCookies().includes("hotjar")) {
-                $('#hotjar').prop('checked', true);
-            }
         }
     });
 
@@ -46,7 +43,7 @@
         cookiePolicyAgree(checked);
 
         if (checked.includes("googleAnalytics")) {
-            $("body").append("<script id=\"gAnalytics1\" async src=\"https://www.googletagmanager.com/gtag/js?id=UA-148482803-1\"></script><script id=\"gAnalytics2\" language=\"javascript\" src=\"~/Scripts/GoogleAnalytics.js\"></script>");
+            $("body").append("<script id=\"gAnalytics1\" async src=\"https://www.googletagmanager.com/gtag/js?id=UA-148482803-1\"></script><script id=\"gAnalytics2\" language=\"javascript\" src=\"/Scripts/GoogleAnalytics.js\"></script>");
         } else {
             $('#gAnalytics1').remove();
             $('#gAnalytics2').remove();
