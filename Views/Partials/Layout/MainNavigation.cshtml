@@ -4,8 +4,7 @@
 
 @{
     var homeNode = Model.AncestorOrSelf(1);
-
-    IPublishedContent infoPages = Umbraco.ContentAtXPath("//dtInfoPages").FirstOrDefault();
+    IPublishedContent infoPages = homeNode.Children().Where(x => x.ContentType.Alias == DtInfoPages.ModelTypeAlias).FirstOrDefault();
 
     var searchParams = new SearchViewModel()
     {
