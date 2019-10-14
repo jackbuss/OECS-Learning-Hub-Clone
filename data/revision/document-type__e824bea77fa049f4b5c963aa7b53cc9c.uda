@@ -33,7 +33,7 @@
           "Alias": "tileContentOrigination",
           "DataType": "umb://data-type/fc44a2df49fc4472b88ed516049399eb",
           "Description": null,
-          "Mandatory": false,
+          "Mandatory": true,
           "Name": "Tile Content Origination",
           "SortOrder": 2,
           "Validation": null,
@@ -160,5 +160,5 @@
   "Name": "Content Tile",
   "Alias": "dtContentTile",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.1.2"
+  "__version": "3.1.4"
 }
