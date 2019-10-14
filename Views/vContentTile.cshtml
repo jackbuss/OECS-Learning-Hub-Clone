@@ -18,25 +18,32 @@
 }
 
 
-<div class="card bg-@(style) border-0">
-    @if (Model.TileExternalVideo != null)
-    {
-        <div class="embed-responsive embed-responsive-16by9 rounded">
-            @Html.Raw(Model.TileExternalVideo.EmbedCode.ToHtmlString().Replace("<iframe", "<iframe class=\"embed-responsive-item\"").Replace("?feature=oembed", "?feature=oembed&rel=0"))
-        </div>
-    }
-    else if (item.BannerImage != null)
-    {
-        <img class="card-img-top rounded" src="@(item.BannerImage.GetCropUrl(cropAlias:"Square", width: 1200))" alt="@(item.BannerImage.Name)">
-        cardImgOverlay = " card-img-overlay";
-    }
-    <div class="d-flex flex-column justify-content-end text-@(textColor) p-0 text-left@(cardImgOverlay)">
-        <div class="bg-@(style)-0-overlay p-2 w-100 rounded-bottom text-@(textColor)">
-            <p class="card-text">@renderThemeIcon(item.TileType) @(item.Parent.Name.ToUpper())</p>
-            <h1 class="card-title">@(item.Name)</h1>
+    <div class="card bg-@(style) border-0">
+        @if (Model.TileExternalVideo != null)
+        {
+            <div class="embed-responsive embed-responsive-16by9 rounded">
+                @Html.Raw(Model.TileExternalVideo.EmbedCode.ToHtmlString().Replace("<iframe", "<iframe class=\"embed-responsive-item\"").Replace("?feature=oembed", "?feature=oembed&rel=0"))
+            </div>
+        }
+        else if (item.BannerImage != null)
+        {
+            <picture>
+                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 1000))" media="(min-width: 1000px)" />
+                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 576))" media="(min-width: 576px)" />
+                <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 288))" alt="@item.BannerImage.Name" class="img-fluid w-100" />
+            </picture>
+
+            @*<img class="card-img-top rounded" src="@(item.BannerImage.GetCropUrl(cropAlias:"Square", width: 1200))" alt="@(item.BannerImage.Name)">*@
+
+            cardImgOverlay = " card-img-overlay";
+        }
+        <div class="d-flex flex-column justify-content-end text-@(textColor) p-0 text-left@(cardImgOverlay)">
+            <div class="bg-@(style)-0-overlay p-2 w-100 rounded-bottom text-@(textColor)">
+                <p class="card-text">@renderThemeIcon(item.TileType) @(item.Parent.Name.ToUpper())</p>
+                <h1 class="card-title">@(item.Name)</h1>
+            </div>
         </div>
     </div>
-</div>
 
 <div class="card mt-1 border-0">
     <div class="card-body">

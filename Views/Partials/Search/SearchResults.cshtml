@@ -18,7 +18,7 @@
         foreach (IPublishedContent result in Model.SearchResults.Results)
         {
             var item = result as DtContentTile;
-        
+
             var randomIndex = rnd.Next(styles.Count);
             var style = styles[randomIndex];
             styles.RemoveAt(randomIndex);
@@ -159,7 +159,14 @@
         </div>
         @if (item.BannerImage != null)
         {
-            <img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">
+            <picture>
+                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 1000))" media="(min-width: 1000px)" />
+                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576))" media="(min-width: 576px)" />
+                <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 288))" alt="@item.BannerImage.Name" class="img-fluid w-100" />
+            </picture>
+
+
+            @*<img class="card-img-top" src="@(item.BannerImage.GetCropUrl("Landscape"))" alt="Card image cap">*@
         }
         <div class="card-body">
             <h5 class="card-title">@(item.Name)</h5>
@@ -179,7 +186,15 @@
         <div class="card bg-@(style) border-0">
             @if (item.BannerImage != null)
             {
-                <img class="card-img-top rounded" src="@(item.BannerImage.GetCropUrl("Square"))" alt="@(item.BannerImage.Name)">
+                <picture>
+                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 960))" media="(min-width: 1200px)" />
+                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 600))" media="(min-width: 996px)" />
+                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576))" media="(min-width: 576px)" />
+                    <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576))" alt="@item.BannerImage.Name" class="img-fluid w-100" />
+                </picture>
+
+
+                @*<img class="card-img-top rounded" src="@(item.BannerImage.GetCropUrl("Square"))" alt="@(item.BannerImage.Name)">*@
             }
             <div class="card-img-overlay d-flex flex-column justify-content-end text-@(textColor) p-0">
                 <div class="bg-@(style)-0-overlay p-2 w-100 rounded-bottom text-@(textColor)">
@@ -197,7 +212,15 @@
         <div class="card">
             @if (item.BannerImage != null)
             {
-                <img class="bg-@(style) card-img-top rounded" src="@(item.BannerImage.GetCropUrl("Square"))" alt="Card image cap">
+                <picture>
+                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 480))" media="(min-width: 1200px)" />
+                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 300))" media="(min-width: 996px)" />
+                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 498))" media="(min-width: 576px)" />
+                    <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 288))" alt="@item.BannerImage.Name" class="img-fluid w-100" />
+                </picture>
+
+
+                @*<img class="bg-@(style) card-img-top rounded" src="@(item.BannerImage.GetCropUrl("Square"))" alt="Card image cap">*@
             }
             <div class="card-body p-2">
                 <small class="card-text text-info mb-0">@renderThemeIcon(item.TileType) @(item.Parent.Name.ToUpper())</small>
@@ -215,7 +238,13 @@
                 @if (item.BannerImage != null)
                 {
                     <div class="col-4 rounded p-0">
-                        <img src="@(item.BannerImage.GetCropUrl("Square"))" class="card-img rounded" alt="@(item.BannerImage.Name)">
+                        <picture>
+                            <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 320))" media="(min-width: 1200px)" />
+                            <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 200))" media="(min-width: 996px)" />
+                            <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 166))" media="(min-width: 576px)" />
+                            <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 192))" alt="@item.BannerImage.Name" class="img-fluid w-100" />
+                        </picture>
+                        @*<img src="@(item.BannerImage.GetCropUrl("Square"))" class="card-img rounded" alt="@(item.BannerImage.Name)">*@
                     </div>
                 }
                 <div class="@(item.BannerImage != null ? "col-8" : "col-12") p-0">
