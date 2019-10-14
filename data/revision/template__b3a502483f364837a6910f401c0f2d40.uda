@@ -1,0 +1,21 @@
+{
+  "File": "umb://template-file/vListPage.cshtml",
+  "Master": "umb://template/49a5b112ceee4f7dbcee3f374fa6e5e7",
+  "Udi": "umb://template/b3a502483f364837a6910f401c0f2d40",
+  "Dependencies": [
+    {
+      "Udi": "umb://template/49a5b112ceee4f7dbcee3f374fa6e5e7",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://template-file/vListPage.cshtml",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "List Page",
+  "Alias": "vListPage",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.TemplateArtifact",
+  "__version": "3.1.4"
+}

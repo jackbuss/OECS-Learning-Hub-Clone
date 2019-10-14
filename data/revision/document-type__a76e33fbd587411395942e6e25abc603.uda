@@ -1,6 +1,8 @@
 {
-  "DefaultTemplate": null,
-  "AllowedTemplates": [],
+  "DefaultTemplate": "umb://template/b3a502483f364837a6910f401c0f2d40",
+  "AllowedTemplates": [
+    "umb://template/b3a502483f364837a6910f401c0f2d40"
+  ],
   "Icon": "icon-thumbnail-list color-black",
   "Thumbnail": "folder.png",
   "Description": null,
@@ -43,10 +45,15 @@
       "Udi": "umb://document-type/e824bea77fa049f4b5c963aa7b53cc9c",
       "Ordering": false,
       "Mode": 0
+    },
+    {
+      "Udi": "umb://template/b3a502483f364837a6910f401c0f2d40",
+      "Ordering": true,
+      "Mode": 0
     }
   ],
   "Name": "List Page",
   "Alias": "dtListPage",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.0.1"
+  "__version": "3.1.4"
 }
