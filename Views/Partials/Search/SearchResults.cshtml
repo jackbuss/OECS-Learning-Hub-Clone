@@ -159,7 +159,7 @@
                 {
                     <div class="text-white text-center mb-auto mt-auto">@renderThemeIcon(item.TileType, 160)</div>
                 }
-                <div class="text-white mb-auto p-2">@renderThemeIcon(item.TileType, 64)</div>
+                <div class="text-white mb-auto p-2">@renderThemeIcon(item.TileType, 32)</div>
                 <div class="p-2 w-100 rounded-bottom text-white">
                     <p class="card-text mb-1">@(item.Parent.Name.ToUpper())</p>
                     <h3 class="card-title"><a class="text-white" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h3>
@@ -192,7 +192,7 @@
             </div>
             @if (item.BannerImage != null)
             {
-                <div class="card-img-overlay text-white p-2">@renderThemeIcon(item.TileType, 64)</div>
+                <div class="card-img-overlay text-white p-2">@renderThemeIcon(item.TileType, 32)</div>
             }
 
             <div class="card-body p-2 z-100">

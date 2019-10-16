@@ -33,21 +33,18 @@
         @if (Model.SearchThemes.Any())
         {
             <div class="card border-0 bg-transparent">
-                <div class="card-header bg-white collapsed" id="headingTheme" data-toggle="collapse" data-target="#collapseTheme" aria-expanded="false" aria-controls="collapseTheme">
-                    <h5 class="mb-0">
-                        Theme
-                        @*<button type="button" class="btn btn-link p-0 collapsed" data-toggle="collapse" data-target="#collapseTheme" aria-expanded="false" aria-controls="collapseTheme">Theme</button>*@
-                    </h5>
+                <div class="card-header bg-white collapsed d-flex align-items-center justify-content-between" id="headingTheme" data-toggle="collapse" data-target="#collapseTheme" aria-expanded="false" aria-controls="collapseTheme">
+                    <p class="mb-0">Theme</p>
                 </div>
 
                 <div id="collapseTheme" class="collapse" aria-labelledby="headingTheme" data-parent="#accordion">
                     <div class="card-body bg-info">
                         @for (int i = 0; i < Model.SearchThemes.Count; i++)
                         {
-                            <div class="custom-control custom-switch text-white">
+                            <div class="custom-control custom-switch text-white mb-1">
                                 @Html.HiddenFor(m => m.SearchThemes[i].Value)
                                 @Html.CheckBoxFor(m => m.SearchThemes[i].Selected, new { @class = "custom-control-input" })
-                                @Html.LabelFor(m => m.SearchThemes[i].Selected, Model.SearchThemes[i].Value, new { @class = "custom-control-label" })
+                                @Html.LabelFor(m => m.SearchThemes[i].Selected, Model.SearchThemes[i].Value, new { @class = "custom-control-label pl-1" })
                             </div>
                         }
                     </div>
@@ -57,20 +54,17 @@
         @if (Model.SearchTypes.Any())
         {
             <div class="card border-0 bg-transparent">
-                <div class="card-header bg-white collapsed" id="headingMedia" data-toggle="collapse" data-target="#collapseMedia" aria-expanded="false" aria-controls="collapseMedia">
-                    <h5 class="mb-0">
-                        Media
-                        @*<button type="button" class="btn btn-link p-0 collapsed" data-toggle="collapse" data-target="#collapseMedia" aria-expanded="false" aria-controls="collapseMedia">Media</button>*@
-                    </h5>
+                <div class="card-header bg-white collapsed d-flex align-items-center justify-content-between" id="headingMedia" data-toggle="collapse" data-target="#collapseMedia" aria-expanded="false" aria-controls="collapseMedia">
+                    <p class="mb-0">Media</p>
                 </div>
                 <div id="collapseMedia" class="collapse" aria-labelledby="headingMedia" data-parent="#accordion">
                     <div class="card-body bg-info">
                         @for (int i = 0; i < Model.SearchTypes.Count; i++)
                         {
-                            <div class="custom-control custom-switch text-white">
+                            <div class="custom-control custom-switch text-white mb-1">
                                 @Html.HiddenFor(m => m.SearchTypes[i].Value)
                                 @Html.CheckBoxFor(m => m.SearchTypes[i].Selected, new { @class = "custom-control-input" })
-                                @Html.LabelFor(m => m.SearchTypes[i].Selected, Model.SearchTypes[i].Value, new { @class = "custom-control-label" })
+                                @Html.LabelFor(m => m.SearchTypes[i].Selected, Model.SearchTypes[i].Value, new { @class = "custom-control-label pl-1" })
                             </div>
                         }
                     </div>
@@ -80,21 +74,17 @@
         @if (Model.SearchPersonas.Any())
         {
             <div class="card border-0 bg-transparent">
-                <div class="card-header bg-white collapsed" id="headingUser" data-toggle="collapse" data-target="#collapseUser" aria-expanded="false" aria-controls="collapseUser">
-                    <h5 class="mb-0">
-                        User
-                        @*<button type="button" class="btn btn-link p-0 collapsed" data-toggle="collapse" data-target="#collapseUser" aria-expanded="false" aria-controls="collapseUser">User</button>
-                        *@
-                    </h5>
+                <div class="card-header bg-white collapsed d-flex align-items-center justify-content-between" id="headingUser" data-toggle="collapse" data-target="#collapseUser" aria-expanded="false" aria-controls="collapseUser">
+                    <p class="mb-0">Interests</p>
                 </div>
                 <div id="collapseUser" class="collapse" aria-labelledby="headingUser" data-parent="#accordion">
                     <div class="card-body bg-info">
                         @for (int i = 0; i < Model.SearchPersonas.Count; i++)
                         {
-                            <div class="custom-control custom-switch text-white">
+                            <div class="custom-control custom-switch text-white mb-1">
                                 @Html.HiddenFor(m => m.SearchPersonas[i].Value)
                                 @Html.CheckBoxFor(m => m.SearchPersonas[i].Selected, new { @class = "custom-control-input" })
-                                @Html.LabelFor(m => m.SearchPersonas[i].Selected, Model.SearchPersonas[i].Value, new { @class = "custom-control-label" })
+                                @Html.LabelFor(m => m.SearchPersonas[i].Selected, Model.SearchPersonas[i].Value, new { @class = "custom-control-label pl-1" })
                             </div>
                         }
                     </div>
@@ -103,5 +93,5 @@
         }
     </div>
 
-    <button id="search-button" class="btn btn-primary float-right mt-2 mb-2" type="submit">EXPLORE</button>
+    <button id="search-button" class="btn btn-primary float-right mt-2 mb-2" type="submit">Explore</button>
 }
