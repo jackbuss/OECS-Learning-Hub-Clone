@@ -1,21 +1,23 @@
-﻿@inherits UmbracoViewPage<TWS.ThinkBlue.Models.SearchViewModel>
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<TWS.ThinkBlue.Models.SearchViewModel>
 @{
     Html.EnableUnobtrusiveJavaScript();
     var styles = new List<string> { "primary", "secondary", "info", "success", "warning", "danger" };
     var rnd = new Random();
-    var tileCount = 0;
-    var requiredTiles = 1;
-    var layoutCount = 0;
-    var layout = 0;
-    var previousLayout = 0;
 }
 @if (Model.SearchResults != null)
 {
     if (Model.SearchResults.HasResults)
     {
-        @*<div class="card-deck">*@
         @*Initial hero content*@
-        foreach (IPublishedContent result in Model.SearchResults.Results)
+        @*if (Model.SearchResults.FeaturedResults.Any())
+            {
+                //inject the top featured rather than include in the search
+                // check for a cookie to see if we watched the item
+                @renderFeaturedTile(Model.SearchResults.FeaturedResults.First() as DtContentTile, "primary");
+            }*@
+
+        @*now our search results mapping a fixed tile pattern with a little variation*@
+        foreach (DtContentTile result in Model.SearchResults.Results)
         {
             var item = result as DtContentTile;
 
@@ -27,62 +29,21 @@
                 styles = new List<string> { "primary", "secondary", "info", "success", "warning", "danger" };
             }
 
-            @*@renderTile(item, style)*@
-            if (result == Model.SearchResults.Results.First() && Model.SearchResults.PageNumber == 1)
+            switch (item.TileContentOrigination)
             {
-                @renderFeaturedTile(item, style)
-
-            }
-            else
-            {
-                if (requiredTiles == tileCount)
-                {
-                    layout = rnd.Next(2);
-                    // track repetitions of layouts.
-                    if (layout == previousLayout)
-                    {
-                        layoutCount++;
-                    }
-                    else
-                    {
-                        layoutCount = 0;
-                    }
-
-                    // allow each layout twice before forcing an alternative
-                    if (layoutCount == 2)
-                    {
-                        do
-                        {
-                            layout = rnd.Next(2);
-                        } while (layout == previousLayout);
-                        layoutCount = 0;
-                    }
-
-                    tileCount = 0;
-
-                }
-
-                switch (layout)
-                {
-                    case 0:
-                        @*if (tileCount == 0) { @Html.Raw("<!-- start card-deck --><div class=\"card-deck\">") }*@
-                        @renderPrimaryTile(item, style)
-                        @*if (tileCount == 1) { @Html.Raw("</div><!--/ end card-deck -->") }*@
-                        requiredTiles = 2;
-                        break;
-                    case 1:
-                        @renderExternalTile(item, style)
-                        requiredTiles = 4;
-                        break;
-                    default:
-                        break;
-                }
-                tileCount++;
+                case "Original":
+                    @renderPrimaryTile(item, style)
+                    break;
+                case "Partner":
+                    @renderFeaturedTile(item, style)
+                    break;
+                case "External":
+                    @renderExternalTile(item, style)
+                    break;
+                default:
+                    break;
             }
         }
-
-
-        @*</div>*@
 
         using (Ajax.BeginForm("SubmitSearchForm", "Search", null, new AjaxOptions
         {
@@ -113,9 +74,9 @@
         <p>No results to display</p>
     }
 }
-@helper renderThemeIcon(string TileType)
+@helper renderThemeIcon(string TileType, int? size)
 {
-    <svg width="12" height="12" class="octicon" viewBox="0 0 16 16" version="1.1" aria-hidden="true">
+    <svg width="@(size== null?24:size)" height="@(size== null?24:size)" class="octicon" viewBox="0 0 18 18" version="1.1" aria-hidden="true">
         <title>@(TileType)</title>
         @{ switch (TileType.ToLower())
             {
@@ -155,7 +116,7 @@
 
     <div class="card mb-2 bg-@(style)">
         <div class="card-header d-flex justify-content-between">
-            @(item.Parent.Name) @renderThemeIcon(item.TileType)
+            @(item.Parent.Name) @renderThemeIcon(item.TileType, 160)
         </div>
         @if (item.BannerImage != null)
         {
@@ -181,25 +142,27 @@
 
 @helper renderFeaturedTile(DtContentTile item, string style)
 {
-    var textColor = style == "warning" ? "primary" : "white";
-    <div class="col-12 col-xs-12 col-md-8 col-lg-6 p-1">
-        <div class="card bg-@(style) border-0">
+    <div class="col-12 col-xs-12 col-md-8 col-lg-6 p-2">
+        <div class="card bg-@(style) border-0 h-100">
             @if (item.BannerImage != null)
             {
+                var fOptions = "&tint=255,255,255,165";
                 <picture>
-                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 960))" media="(min-width: 1200px)" />
-                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 600))" media="(min-width: 996px)" />
-                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576))" media="(min-width: 576px)" />
-                    <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576))" alt="@item.BannerImage.Name" class="img-fluid w-100" />
+                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 960, furtherOptions:fOptions))" media="(min-width: 1200px)" />
+                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 600, furtherOptions:fOptions))" media="(min-width: 996px)" />
+                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576, furtherOptions:fOptions))" media="(min-width: 576px)" />
+                    <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576,furtherOptions:fOptions))" alt="@(item.BannerImage.Name)" class="card-img-top rounded" />
                 </picture>
-
-
-                @*<img class="card-img-top rounded" src="@(item.BannerImage.GetCropUrl("Square"))" alt="@(item.BannerImage.Name)">*@
             }
-            <div class="card-img-overlay d-flex flex-column justify-content-end text-@(textColor) p-0">
-                <div class="bg-@(style)-0-overlay p-2 w-100 rounded-bottom text-@(textColor)">
-                    <p class="card-text">@renderThemeIcon(item.TileType) @(item.Parent.Name.ToUpper())</p>
-                    <h3 class="card-title"><a class="text-@(textColor)" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h3>
+            <div class="card-img-overlay d-flex flex-column justify-content-end text-white p-1">
+                @if (item.BannerImage == null)
+                {
+                    <div class="text-white text-center mb-auto mt-auto">@renderThemeIcon(item.TileType, 160)</div>
+                }
+                <div class="text-white mb-auto p-2">@renderThemeIcon(item.TileType, 64)</div>
+                <div class="p-2 w-100 rounded-bottom text-white">
+                    <p class="card-text mb-1">@(item.Parent.Name.ToUpper())</p>
+                    <h3 class="card-title"><a class="text-white" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h3>
                 </div>
             </div>
         </div>
@@ -208,33 +171,43 @@
 
 @helper renderPrimaryTile(DtContentTile item, string style)
 {
-    <div class="col-6 col-xs-6 col-md-4 col-lg-3 p-1">
+    <div class="col-6 col-xs-6 col-md-4 col-lg-3 p-2">
         <div class="card">
+            <div class="card-img">
+                @if (item.BannerImage != null)
+                {
+                    <picture>
+                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 480))" media="(min-width: 1200px)" />
+                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 300))" media="(min-width: 996px)" />
+                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 498))" media="(min-width: 576px)" />
+                        <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 288))" alt="@(item.BannerImage.Name)" class="bg-@(style) card-img-top rounded-top" />
+                    </picture>
+                }
+                else
+                {
+                    <div class="bg-@(style) text-white text-center rounded-top p-5">
+                        <div class="p-4">@renderThemeIcon(item.TileType, 80)</div>
+                    </div>
+                }
+            </div>
             @if (item.BannerImage != null)
             {
-                <picture>
-                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 480))" media="(min-width: 1200px)" />
-                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 300))" media="(min-width: 996px)" />
-                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 498))" media="(min-width: 576px)" />
-                    <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 288))" alt="@item.BannerImage.Name" class="img-fluid w-100" />
-                </picture>
-
-
-                @*<img class="bg-@(style) card-img-top rounded" src="@(item.BannerImage.GetCropUrl("Square"))" alt="Card image cap">*@
+                <div class="card-img-overlay text-white p-2">@renderThemeIcon(item.TileType, 64)</div>
             }
-            <div class="card-body p-2">
-                <small class="card-text text-info mb-0">@renderThemeIcon(item.TileType) @(item.Parent.Name.ToUpper())</small>
-                <h5 class="card-title"><a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h5>
+
+            <div class="card-body p-2 z-100">
+                <small class="card-text text-info mb-0">@(item.Parent.Name.ToUpper())</small>
+                <h5 class="card-title mb-1"><a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h5>
             </div>
         </div>
     </div>
 }
 
-@helper renderExternalTile(DtContentTile item, string style)
+@helper renderPartnerTile(DtContentTile item, string style)
 {
-    <div class="col-12 col-xs-12 col-md-6 p-1">
+    <div class="col-12 col-xs-12 col-md-6 p-2">
         <div class="card">
-            <div class="row no-gutters">
+            <div class="row no-gutters h-100">
                 @if (item.BannerImage != null)
                 {
                     <div class="col-4 rounded p-0">
@@ -242,14 +215,46 @@
                             <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 320))" media="(min-width: 1200px)" />
                             <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 200))" media="(min-width: 996px)" />
                             <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 166))" media="(min-width: 576px)" />
-                            <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 192))" alt="@item.BannerImage.Name" class="img-fluid w-100" />
+                            <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 192))" alt="@(item.BannerImage.Name)" class="card-img rounded h-100" />
                         </picture>
-                        @*<img src="@(item.BannerImage.GetCropUrl("Square"))" class="card-img rounded" alt="@(item.BannerImage.Name)">*@
                     </div>
                 }
                 <div class="@(item.BannerImage != null ? "col-8" : "col-12") p-0">
                     <div class="card-body p-2">
-                        <small class="card-text text-info  mb-0">@renderThemeIcon(item.TileType) @(item.Parent.Name.ToUpper())</small>
+                        <small class="card-text text-info  mb-0">@renderThemeIcon(item.TileType, null) @(item.Parent.Name.ToUpper())</small>
+                        <h5 class="card-title text-primary"><a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@helper renderExternalTile(DtContentTile item, string style)
+{
+    <div class="col-12 col-xs-12 col-md-6 pl-2 pr-2">
+        <div class="card border-top-0 border-left-0 border-right-0 rounded-0">
+            <div class="row no-gutters">
+                <div class="col-2 rounded pt-1 pb-2 d-flex align-items-center justify-content-center">
+                    @if (item.BannerImage != null)
+                    {
+
+                        <picture>
+                            <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 320))" media="(min-width: 1200px)" />
+                            <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 200))" media="(min-width: 996px)" />
+                            <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 166))" media="(min-width: 576px)" />
+                            <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 192))" alt="@(item.BannerImage.Name)" class="card-img rounded h-100" />
+                        </picture>
+
+                    }
+                    else
+                    {
+                        <div class="text-primary">@renderThemeIcon(item.TileType, 32)</div>
+                    }
+                </div>
+                <div class="col-10 p-0">
+                    <div class="card-body p-2">
+                        <small class="card-text text-info  mb-0">@(item.Parent.Name.ToUpper())</small>
                         <h5 class="card-title text-primary"><a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">@(item.Name)</a></h5>
                     </div>
                 </div>

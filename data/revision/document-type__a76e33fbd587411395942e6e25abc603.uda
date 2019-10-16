@@ -6,7 +6,7 @@
   "Icon": "icon-thumbnail-list color-black",
   "Thumbnail": "folder.png",
   "Description": null,
-  "IsContainer": false,
+  "IsContainer": true,
   "Permissions": {
     "AllowVaryingByCulture": false,
     "AllowVaryingBySegment": false,
