@@ -33,9 +33,10 @@
         @if (Model.SearchThemes.Any())
         {
             <div class="card border-0 bg-transparent">
-                <div class="card-header bg-white" id="headingTheme">
+                <div class="card-header bg-white collapsed" id="headingTheme" data-toggle="collapse" data-target="#collapseTheme" aria-expanded="false" aria-controls="collapseTheme">
                     <h5 class="mb-0">
-                        <button type="button" class="btn btn-link p-0 collapsed" data-toggle="collapse" data-target="#collapseTheme" aria-expanded="false" aria-controls="collapseTheme">Theme</button>
+                        Theme
+                        @*<button type="button" class="btn btn-link p-0 collapsed" data-toggle="collapse" data-target="#collapseTheme" aria-expanded="false" aria-controls="collapseTheme">Theme</button>*@
                     </h5>
                 </div>
 
@@ -56,9 +57,10 @@
         @if (Model.SearchTypes.Any())
         {
             <div class="card border-0 bg-transparent">
-                <div class="card-header bg-white" id="headingMedia">
+                <div class="card-header bg-white collapsed" id="headingMedia" data-toggle="collapse" data-target="#collapseMedia" aria-expanded="false" aria-controls="collapseMedia">
                     <h5 class="mb-0">
-                        <button type="button" class="btn btn-link p-0 collapsed" data-toggle="collapse" data-target="#collapseMedia" aria-expanded="false" aria-controls="collapseMedia">Media</button>
+                        Media
+                        @*<button type="button" class="btn btn-link p-0 collapsed" data-toggle="collapse" data-target="#collapseMedia" aria-expanded="false" aria-controls="collapseMedia">Media</button>*@
                     </h5>
                 </div>
                 <div id="collapseMedia" class="collapse" aria-labelledby="headingMedia" data-parent="#accordion">
@@ -78,9 +80,11 @@
         @if (Model.SearchPersonas.Any())
         {
             <div class="card border-0 bg-transparent">
-                <div class="card-header bg-white" id="headingUser">
+                <div class="card-header bg-white collapsed" id="headingUser" data-toggle="collapse" data-target="#collapseUser" aria-expanded="false" aria-controls="collapseUser">
                     <h5 class="mb-0">
-                        <button type="button" class="btn btn-link p-0 collapsed" data-toggle="collapse" data-target="#collapseUser" aria-expanded="false" aria-controls="collapseUser">User</button>
+                        User
+                        @*<button type="button" class="btn btn-link p-0 collapsed" data-toggle="collapse" data-target="#collapseUser" aria-expanded="false" aria-controls="collapseUser">User</button>
+                        *@
                     </h5>
                 </div>
                 <div id="collapseUser" class="collapse" aria-labelledby="headingUser" data-parent="#accordion">
@@ -99,5 +103,5 @@
         }
     </div>
 
-    <button id="search-button" class="btn btn-primary float-right mt-2 mb-2" type="submit">GO</button>
+    <button id="search-button" class="btn btn-primary float-right mt-2 mb-2" type="submit">EXPLORE</button>
 }
