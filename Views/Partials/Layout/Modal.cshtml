@@ -9,12 +9,15 @@
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-dialog modal-full" role="document">
         <div class="modal-content rounded-0 border-0">
-            <div class="modal-header border-0">
+            <div class="modal-header border-0 p-2">
                 <button type="button" class="close text-primary" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <svg class="icon text-primary">
+                        <use xlink:href="thinkblue-icons.svg#icon-close"></use>
+                    </svg>
+                    <span class="sr-only">close</span>                    
                 </button>
             </div>
-            <div class="modal-body border-0 text-left">
+            <div class="modal-body border-top text-left">
                 <span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...
             </div>            
         </div>
