@@ -1,0 +1,56 @@
+{
+  "DefaultTemplate": null,
+  "AllowedTemplates": [],
+  "Icon": "icon-document",
+  "Thumbnail": "folder.png",
+  "Description": null,
+  "IsContainer": false,
+  "Permissions": {
+    "AllowVaryingByCulture": false,
+    "AllowVaryingBySegment": false,
+    "AllowedAtRoot": false,
+    "IsElementType": false,
+    "AllowedChildContentTypes": []
+  },
+  "Parent": "umb://document-type-container/450a6332a63341918630d8395cbc99de",
+  "CompositionContentTypes": [],
+  "PropertyGroups": [
+    {
+      "Key": "3e8ce912-2f98-4fec-8364-349f3033a076",
+      "Name": "Call to Action options",
+      "SortOrder": 50,
+      "PropertyTypes": [
+        {
+          "Key": "4996e771-3951-4440-935e-363c3411aa2f",
+          "Alias": "selectedCallToAction",
+          "DataType": "umb://data-type/841fe89a0b7e447bb5b8b132b4b4a148",
+          "Description": null,
+          "Mandatory": false,
+          "Name": "Call to Action",
+          "SortOrder": 0,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        }
+      ]
+    }
+  ],
+  "PropertyTypes": [],
+  "Udi": "umb://document-type/c0c71f0963e349bcb01be18ab5f2a82e",
+  "Dependencies": [
+    {
+      "Udi": "umb://data-type/841fe89a0b7e447bb5b8b132b4b4a148",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://document-type-container/450a6332a63341918630d8395cbc99de",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "Call to Action",
+  "Alias": "dtcCallToAction",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
+  "__version": "3.1.4"
+}

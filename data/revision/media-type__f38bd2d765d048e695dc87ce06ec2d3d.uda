@@ -10,6 +10,7 @@
     "IsElementType": false,
     "AllowedChildContentTypes": [
       "umb://media-type/4c52d8ab54e640cd999c7a5f24903e4d",
+      "umb://media-type/92d7aeaad74044e897d666883c88e58c",
       "umb://media-type/cc07b31308434aa8bbda871c8da728c8",
       "umb://media-type/f38bd2d765d048e695dc87ce06ec2d3d"
     ]
@@ -22,6 +23,11 @@
   "Dependencies": [
     {
       "Udi": "umb://media-type/4c52d8ab54e640cd999c7a5f24903e4d",
+      "Ordering": false,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://media-type/92d7aeaad74044e897d666883c88e58c",
       "Ordering": false,
       "Mode": 0
     },

@@ -84,7 +84,7 @@
 
     var svgType = $"icon-{TileType.Replace(" ", "-").ToLower()}";
     <svg class="icon @(svgType)@(sizeMultiple!= null ? $" x{sizeMultiple}-icon":"")">
-        <use xlink:href="thinkblue-icons.svg#@(svgType)"></use>
+        <use xlink:href="/thinkblue-icons.svg#@(svgType)"></use>
     </svg>
     <span class="sr-only">@(TileType)</span>
 }

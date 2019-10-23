@@ -20,6 +20,7 @@
     "umb://document-type/41338bab4dde4ebdbe48d4ae22ce331f",
     "umb://document-type/b8988f1b408649b68fdc10165d603ad3",
     "umb://document-type/ba85ac7eec3b45c48b3e9ad8b211b31c",
+    "umb://document-type/c0c71f0963e349bcb01be18ab5f2a82e",
     "umb://document-type/d29f501e8acd4dcb9177bd11aa7e1fa5"
   ],
   "PropertyGroups": [
@@ -75,7 +76,7 @@
           "Key": "a750067f-163c-4a31-8205-f4242927a4f2",
           "Alias": "tileType",
           "DataType": "umb://data-type/6593d277c576441e8dadf99b76f31d94",
-          "Description": null,
+          "Description": "Type of tile",
           "Mandatory": true,
           "Name": "Tile Type",
           "SortOrder": 2,
@@ -143,6 +144,11 @@
     },
     {
       "Udi": "umb://document-type/ba85ac7eec3b45c48b3e9ad8b211b31c",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://document-type/c0c71f0963e349bcb01be18ab5f2a82e",
       "Ordering": true,
       "Mode": 0
     },
