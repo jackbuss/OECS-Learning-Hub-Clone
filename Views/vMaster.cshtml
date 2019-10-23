@@ -25,6 +25,7 @@
     @{ Html.RenderPartial("Meta/CommonMetaTags"); }
     <!-- Additional Meta -->
     <link rel="canonical" href="@(Model.Url(mode: UrlMode.Absolute))">
+    <link rel="manifest" href="~/site.webmanifest">
     @{Html.RenderPartial("Meta/FacebookOG");}
     @{Html.RenderPartial("Meta/TwitterCard");}
     @{Html.RenderPartial("Meta/FavIcons");}
