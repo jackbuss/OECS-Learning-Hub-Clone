@@ -1,7 +1,7 @@
 {
   "EditorAlias": "Umbraco.MultiNodeTreePicker",
   "DatabaseType": 0,
-  "Configuration": {"startNode":{"type":"media","query":null,"id":null},"filter":null,"minNumber":0,"maxNumber":1,"showOpenButton":false,"ignoreUserStartNodes":false},
+  "Configuration": {"startNode":{"type":"media","query":null,"id":"umb://media/09b521c3ba91437dac1c4d20de43e3a1"},"filter":null,"minNumber":0,"maxNumber":1,"showOpenButton":false,"ignoreUserStartNodes":false},
   "Parent": null,
   "Udi": "umb://data-type/841fe89a0b7e447bb5b8b132b4b4a148",
   "Dependencies": [],
