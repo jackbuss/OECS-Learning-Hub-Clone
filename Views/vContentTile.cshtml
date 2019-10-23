@@ -94,58 +94,43 @@ else
         @if (!String.IsNullOrWhiteSpace(Model.TileExternalUrl))
         {
             <div class="card-link text-center">
-                <cite title="Source"><a href="@Model.TileExternalUrl" class="btn btn-@style card-link alert-link" title="Source Content (opens in a new window)" target="_blank">Start exploring</a></cite>
+                <a href="@Model.TileExternalUrl" class="btn btn-@style card-link alert-link" title="Source Content (opens in a new window)" target="_blank">Explore</a>
             </div>
         }
     </div>
 </div>
 
 @{
-    IPublishedContent node = null;
-    var exists = false;
-    //if (Model.SelectedCallToAction != null)
-    //{
-    //    node = Model.SelectedCallToAction;
-    //    exists = true;
-    //}
-     if (Model.Value("SelectedCallToAction", fallback: Fallback.ToAncestors) != null)
-    {
-        node = Model.Value("SelectedCallToAction", fallback: Fallback.ToAncestors) as MtCallToAction;
-        exists = true;
-    }
-}
 
-
-@if (exists == true)
-{
     try
     {
+        var fOptions = "&tint=255,255,255,165";
+        var node = Model.Value("SelectedCallToAction", fallback: Fallback.ToAncestors) as MtCallToAction;
+        if (node != null)
+        {
+            <div class="card border-0">
 
-        <div class="card border-0">
-            @*<img class="w-100" src="@Model.SelectedCallToAction.Url" />*@
-
-            @{
-                var fOptions = "&tint=255,255,255,165";
                 <picture>
                     <source srcset="@(node.GetCropUrl(width: 960, furtherOptions: fOptions + "&heightRatio=0.2"))" media="(min-width: 1200px)" />
                     <source srcset="@(node.GetCropUrl(cropAlias: "Landscape", width: 600, furtherOptions: fOptions))" media="(min-width: 996px)" />
                     <source srcset="@(node.GetCropUrl(cropAlias: "Landscape", width: 576, furtherOptions: fOptions))" media="(min-width: 576px)" />
                     <img srcset="@(node.GetCropUrl(cropAlias: "Landscape", width: 576, furtherOptions: fOptions))" alt="@(node.Name)" class="card-img-top rounded" />
                 </picture>
-            }
 
-            <div class="calltoaction card-img-overlay d-flex flex-column">
-                <div class="inner-container m-auto d-flex flex-column">
-                    <h5 class="m-auto text-white pb-3 text-center">@node.Value("CtaText")</h5>
-                    <a class="m-auto text-info" href="@node.Value("CallToActionURL")" target="_blank" alt="@node.Name">
-                        @renderThemeIcon("study-arrow", 4)
-                    </a>
+                <div class="calltoaction card-img-overlay d-flex flex-column">
+                    <div class="inner-container m-auto d-flex flex-column">
+                        <h5 class="m-auto text-white pb-3 text-center">@node.Value("CtaText")</h5>
+                        <a class="m-auto text-info" href="@node.Value("CallToActionURL")" target="_blank" title="@node.Name">
+                            @renderThemeIcon("study-arrow", 4)
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     }
     catch { }
 }
+
 
 @helper renderThemeIcon(string TileType, int? sizeMultiple)
 {
