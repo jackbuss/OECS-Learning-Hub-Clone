@@ -6,7 +6,7 @@
   "Permissions": {
     "AllowVaryingByCulture": false,
     "AllowVaryingBySegment": false,
-    "AllowedAtRoot": true,
+    "AllowedAtRoot": false,
     "IsElementType": false,
     "AllowedChildContentTypes": []
   },
@@ -147,7 +147,7 @@
     }
   ],
   "Name": "Call to Action",
-  "Alias": "Image1",
+  "Alias": "mtCallToAction",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.MediaTypeArtifact",
   "__version": "3.1.4"
 }

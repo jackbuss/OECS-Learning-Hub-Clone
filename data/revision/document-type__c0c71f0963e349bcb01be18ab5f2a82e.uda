@@ -50,7 +50,7 @@
     }
   ],
   "Name": "Call to Action",
-  "Alias": "callToAction",
+  "Alias": "dtcCallToAction",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
   "__version": "3.1.4"
 }
