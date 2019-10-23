@@ -6,6 +6,11 @@
     stroke: currentColor;
     fill: currentColor;
 }
+    .icon.x1_5-icon {
+        width: 1.5em;
+        height: 1.5em;
+    }
+
     .icon.x2-icon {
         width: 2em;
         height: 2em;
