@@ -47,7 +47,7 @@
           "DataType": "umb://data-type/bdc8c3843aff4fe8a677085633d839a2",
           "Description": "The tile is most appropriate for...",
           "Mandatory": false,
-          "Name": "Tile Personna",
+          "Name": "Tile Interests",
           "SortOrder": 3,
           "Validation": null,
           "VariesByCulture": false,
@@ -166,5 +166,5 @@
   "Name": "Content Tile",
   "Alias": "dtContentTile",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.1.4"
+  "__version": "3.1.5"
 }
