@@ -1,0 +1,153 @@
+{
+  "Icon": "icon-picture",
+  "Thumbnail": "icon-picture",
+  "Description": null,
+  "IsContainer": false,
+  "Permissions": {
+    "AllowVaryingByCulture": false,
+    "AllowVaryingBySegment": false,
+    "AllowedAtRoot": true,
+    "IsElementType": false,
+    "AllowedChildContentTypes": []
+  },
+  "Parent": null,
+  "CompositionContentTypes": [],
+  "PropertyGroups": [
+    {
+      "Key": "441ffe9b-cb6b-43de-8854-4c01bd8fcb75",
+      "Name": "Image",
+      "SortOrder": 1,
+      "PropertyTypes": [
+        {
+          "Key": "07a62434-471d-4f74-8973-2612bdeb4203",
+          "Alias": "umbracoWidth",
+          "DataType": "umb://data-type/8e7f995cbd8146279932c40e568ec788",
+          "Description": "in pixels",
+          "Mandatory": false,
+          "Name": "Width",
+          "SortOrder": 1,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        },
+        {
+          "Key": "5d1cc451-f217-4833-9437-f5baa9acb2b2",
+          "Alias": "umbracoHeight",
+          "DataType": "umb://data-type/8e7f995cbd8146279932c40e568ec788",
+          "Description": "in pixels",
+          "Mandatory": false,
+          "Name": "Height",
+          "SortOrder": 2,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        },
+        {
+          "Key": "91dba927-8c6c-4a6e-beb9-383218290231",
+          "Alias": "umbracoExtension",
+          "DataType": "umb://data-type/f0bc4bfbb49940d6ba86058885a5178c",
+          "Description": null,
+          "Mandatory": false,
+          "Name": "Type",
+          "SortOrder": 4,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        },
+        {
+          "Key": "92f673a1-d8d8-421b-ab6c-5c37ad407741",
+          "Alias": "umbracoBytes",
+          "DataType": "umb://data-type/930861bfe2624eada704f99453565708",
+          "Description": "in bytes",
+          "Mandatory": false,
+          "Name": "Size",
+          "SortOrder": 3,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        },
+        {
+          "Key": "c90e0128-5fb2-45a1-a2c1-fb2f790d911d",
+          "Alias": "umbracoFile",
+          "DataType": "umb://data-type/1df9f033e6d4451fb8d2e0cbc50a836f",
+          "Description": null,
+          "Mandatory": true,
+          "Name": "Upload image",
+          "SortOrder": 0,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        }
+      ]
+    },
+    {
+      "Key": "6ab5f795-d46f-4f61-ac51-77362fe97434",
+      "Name": "Options",
+      "SortOrder": 2,
+      "PropertyTypes": [
+        {
+          "Key": "3c195b84-04d0-4dec-9047-65cae78f2baf",
+          "Alias": "callToActionURL",
+          "DataType": "umb://data-type/0cc0eba1996042c9bf9b60e150b429ae",
+          "Description": null,
+          "Mandatory": true,
+          "Name": "Call to Action URL",
+          "SortOrder": 0,
+          "Validation": "https?://[a-zA-Z0-9-.]+.[a-zA-Z]{2,}",
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        },
+        {
+          "Key": "f500dc8d-3288-4153-ae6d-e40b45580eaf",
+          "Alias": "ctaText",
+          "DataType": "umb://data-type/2388baec77c344529c12d6fb0db7e3df",
+          "Description": "Text to be displayed above icon",
+          "Mandatory": true,
+          "Name": "Text",
+          "SortOrder": 1,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        }
+      ]
+    }
+  ],
+  "PropertyTypes": [],
+  "Udi": "umb://media-type/92d7aeaad74044e897d666883c88e58c",
+  "Dependencies": [
+    {
+      "Udi": "umb://data-type/0cc0eba1996042c9bf9b60e150b429ae",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://data-type/1df9f033e6d4451fb8d2e0cbc50a836f",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://data-type/2388baec77c344529c12d6fb0db7e3df",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://data-type/8e7f995cbd8146279932c40e568ec788",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://data-type/930861bfe2624eada704f99453565708",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://data-type/f0bc4bfbb49940d6ba86058885a5178c",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "Call to Action",
+  "Alias": "Image1",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.MediaTypeArtifact",
+  "__version": "3.1.4"
+}

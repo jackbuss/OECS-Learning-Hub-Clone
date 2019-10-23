@@ -102,8 +102,14 @@ else
     </div>
 </div>
 
-<div>
-    <p>CTA here</p>
+<div class="card border-0">
+    <img class="w-100" src="@Model.SelectedCallToAction.Url" />
+    <div class="card-img-overlay d-flex flex-column">
+        <p></p>
+        <a class="m-auto" href="@Model.SelectedCallToAction.Value("CallToActionURL")" target="_blank" alt="@Model.SelectedCallToAction.Name">
+            <button type="button" class="btn btn-primary">Explore!</button>
+        </a>
+    </div>
 </div>
 
 @helper renderThemeIcon(string TileType, int? size)

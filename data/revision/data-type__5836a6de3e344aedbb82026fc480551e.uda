@@ -1,0 +1,12 @@
+{
+  "EditorAlias": "Umbraco.TrueFalse",
+  "DatabaseType": 2,
+  "Configuration": {"default":"0","labelOn":null},
+  "Parent": null,
+  "Udi": "umb://data-type/5836a6de3e344aedbb82026fc480551e",
+  "Dependencies": [],
+  "Name": "Call to Action - Global - Checkbox",
+  "Alias": null,
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
+  "__version": "3.1.4"
+}
