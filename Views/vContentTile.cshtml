@@ -15,40 +15,35 @@
     var item = Model;
 }
 
+<div class="row no-gutters">
+    <div class="col-1 rounded pt-1 pb-2 d-flex align-items-center justify-content-center">
+        <div class="text-primary">@renderThemeIcon(item.TileType, 2)</div>
+    </div>
+    <div class="col-11 p-0">
+        <div class="card-body p-2">
+            <small class="card-text text-info  mb-0">@(item.Parent.Name.ToUpper())</small>
+            <h5 class="card-title text-primary">@(item.Name)</h5>
+        </div>
+    </div>
+</div>
+
 @if (item.BannerImage == null && Model.TileExternalVideo == null)
 {
-    <div class="card">
-        <div class="card-img">
-            @if (item.BannerImage != null)
-            {
-                <picture>
-                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 480))" media="(min-width: 1200px)" />
-                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 300))" media="(min-width: 996px)" />
-                    <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 498))" media="(min-width: 576px)" />
-                    <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 288))" alt="@(item.BannerImage.Name)" class="bg-@(style) card-img-top rounded-top" />
-                </picture>
-            }
-            else
-            {
-                <div class="bg-@(style) text-white text-center rounded-top p-5">
-                    <div class="p-4">@renderThemeIcon(item.TileType, 80)</div>
-                </div>
-            }
-        </div>
-        @if (item.BannerImage != null)
-        {
-            <div class="card-img-overlay text-white p-2">@renderThemeIcon(item.TileType, 64)</div>
-        }
 
-        <div class="card-body p-2 z-100">
-            <small class="card-text text-info mb-0">@(item.Parent.Name.ToUpper())</small>
-            <h5 class="card-title mb-1">@(item.Name)</h5>
+    <div class="card border-0">
+
+        <div class="card-img">
+            <div class="bg-@(style) text-white text-center rounded p-5">
+                <div class="p-4">@renderThemeIcon(item.TileType, 4)</div>
+            </div>
         </div>
     </div>
 }
 else
 {
+
     <div class="card bg-@(style) border-0">
+
         @if (Model.TileExternalVideo != null)
         {
             <div class="embed-responsive embed-responsive-16by9 rounded">
@@ -57,24 +52,27 @@ else
         }
         else if (item.BannerImage != null)
         {
-            var fOptions = "&tint=255,255,255,165";
+            var fOptions = "";//"&tint=255,255,255,165";
             <picture>
-                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 960, furtherOptions: fOptions))" media="(min-width: 1200px)" />
-                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 600, furtherOptions: fOptions))" media="(min-width: 996px)" />
-                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576, furtherOptions: fOptions))" media="(min-width: 576px)" />
-                <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576, furtherOptions: fOptions))" alt="@(item.BannerImage.Name)" class="card-img-top rounded" />
+                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 960, furtherOptions: fOptions))" media="(min-width: 1200px)" />
+                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 600, furtherOptions: fOptions))" media="(min-width: 996px)" />
+                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 576, furtherOptions: fOptions))" media="(min-width: 576px)" />
+                <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 576, furtherOptions: fOptions))" alt="@(item.BannerImage.Name)" class="card-img-top rounded" />
             </picture>
         }
-        <div class="@(Model.TileExternalVideo == null? "card-img-overlay " : "")d-flex flex-column justify-content-end text-white p-1">
-            @if (Model.TileExternalVideo == null)
-            {
-                <div class="text-white mb-auto p-2">@renderThemeIcon(item.TileType, 64)</div>
-            }
-            <div class="p-2 w-100 rounded-bottom text-white">
-                <p class="card-text mb-1">@(item.Parent.Name.ToUpper())</p>
-                <h3 class="card-title">@(item.Name)</h3>
-            </div>
-        </div>
+        @*<div class="d-flex flex-column justify-content-end text-white p-1">
+                @if (Model.TileExternalVideo == null)
+                {
+                    <div class="text-white mb-auto p-2">@renderThemeIcon(item.TileType, 4)</div>
+                }
+                <div class="p-2 w-100 rounded-bottom text-white">
+                    <p class="card-text mb-1">@(item.Parent.Name.ToUpper())</p>
+                    <h3 class="card-title">@(item.Name)</h3>
+                </div>
+            </div>*@
+
+
+
     </div>
 }
 
@@ -83,7 +81,7 @@ else
         @if (Model.ContentTitle != Model.Name)
         {
             <div class="">
-                <h2>@(Model.ContentTitle)</h2>
+                <h5>@(Model.ContentTitle)</h5>
             </div>
         }
         @if (Model.ContentGrid != null)
@@ -96,7 +94,7 @@ else
         @if (!String.IsNullOrWhiteSpace(Model.TileExternalUrl))
         {
             <div class="card-link text-center">
-                <cite title="Source"><a href="@Model.TileExternalUrl" class="btn btn-@style card-link alert-link" title="Source Content (opens in a new window)" target="_blank">Start learning</a></cite>
+                <cite title="Source"><a href="@Model.TileExternalUrl" class="btn btn-@style card-link alert-link" title="Source Content (opens in a new window)" target="_blank">Start exploring</a></cite>
             </div>
         }
     </div>
@@ -112,38 +110,17 @@ else
     </div>
 </div>
 
-@helper renderThemeIcon(string TileType, int? size)
+@helper renderThemeIcon(string TileType, int? sizeMultiple)
 {
-    <svg width="@(size== null?24:size)" height="@(size== null?24:size)" class="octicon" viewBox="0 0 18 18" version="1.1" aria-hidden="true">
-        <title>@(TileType)</title>
-        @{ switch (TileType.ToLower())
-            {
-                case "course":
-                    <path fill-rule="evenodd" d="M15 0H9v7c0 .55.45 1 1 1h1v1h1V8h3c.55 0 1-.45 1-1V1c0-.55-.45-1-1-1zm-4 7h-1V6h1v1zm4 0h-3V6h3v1zm0-2h-4V1h4v4zM4 5H3V4h1v1zm0-2H3V2h1v1zM2 1h6V0H1C.45 0 0 .45 0 1v12c0 .55.45 1 1 1h2v2l1.5-1.5L6 16v-2h5c.55 0 1-.45 1-1v-3H2V1zm9 10v2H6v-1H3v1H1v-2h10zM3 8h1v1H3V8zm1-1H3V6h1v1z"></path>
-                    break;
-                case "e-book":
-                    <path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"></path>
-                    break;
-                case "event":
-                    <path fill-rule="evenodd" d="M15 2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 9H1V3h14v8z"></path>
-                    break;
-                case "network":
-                    <path fill-rule="evenodd" d="M10 7c-.73 0-1.38.41-1.73 1.02V8C7.22 7.98 6 7.64 5.14 6.98c-.75-.58-1.5-1.61-1.89-2.44A1.993 1.993 0 0 0 2 .99C.89.99 0 1.89 0 3a2 2 0 0 0 1 1.72v6.56c-.59.35-1 .99-1 1.72 0 1.11.89 2 2 2a1.993 1.993 0 0 0 1-3.72V7.67c.67.7 1.44 1.27 2.3 1.69.86.42 2.03.63 2.97.64v-.02c.36.61 1 1.02 1.73 1.02 1.11 0 2-.89 2-2 0-1.11-.89-2-2-2zm-6.8 6c0 .66-.55 1.2-1.2 1.2-.65 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm8 6c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"></path>
-                    break;
-                case "news":
-                    <path fill-rule="evenodd" d="M10 1c-.17 0-.36.05-.52.14C8.04 2.02 4.5 4.58 3 5c-1.38 0-3 .67-3 2.5S1.63 10 3 10c.3.08.64.23 1 .41V15h2v-3.45c1.34.86 2.69 1.83 3.48 2.31.16.09.34.14.52.14.52 0 1-.42 1-1V2c0-.58-.48-1-1-1zm0 12c-.38-.23-.89-.58-1.5-1-.16-.11-.33-.22-.5-.34V3.31c.16-.11.31-.2.47-.31.61-.41 1.16-.77 1.53-1v11zm2-6h4v1h-4V7zm0 2l4 2v1l-4-2V9zm4-6v1l-4 2V5l4-2z"></path>
-                    break;
-                case "video":
-                    <path fill-rule="evenodd" d="M15.2 2.09L10 5.72V3c0-.55-.45-1-1-1H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h8c.55 0 1-.45 1-1V9.28l5.2 3.63c.33.23.8 0 .8-.41v-10c0-.41-.47-.64-.8-.41z"></path>
-                    break;
-                case "external link":
-                    <path d="M1 1h7.5l2 2H9L8 2H1v12h10v-1h1v1c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1zm9 6h3v1h-3V7zm2 2h-2v1h2V9zM8.583 4h4.375L15 6v5.429a.58.58 0 0 1-.583.571H8.583A.58.58 0 0 1 8 11.429V10h1v1h5V6.5L12.5 5H9v1H8V4.571A.58.58 0 0 1 8.583 4zM9.5 7H6.667V5l-4 3 4 3V9H9.5V7z"></path>
-                    break;
-                default:
-                    <path d="M1 1h7.5l2 2H9L8 2H1v12h10v-1h1v1c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1zm9 6h3v1h-3V7zm2 2h-2v1h2V9zM8.583 4h4.375L15 6v5.429a.58.58 0 0 1-.583.571H8.583A.58.58 0 0 1 8 11.429V10h1v1h5V6.5L12.5 5H9v1H8V4.571A.58.58 0 0 1 8.583 4zM9.5 7H6.667V5l-4 3 4 3V9H9.5V7z"></path>
-                    break;
-            }
-        }
+
+     if (TileType == "External Link")
+    {
+        TileType = "Web Link";
+    }
+
+    var svgType = $"icon-{TileType.Replace(" ", "-").ToLower()}";
+    <svg class="icon @(svgType)@(sizeMultiple!= null ? $" x{sizeMultiple}-icon":"")">
+        <use xlink:href="thinkblue-icons.svg#@(svgType)"></use>
     </svg>
     <span class="sr-only">@(TileType)</span>
 }

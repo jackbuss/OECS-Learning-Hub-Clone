@@ -14,6 +14,7 @@ using Umbraco.Core.Models.PublishedContent;
 using System.Web.Http.Controllers;
 using System.Net.Http.Formatting;
 using Umbraco.Core.Services;
+using System.Net;
 
 /// <summary>
 /// Summary description for ImportContent
@@ -44,7 +45,7 @@ public class ImportContentController : UmbracoApiController
 
         if (type.ToLower() == "website" || type == "" || type == null)
         {
-            tileType = "External Link";
+            tileType = "Web link";
         }
         else
         {
@@ -73,11 +74,46 @@ public class ImportContentController : UmbracoApiController
         node.SetValue("MetaDescription", title);
         node.SetValue("MetaTitle", title);
 
+
         string[] metaKeywords = new string[] { title };
         node.AssignTags("MetaKeywords", metaKeywords);
 
         string[] tileTopics = new string[] { topic };
         node.AssignTags("TileTopics", tileTopics);
+
+
+        if (tileType.ToLower() == "video")
+        {
+
+            toPrint.Add(new[] { "VIDEO" });
+            String rt;
+            WebRequest request = WebRequest.Create($"https://localhost:44384/umbraco/Api/UnristrictedRteEmbed/GetEmbed?height=240&url={link}&width=360");
+            ((System.Net.HttpWebRequest)request).UserAgent =
+            "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)";
+
+            WebResponse response = request.GetResponse();
+
+            Stream dataStream = response.GetResponseStream();
+
+            StreamReader reader = new StreamReader(dataStream);
+
+            rt = reader.ReadToEnd();
+
+            toPrint.Add(new[] { rt });
+
+            var newRt = rt.Replace("\\\"", "'");
+
+            toPrint.Add(new[] { newRt });
+
+            var jsonised = Newtonsoft.Json.JsonConvert.DeserializeObject<TWS.ThinkBlue.Core.MarkupFinder>(newRt);
+
+            var json = $"[{{\"url\": \"{link}\",\"width\": 360,\"height\": 240,\"preview\": \"{jsonised.Markup.ToString()/*.Replace("'", "\\\"")*/}\"}}]";
+
+            toPrint.Add(new[] { json.ToString() });
+
+            node.SetValue("TileExternalVideo", json);
+
+        }
 
         var originationValue = Newtonsoft.Json.JsonConvert.SerializeObject(new[] { (string)"External" });
         var typeValue = Newtonsoft.Json.JsonConvert.SerializeObject(new[] { (string)tileType });
@@ -124,7 +160,14 @@ public class ImportContentController : UmbracoApiController
 
                     caseTheme = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(theme);
 
-                    var node = Umbraco.ContentSingleAtXPath("//dtListPage[@nodeName='" + caseTheme + "']");
+                    long totalChildren = 0;
+
+                    var filter = SqlContext.Query<IContent>().Where(x => /*x.ContentTypeId == /*ID*/ /*1085 &&*/ x.Name == caseTheme);
+                    var children = cs.GetPagedChildren(id: cs.GetById(new Guid("702f7185-50cb-49ff-9df0-b123d93b2874")).Id, pageIndex: 0, pageSize: int.MaxValue, totalRecords: out totalChildren, filter: filter);
+
+
+                    var node = children.FirstOrDefault();
+                    //var node = Umbraco.ContentSingleAtXPath("//dtListPage[@nodeName='" + caseTheme + "']");
 
 
                     if (node == null)
@@ -145,8 +188,9 @@ public class ImportContentController : UmbracoApiController
 
                     }
 
-                    
-                    createContent(theme, Umbraco.ContentSingleAtXPath("//dtListPage[@nodeName='" + caseTheme + "']").Id, split);
+
+                    createContent(theme, node.Id, split);
+                    //createContent(theme, Umbraco.ContentSingleAtXPath("//dtListPage[@nodeName='" + caseTheme + "']").Id, split);
                 }
                 catch (Exception e)
                 {
