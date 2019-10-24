@@ -3,11 +3,16 @@
 <div class="row">
     @{
 
+        List<DtContentTile> items;
+
         var nodes = Umbraco.ContentAtXPath("//dtContentTile").Select(x => new DtContentTile(x)).Where(x => x.TileContentOrigination == "Original" || x.TileContentOrigination == "Partner");
+
+        items = nodes.ToList();
+        var rnd = new Random();
 
         try
         {
-            foreach (DtContentTile item in nodes.Take(3))
+            foreach (DtContentTile item in items.OrderBy(x => rnd.Next()).Take(3))
             {
                 try
                 {
