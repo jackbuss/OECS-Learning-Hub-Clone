@@ -10,7 +10,7 @@
     //set the title
     modaltitle.html(button.attr('title'));
     // Load in the content
-    modalbody.load(button.attr('href') + '?m=1', function (response, status, xhr) {});
+    modalbody.load(button.attr('href') + '?m=1', function (response, status, xhr) { });
     
 });
 

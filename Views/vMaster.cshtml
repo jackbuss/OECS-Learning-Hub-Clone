@@ -12,7 +12,8 @@
         .RequiresJs(new JavascriptFile("~/js/vendor/popper-1.14.7.min.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 })
         .RequiresJs(new JavascriptFile("~/js/vendor/bootstrap-4.3.1.min.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 })
         .RequiresJs(new JavascriptFile("~/js/vendor/picturefill-3.0.2.min.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 })
-        .RequiresJs(new JavascriptFile("~/js/vendor/js.cookie-2.2.0.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 });
+        .RequiresJs(new JavascriptFile("~/js/vendor/js.cookie-2.2.0.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 })
+        .RequiresJs(new JavascriptFile("https://player.vimeo.com/api/player.js") { ForceProvider = "FootRenderer", Priority = 1, Group = 1 });
 
     Html.RequiresJsFolder("~/scripts/sitewide", "*", 2, 2, null, "FootRenderer");
 
@@ -61,6 +62,7 @@
         }
     }
 
+    <script src="https://www.youtube.com/iframe_api"></script>
 
 </body>
 </html>
