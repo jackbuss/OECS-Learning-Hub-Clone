@@ -67,7 +67,7 @@
           "Description": "please include http(s)://",
           "Mandatory": false,
           "Name": "Tile External Url",
-          "SortOrder": 4,
+          "SortOrder": 7,
           "Validation": "https?://[a-zA-Z0-9-.]+.[a-zA-Z]{2,}",
           "VariesByCulture": false,
           "VariesBySegment": false
@@ -79,7 +79,7 @@
           "Description": "Type of tile",
           "Mandatory": true,
           "Name": "Tile Type",
-          "SortOrder": 2,
+          "SortOrder": 0,
           "Validation": null,
           "VariesByCulture": false,
           "VariesBySegment": false
@@ -91,7 +91,7 @@
           "Description": "Optional",
           "Mandatory": false,
           "Name": "Tile External Video",
-          "SortOrder": 3,
+          "SortOrder": 1,
           "Validation": null,
           "VariesByCulture": false,
           "VariesBySegment": false

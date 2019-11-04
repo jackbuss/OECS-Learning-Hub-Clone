@@ -78,16 +78,18 @@ else
 
 <div class="card mt-1 border-0">
     <div class="card-body">
-        @if (Model.ContentTitle != Model.Name)
-        {
-            <div class="">
-                <h5>@(Model.ContentTitle)</h5>
-            </div>
-        }
+
         @if (Model.ContentGrid != null)
         {
             <div class="card-text">
                 @Html.GetGridHtml(Model, "contentGrid")
+            </div>
+        }
+
+        @if (Model.ContentTitle != Model.Name)
+        {
+            <div class="">
+                <h5>@(Model.ContentTitle)</h5>
             </div>
         }
 
