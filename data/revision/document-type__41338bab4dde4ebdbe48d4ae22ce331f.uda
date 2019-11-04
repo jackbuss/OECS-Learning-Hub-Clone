@@ -27,7 +27,7 @@
           "Description": null,
           "Mandatory": false,
           "Name": "Content",
-          "SortOrder": 1,
+          "SortOrder": 0,
           "Validation": null,
           "VariesByCulture": false,
           "VariesBySegment": false
@@ -38,8 +38,8 @@
           "DataType": "umb://data-type/0cc0eba1996042c9bf9b60e150b429ae",
           "Description": null,
           "Mandatory": false,
-          "Name": "Title",
-          "SortOrder": 0,
+          "Name": "Modal CTA",
+          "SortOrder": 1,
           "Validation": null,
           "VariesByCulture": false,
           "VariesBySegment": false
@@ -69,5 +69,5 @@
   "Name": "Common Content",
   "Alias": "dtcCommonContent",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.0.1"
+  "__version": "3.1.5"
 }
