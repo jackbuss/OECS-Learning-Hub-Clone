@@ -97,8 +97,19 @@ else
                 <a href="@Model.TileExternalUrl" class="btn btn-@style card-link alert-link" title="Source Content (opens in a new window)" target="_blank">Explore</a>
             </div>
         }
+
     </div>
 </div>
+
+<hr />
+
+
+<div class="3-random card border-0">
+    <h5 class="text-center"><strong>These may also be of interest:</strong></h5>
+    @Html.Partial("Content/SuggestedTiles")
+</div>
+
+<hr />
 
 @{
 
