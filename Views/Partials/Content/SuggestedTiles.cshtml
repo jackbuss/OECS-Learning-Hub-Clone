@@ -17,7 +17,9 @@
                 try
                 {
                     var fOptions = "";
-                    <div class="col-12 col-xs-12 col-md-4 p-2">
+
+                    @renderPrimaryTile(item, "primary", fOptions)
+                    @*<div class="col-12 col-xs-12 col-md-4 p-2">
                         <div class="card">
                             <a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">
                                 <div class="row no-gutters h-100">
@@ -43,7 +45,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
+                    </div>*@
                 }
                 catch
                 {
@@ -56,7 +58,7 @@
     }
 </div>
 
-@*@helper renderPrimaryTile(DtContentTile item, string style, string fOptions)
+@helper renderPrimaryTile(DtContentTile item, string style, string fOptions)
     {
         <div class="col-12 col-xs-12 col-md-4 p-2">
             <div class="card">
@@ -65,10 +67,10 @@
                         @if (item.BannerImage != null)
                         {
                             <picture>
-                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 480, furtherOptions:fOptions))" media="(min-width: 1200px)" />
-                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 300, furtherOptions:fOptions))" media="(min-width: 996px)" />
-                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 498, furtherOptions:fOptions))" media="(min-width: 576px)" />
-                                <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 288, furtherOptions:fOptions))" alt="@(item.BannerImage.Name)" class="bg-@(style) card-img-top rounded-top" />
+                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 480, furtherOptions:fOptions))" media="(min-width: 1200px)" />
+                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 300, furtherOptions:fOptions))" media="(min-width: 996px)" />
+                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 498, furtherOptions:fOptions))" media="(min-width: 576px)" />
+                                <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 288, furtherOptions:fOptions))" alt="@(item.BannerImage.Name)" class="bg-@(style) card-img-top rounded-top" />
                             </picture>
                         }
                         else
@@ -92,7 +94,7 @@
                 </a>
             </div>
         </div>
-    }*@
+    }
 
 
 

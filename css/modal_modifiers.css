@@ -1,9 +1,9 @@
 ﻿.modal { padding-right: 0 !important; }
 
-.modal-full { min-width: 1200px; margin: 0 auto; }
+.modal-full { min-width: 996px; margin: 0 auto; }
     .modal-full .modal-content { min-height: 100vh; }
 
-@media (max-width: 1200px) {
+@media (max-width: 996px) {
     .modal-full { min-width: 100%; }
 }
 
