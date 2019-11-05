@@ -1,7 +1,6 @@
 ﻿; (function (tbSearch, undefined) {
     //private
     $(function () {
-
         $(window).on('scroll resize', tbSearch.debounce(function (e) {
             if ($('button#load-more').is(':in-viewport')) { // Check if visible on the screen
                 $('button#load-more').trigger('click'); // Click button
@@ -14,6 +13,11 @@
             $(form).submit();
         }, 300));
 
+        $("#search-filters .custom-rb").on("click", function (e) {
+            $("#search-form-wrapper").collapse("hide"); // collapse the search menu when filteroption selected
+            var form = $(e.target).closest('form');
+            $(form).submit();
+        });
     });
     //public 
     tbSearch.loadMoreSuccess = function (data) {

@@ -59,6 +59,29 @@
             @Html.HiddenFor(m => m.FieldPropertyAliases)
             @Html.HiddenFor(m => m.PageSize)
             @Html.HiddenFor(m => m.SearchTerm)
+            @Html.HiddenFor(m => m.Browse)
+
+            if (Model.SearchThemes != null)
+            {
+                for (int i = 0; i < Model.SearchThemes.Count(); i++)
+                {
+                    @Html.HiddenFor(m => m.SearchThemes[i].Value)
+                }
+            }
+            if (Model.SearchTypes != null)
+            {
+                for (int i = 0; i < Model.SearchTypes.Count(); i++)
+                {
+                    @Html.HiddenFor(m => m.SearchTypes[i].Value)
+                }
+            }
+            if (Model.SearchPersonas != null)
+            {
+                for (int i = 0; i < Model.SearchPersonas.Count(); i++)
+                {
+                    @Html.HiddenFor(m => m.SearchPersonas[i].Value)
+                }
+            }
             @Html.AntiForgeryToken();
 
             if (Model.SearchResults.PageNumber < Model.SearchResults.PageCount)
@@ -102,7 +125,7 @@
                         <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576, furtherOptions:fOptions))" media="(min-width: 576px)" />
                         <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576,furtherOptions:fOptions))" alt="@(item.BannerImage.Name)" class="card-img-top rounded" />
                     </picture>
-                }                
+                }
                 <div class="card-img-overlay d-flex flex-column justify-content-end text-white p-1">
                     @if (item.BannerImage != null)
                     {
