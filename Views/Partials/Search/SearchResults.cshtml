@@ -4,18 +4,24 @@
     var styles = new List<string> { "primary", "secondary", "info", "success", "warning", "danger" };
     var rnd = new Random();
     var fOptions = "&tint=255,255,255,165";
+    DtContentTile featuredTile = null;
 }
 @if (Model.SearchResults != null)
 {
     if (Model.SearchResults.HasResults)
     {
         @*Initial hero content*@
-        @*if (Model.SearchResults.FeaturedResults.Any())
+        if (Model.SearchResults.FeaturedResults != null && Model.SearchResults.PageNumber == 1
+                && String.IsNullOrWhiteSpace(Model.Browse) && String.IsNullOrWhiteSpace(Model.SearchTerm))
+        {
+            if (Model.SearchResults.FeaturedResults.Any())
             {
                 //inject the top featured rather than include in the search
-                // check for a cookie to see if we watched the item
-                @renderFeaturedTile(Model.SearchResults.FeaturedResults.First() as DtContentTile, "primary");
-            }*@
+                // TODO: check for a cookie to see if we watched the item
+                featuredTile = Model.SearchResults.FeaturedResults.First() as DtContentTile;
+                @renderFeaturedTile(featuredTile, "primary", fOptions);
+            }
+        }
 
         @*now our search results mapping a fixed tile pattern with a little variation*@
         foreach (DtContentTile result in Model.SearchResults.Results)
@@ -33,10 +39,21 @@
             switch (item.TileContentOrigination)
             {
                 case "Original":
-                    @renderPrimaryTile(item, style, fOptions)
+                    if (Model.SearchResults.FeaturedResults.Contains(item))
+                    {
+                        // don't reshow the featured item
+                        if (featuredTile != item)
+                        {
+                            @renderFeaturedTile(item, style, fOptions)
+                        }
+                    }
+                    else
+                    {
+                        @renderPrimaryTile(item, style, fOptions)
+                    }
                     break;
                 case "Partner":
-                    @renderFeaturedTile(item, style, fOptions)
+                    @renderPrimaryTile(item, style, fOptions)
                     break;
                 case "External":
                     @renderExternalTile(item, style, fOptions)
@@ -86,7 +103,7 @@
 
             if (Model.SearchResults.PageNumber < Model.SearchResults.PageCount)
             {
-                <button id="load-more" class="btn btn-primary mt-4" name="page-@(Model.SearchResults.PageNumber + 1)" aria-label="Load More Results">
+                <button id="load-more" class="btn btn-primary ml-2 mt-4" name="page-@(Model.SearchResults.PageNumber + 1)" aria-label="Load More Results">
                     Load More
                 </button>
             }
@@ -94,8 +111,8 @@
     }
     else
     {
-        // need to show suggested results.
-        <p>No results to display</p>
+        // need to show suggested results?
+        <div class="col-12"><p>No results to display</p></div>
     }
 }
 @helper renderThemeIcon(string TileType, int? sizeMultiple)
