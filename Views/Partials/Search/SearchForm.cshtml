@@ -31,77 +31,9 @@
     </div>
 
     <div id="search-filters">
-        @if (Model.SearchThemes.Any())
-        {
-            <div class="card border-0 bg-transparent">
-                <div class="card-header bg-white">
-                    <p class="mb-0">Browse Themes</p>
-                </div>
-
-                <div class="card-body bg-info">
-                    <div class="row">
-                        @renderBrowseOptions(Model.SearchThemes, true)
-                    </div>
-                </div>
-
-            </div>
-        }
-        @if (Model.SearchTypes.Any())
-        {
-            <div class="card border-0 bg-transparent">
-                <div class="card-header bg-white d-flex align-items-center justify-content-between" id="headingMedia">
-                    <p class="mb-0">Browse Media</p>
-                </div>
-                <div id="collapseMedia" aria-labelledby="headingMedia">
-                    <div class="card-body bg-info">
-                        <div class="row p-1">
-                            @*@for (int i = 0; i < Model.SearchTypes.Count; i++)
-                                {
-                                    <div class="col-6 col-lg-3 col-md-4 pt-2 pb-2 pl-4">
-                                        <div class="row">
-                                            <div class="col-2 rounded pt-1 pb-2 d-flex align-items-center justify-content-center">
-                                                <div class="text-primary">@renderThemeIcon(Model.SearchTypes[i].Value, 2)</div>
-                                            </div>
-                                            <div class="col-10 p-0">
-                                                <div class="card-body p-2">
-                                                    <div class="custom-control custom-radio text-white">
-                                                        @Html.RadioButtonFor(m => m.Browse, Model.SearchTypes[i].Id, new { id = Model.SearchTypes[i].Value.Replace(" ", "_"), @class = "custom-control-input" })
-                                                        @Html.Label(Model.SearchTypes[i].Value, Model.SearchTypes[i].Value, new { @class = "custom-control-label pl-1" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }*@
-                            @renderBrowseOptions(Model.SearchTypes, false)
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-        @if (Model.SearchPersonas.Any())
-        {
-            <div class="card border-0 bg-transparent">
-                <div class="card-header bg-white d-flex align-items-center justify-content-between" id="headingUser">
-                    <p class="mb-0">Browse Interests</p>
-                </div>
-                <div id="collapseUser" aria-labelledby="headingUser">
-                    <div class="card-body bg-info">
-                        <div class="row p-1">
-                            @renderBrowseOptions(Model.SearchPersonas, false)
-
-                            @*@for (int i = 0; i < Model.SearchPersonas.Count; i++)
-                                {
-                                    <div class="custom-control custom-radio text-white mb-1">
-                                        @Html.RadioButtonFor(m => m.Browse, Model.SearchPersonas[i].Value, new { id = Model.SearchPersonas[i].Value.Replace(" ", "_"), @class = "custom-control-input" })
-                                        @Html.Label(Model.SearchPersonas[i].Value, Model.SearchPersonas[i].Value, new { @class = "custom-control-label pl-1" })
-                                    </div>
-                                }*@
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
+        @renderBrowseOptions(Model.SearchThemes, true, "Themes", "tileTheme")
+        @renderBrowseOptions(Model.SearchTypes, false, "Media", "tileType")
+        @renderBrowseOptions(Model.SearchPersonas, false, "Interests", "tilePersonna")
     </div>
 
     <button id="search-button" class="btn btn-primary float-right mt-2 mb-2" type="submit">Explore</button>
@@ -121,40 +53,55 @@
     <span class="sr-only">@(TileType)</span>
 }
 
-@helper renderBrowseOptions(List<TWS.ThinkBlue.Models.FilterModel> filterList, bool isImage)
+@helper renderBrowseOptions(List<TWS.ThinkBlue.Models.FilterModel> filterList, bool isImage, string title, string field)
 {
-    for (int i = 0; i < filterList.Count; i++)
+    if (filterList.Any())
     {
-        var fOptions = "";// "&tint=255,255,255,165";
-        IPublishedContent bannerImage = null;
-
-        if (isImage)
-        {
-            DtListPage item = Umbraco.Content(filterList[i].Id) as DtListPage;
-            bannerImage = (item.BannerImage != null ? item.BannerImage : Umbraco.Media(Guid.Parse("e2fdcf23-4e61-46ef-9837-7e88ca180132")));
-        }
-
-        <div class="col-6 col-md-4 col-lg-3">
-            <div class="text-white custom-rb">
-                @Html.RadioButtonFor(m => m.Browse, filterList[i].Id, new { id = filterList[i].Value.Replace(" ", "_") })
-                <label for="@filterList[i].Value.Replace(" ","_")" class="w-100 d-inline-flex align-items-center">
-                    @if (isImage)
-                    {
-                        <picture>
-                            <source srcset="@(bannerImage.GetCropUrl(cropAlias: "Square", width: 240, furtherOptions: fOptions))" media="(min-width: 1200px)" />
-                            <source srcset="@(bannerImage.GetCropUrl(cropAlias: "Square", width: 120, furtherOptions: fOptions))" media="(min-width: 996px)" />
-                            <source srcset="@(bannerImage.GetCropUrl(cropAlias: "Square", width: 80, furtherOptions: fOptions))" media="(min-width: 576px)" />
-                            <img srcset="@(bannerImage.GetCropUrl(cropAlias: "Square", width: 80, furtherOptions: fOptions))" alt="@(bannerImage.Name)" class="card-img" />
-                        </picture>
-                    }
-                    else
-                    {
-                        <span id="icon" class="text-primary pb-2 pt-2">@renderThemeIcon(filterList[i].Value, 2)</span>
-                    }
-                    <span class="w-100 p-2">@(filterList[i].Value)</span>
-                </label>
+        <div class="card border-0 bg-transparent">
+            <div class="card-header bg-white" id="heading@(title)">
+                <p class="mb-0">Browse @(title)</p>
             </div>
+            <div aria-labelledby="heading@(title)">
+                <div class="card-body bg-info">
+                    <div class="row p-1">
+                        @for (int i = 0; i < filterList.Count; i++)
+                        {
+                            var fOptions = "";// "&tint=255,255,255,165";
+                            IPublishedContent bannerImage = null;
 
+                            string filterValue = $"{field}|{filterList[i].Value}";
+
+
+                            if (isImage)
+                            {
+                                DtListPage item = Umbraco.Content(filterList[i].Id) as DtListPage;
+                                bannerImage = (item.BannerImage != null ? item.BannerImage : Umbraco.Media(Guid.Parse("e2fdcf23-4e61-46ef-9837-7e88ca180132")));
+                            }
+                            <div class="col-6 col-md-4 col-lg-3">
+                                <div class="text-white custom-rb">
+                                    @Html.RadioButtonFor(m => m.Browse, filterValue, new { id = filterList[i].Value.Replace(" ", "_") })
+                                    <label for="@filterList[i].Value.Replace(" ","_")" class="w-100 d-inline-flex align-items-center">
+                                        @if (isImage)
+                                        {
+                                            <picture>
+                                                <source srcset="@(bannerImage.GetCropUrl(cropAlias: "Square", width: 240, furtherOptions: fOptions))" media="(min-width: 1200px)" />
+                                                <source srcset="@(bannerImage.GetCropUrl(cropAlias: "Square", width: 120, furtherOptions: fOptions))" media="(min-width: 996px)" />
+                                                <source srcset="@(bannerImage.GetCropUrl(cropAlias: "Square", width: 80, furtherOptions: fOptions))" media="(min-width: 576px)" />
+                                                <img srcset="@(bannerImage.GetCropUrl(cropAlias: "Square", width: 80, furtherOptions: fOptions))" alt="@(bannerImage.Name)" class="card-img" />
+                                            </picture>
+                                        }
+                                        else
+                                        {
+                                            <span id="icon" class="text-primary pb-2 pt-2">@renderThemeIcon(filterList[i].Value, 2)</span>
+                                        }
+                                        <span class="w-100 p-2">@(filterList[i].Value)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     }
 }
