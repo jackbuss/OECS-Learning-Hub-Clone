@@ -13,7 +13,7 @@
             $(form).submit();
         }, 300));
 
-        $("#search-filters .custom-rb").on("click", function (e) {
+        $("#search-filters .custom-rb [type=radio]").on("click", function (e) {
             $("#search-form-wrapper").collapse("hide"); // collapse the search menu when filteroption selected
             var form = $(e.target).closest('form');
             $(form).submit();
