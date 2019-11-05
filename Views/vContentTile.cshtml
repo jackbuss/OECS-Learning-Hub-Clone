@@ -47,7 +47,7 @@ else
         @if (Model.TileExternalVideo != null)
         {
             <div class="embed-responsive embed-responsive-16by9 rounded">
-                @Html.Raw(Model.TileExternalVideo.EmbedCode.ToHtmlString().Replace("<iframe", "<iframe class=\"embed-responsive-item\"").Replace("?feature=oembed", "?feature=oembed&rel=0"))
+                @Html.Raw(Model.TileExternalVideo.EmbedCode.ToHtmlString().Replace("<iframe", "<iframe class=\"embed-responsive-item\"").Replace("?feature=oembed", "?feature=oembed&rel=0&enablejsapi=1&version=3"))
             </div>
         }
         else if (item.BannerImage != null)
@@ -78,16 +78,18 @@ else
 
 <div class="card mt-1 border-0">
     <div class="card-body">
-        @if (Model.ContentTitle != Model.Name)
-        {
-            <div class="">
-                <h5>@(Model.ContentTitle)</h5>
-            </div>
-        }
+
         @if (Model.ContentGrid != null)
         {
             <div class="card-text">
                 @Html.GetGridHtml(Model, "contentGrid")
+            </div>
+        }
+
+        @if (Model.ContentTitle != Model.Name)
+        {
+            <div class="pb-2">
+                <h5>@(Model.ContentTitle)</h5>
             </div>
         }
 
@@ -97,39 +99,22 @@ else
                 <a href="@Model.TileExternalUrl" class="btn btn-@style card-link alert-link" title="Source Content (opens in a new window)" target="_blank">Explore</a>
             </div>
         }
+
     </div>
 </div>
 
-@{
+<hr />
 
-    try
-    {
-        var fOptions = "&tint=255,255,255,165";
-        var node = Model.Value("SelectedCallToAction", fallback: Fallback.ToAncestors) as MtCallToAction;
-        if (node != null)
-        {
-            <div class="card border-0">
 
-                <picture>
-                    <source srcset="@(node.GetCropUrl(width: 960, furtherOptions: fOptions + "&heightRatio=0.2"))" media="(min-width: 1200px)" />
-                    <source srcset="@(node.GetCropUrl(cropAlias: "Landscape", width: 600, furtherOptions: fOptions))" media="(min-width: 996px)" />
-                    <source srcset="@(node.GetCropUrl(cropAlias: "Landscape", width: 576, furtherOptions: fOptions))" media="(min-width: 576px)" />
-                    <img srcset="@(node.GetCropUrl(cropAlias: "Landscape", width: 576, furtherOptions: fOptions))" alt="@(node.Name)" class="card-img-top rounded" />
-                </picture>
+<div class="3-random card border-0">
+    <h5 class="text-center"><strong>These may also be of interest:</strong></h5>
+    @Html.Partial("Content/SuggestedTiles")
+</div>
 
-                <div class="calltoaction card-img-overlay d-flex flex-column">
-                    <div class="inner-container m-auto d-flex flex-column">
-                        <h5 class="m-auto text-white pb-3 text-center">@node.Value("CtaText")</h5>
-                        <a class="m-auto text-info" href="@node.Value("CallToActionURL")" target="_blank" title="@node.CtaText (Opens in a new window)">
-                            @renderThemeIcon("study-arrow", 4)
-                        </a>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-    catch { }
-}
+<hr />
+
+
+@Html.Partial("Content/CallToAction")
 
 
 @helper renderThemeIcon(string TileType, int? sizeMultiple)

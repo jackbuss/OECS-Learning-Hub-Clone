@@ -1,0 +1,48 @@
+﻿﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+
+    try
+    {
+        var fOptions = "&tint=255,255,255,165";
+        var node = Model.Value("SelectedCallToAction", fallback: Fallback.ToAncestors) as MtCallToAction;
+        if (node != null)
+        {
+            <div class="card border-0">
+
+                <picture>
+                    <source srcset="@(node.GetCropUrl(width: 960, furtherOptions: fOptions + "&heightRatio=0.2"))" media="(min-width: 1200px)" />
+                    <source srcset="@(node.GetCropUrl(cropAlias: "Landscape", width: 600, furtherOptions: fOptions))" media="(min-width: 996px)" />
+                    <source srcset="@(node.GetCropUrl(cropAlias: "Landscape", width: 576, furtherOptions: fOptions))" media="(min-width: 576px)" />
+                    <img srcset="@(node.GetCropUrl(cropAlias: "Landscape", width: 576, furtherOptions: fOptions))" alt="@(node.Name)" class="card-img-top rounded" />
+                </picture>
+
+                <div class="calltoaction card-img-overlay d-flex flex-column">
+                    <div class="inner-container m-auto d-flex flex-column">
+                        <h5 class="m-auto text-white pb-3 text-center">@node.Value("CtaText")</h5>
+                        <a class="m-auto text-info" href="@node.Value("CallToActionURL")" target="_blank" title="@node.CtaText (Opens in a new window)">
+                            @renderThemeIcon("study-arrow", 4)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    catch { }
+}
+
+
+@helper renderThemeIcon(string TileType, int? sizeMultiple)
+{
+
+    if (TileType == "External Link")
+    {
+        TileType = "Web Link";
+    }
+
+    var svgType = $"icon-{TileType.Replace(" ", "-").ToLower()}";
+    <svg class="icon @(svgType)@(sizeMultiple!= null ? $" x{sizeMultiple}-icon":"")">
+        <use xlink:href="/thinkblue-icons.svg#@(svgType)"></use>
+    </svg>
+    <span class="sr-only">@(TileType)</span>
+}

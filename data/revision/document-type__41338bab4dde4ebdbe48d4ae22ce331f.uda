@@ -18,7 +18,7 @@
     {
       "Key": "fe65f177-97ea-48e4-a6ce-3bb4b6330a60",
       "Name": "Content",
-      "SortOrder": 0,
+      "SortOrder": 1,
       "PropertyTypes": [
         {
           "Key": "a530a6e3-a366-4c27-821e-b6af6eb39aff",
@@ -27,7 +27,7 @@
           "Description": null,
           "Mandatory": false,
           "Name": "Content",
-          "SortOrder": 1,
+          "SortOrder": 5,
           "Validation": null,
           "VariesByCulture": false,
           "VariesBySegment": false
@@ -38,8 +38,8 @@
           "DataType": "umb://data-type/0cc0eba1996042c9bf9b60e150b429ae",
           "Description": null,
           "Mandatory": false,
-          "Name": "Title",
-          "SortOrder": 0,
+          "Name": "Modal CTA",
+          "SortOrder": 6,
           "Validation": null,
           "VariesByCulture": false,
           "VariesBySegment": false
@@ -69,5 +69,5 @@
   "Name": "Common Content",
   "Alias": "dtcCommonContent",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.0.1"
+  "__version": "3.1.5"
 }

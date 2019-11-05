@@ -17,7 +17,8 @@
   "Parent": null,
   "CompositionContentTypes": [
     "umb://document-type/06ef76a52eb64783b1eccbb983613a8e",
-    "umb://document-type/41338bab4dde4ebdbe48d4ae22ce331f"
+    "umb://document-type/41338bab4dde4ebdbe48d4ae22ce331f",
+    "umb://document-type/c0c71f0963e349bcb01be18ab5f2a82e"
   ],
   "PropertyGroups": [],
   "PropertyTypes": [],
@@ -34,6 +35,11 @@
       "Mode": 0
     },
     {
+      "Udi": "umb://document-type/c0c71f0963e349bcb01be18ab5f2a82e",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
       "Udi": "umb://template/c14ea62833b84085a9ab096e3427c927",
       "Ordering": true,
       "Mode": 0
@@ -42,5 +48,5 @@
   "Name": "Info Page",
   "Alias": "dtInfoPage",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.0.2"
+  "__version": "3.1.5"
 }
