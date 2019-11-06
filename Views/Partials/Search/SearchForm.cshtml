@@ -36,7 +36,7 @@
         @renderBrowseOptions(Model.SearchPersonas, false, "Interests", "tilePersonna")
     </div>
 
-    <button id="search-button" class="btn btn-primary float-right mt-2 mb-2" type="submit">Explore</button>
+    @*<button id="search-button" class="btn btn-primary float-right mt-2 mb-2" type="submit">Explore</button>*@
 }
 
 @helper renderThemeIcon(string TileType, int? sizeMultiple)
@@ -59,7 +59,7 @@
     {
         <div class="card border-0 bg-transparent">
             <div class="card-header bg-white" id="heading@(title)">
-                <p class="mb-0">Browse @(title)</p>
+                <p class="mb-0">Browse by @(title)</p>
             </div>
             <div aria-labelledby="heading@(title)">
                 <div class="card-body bg-info">
