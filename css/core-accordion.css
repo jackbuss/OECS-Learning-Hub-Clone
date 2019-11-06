@@ -1,4 +1,4 @@
-﻿#accordion .card-header {
+﻿/*#accordion .card-header {
     cursor: pointer;
 }
 
@@ -11,4 +11,27 @@
     #accordion .card-header.collapsed:after {
         content: url("data:image/svg+xml;charset=UTF-8, <svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' class='octicon' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M5.5 3L7 4.5 3.25 8 7 11.5 5.5 13l-5-5 5-5z'></path></svg>");
         display: block;
+    }*/
+
+
+.custom-rb [type=radio] {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.custom-rb label > picture, .custom-rb label > #icon {
+    opacity: 0.7;
+}
+
+.custom-rb [type=radio]:checked + label {
+    text-decoration: underline;
+}
+
+    .custom-rb [type=radio]:checked + label > picture, .custom-rb [type=radio]:checked + label > #icon {
+        opacity: 1;
     }
+
+.custom-rb label {
+    cursor: pointer;
+}

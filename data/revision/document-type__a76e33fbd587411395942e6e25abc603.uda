@@ -20,6 +20,7 @@
   "Parent": null,
   "CompositionContentTypes": [
     "umb://document-type/06ef76a52eb64783b1eccbb983613a8e",
+    "umb://document-type/b8988f1b408649b68fdc10165d603ad3",
     "umb://document-type/ba85ac7eec3b45c48b3e9ad8b211b31c",
     "umb://document-type/c0c71f0963e349bcb01be18ab5f2a82e"
   ],
@@ -35,6 +36,11 @@
     {
       "Udi": "umb://document-type/a76e33fbd587411395942e6e25abc603",
       "Ordering": false,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://document-type/b8988f1b408649b68fdc10165d603ad3",
+      "Ordering": true,
       "Mode": 0
     },
     {
@@ -61,5 +67,5 @@
   "Name": "List Page",
   "Alias": "dtListPage",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.1.4"
+  "__version": "3.1.5"
 }
