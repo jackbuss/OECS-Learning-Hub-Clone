@@ -5,7 +5,7 @@
 
         List<DtContentTile> items;
 
-        var nodes = Umbraco.ContentAtXPath("//dtContentTile").Select(x => new DtContentTile(x)).Where(x => x.TileContentOrigination == "Original" || x.TileContentOrigination == "Partner");
+        var nodes = Umbraco.ContentAtXPath("//dtContentTile").Select(x => new DtContentTile(x)).Where(x => (x.TileContentOrigination == "Original" || x.TileContentOrigination == "Partner") && x.Key != Model.Key);
 
         items = nodes.ToList();
         var rnd = new Random();
@@ -19,37 +19,9 @@
                     var fOptions = "";
 
                     @renderPrimaryTile(item, "primary", fOptions)
-                    @*<div class="col-12 col-xs-12 col-md-4 p-2">
-                        <div class="card">
-                            <a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">
-                                <div class="row no-gutters h-100">
-                                    @if (item.BannerImage != null)
-                                    {
-                                        <div class="col-4 rounded p-0">
-                                            <picture>
-                                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 320, furtherOptions:fOptions))" media="(min-width: 1200px)" />
-                                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 200, furtherOptions:fOptions))" media="(min-width: 996px)" />
-                                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 166, furtherOptions:fOptions))" media="(min-width: 576px)" />
-                                                <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 192, furtherOptions:fOptions))" alt="@(item.BannerImage.Name)" class="card-img rounded h-100" />
-                                            </picture>
-                                        </div>
-                                    }
-                                    <div class="@(item.BannerImage != null ? "col-8" : "col-12") p-0">
-                                        <div class="card-body p-2">
-                                            <small class="card-text text-info  mb-0">@renderThemeIcon(item.TileType, 2) @(item.Parent.Name.ToUpper())</small>
-                                            <h5 class="card-title text-primary">
-                                                @(item.Name)
-                                            </h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>*@
                 }
                 catch
                 {
-                    <p>no</p>
                 }
             }
         }
@@ -62,7 +34,7 @@
     {
         <div class="col-12 col-xs-12 col-md-4 p-2">
             <div class="card">
-                <a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">
+                <a class="suggestedContent" href="#" data-forward="@item.Url" @*data-toggle="modal" data-target="#modal" *@title="@(item.Name)">
                     <div class="card-img">
                         @if (item.BannerImage != null)
                         {
