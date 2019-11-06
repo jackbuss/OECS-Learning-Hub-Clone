@@ -6,32 +6,34 @@
     var button = $(event.relatedTarget); // Button that triggered the modal
     var imgsrc, iframesrc, title, target;
 
-    // Load in the content
-    modalbody.load(button.attr('href') + '?m=1', function (response, status, xhr) {
-        if (status == "success") {
+    if (button.length > 0) {
+        // Load in the content
+        modalbody.load(button.attr('href') + '?m=1', function (response, status, xhr) {
+            if (status == "success") {
 
-            if (modalbody.find(".embed-responsive-item").length > 0) {
-                var tileId = button.data("key");
+                if (modalbody.find(".embed-responsive-item").length > 0) {
+                    var tileId = button.data("key");
 
-                var iframe = $(".embed-responsive-item");
-                if (iframe.attr("src").includes("vimeo.com")) {
-                    var player = new Vimeo.Player(iframe);
+                    var iframe = $(".embed-responsive-item");
+                    if (iframe.attr("src").includes("vimeo.com")) {
+                        var player = new Vimeo.Player(iframe);
 
-                    player.on('ended', function () {
-                        injectEnd(tileId);
-                    });
-                } else if (iframe.attr("src").includes("youtube.com")) {
+                        player.on('ended', function () {
+                            injectEnd(tileId);
+                        });
+                    } else if (iframe.attr("src").includes("youtube.com")) {
 
 
+
+                    }
 
                 }
 
+            } else {
+                modalbody.html("<h1>Sorry an error has occurred, please try again later</h1>");
             }
-
-        } else {
-            modalbody.html("<h1>Sorry an error has occurred, please try again later</h1>");
-        }
-    });
+        });
+    }
 
 });
 
