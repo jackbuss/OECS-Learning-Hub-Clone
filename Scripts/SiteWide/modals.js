@@ -2,13 +2,10 @@
 
     var modal = $(this);
     var modalbody = modal.find('.modal-body');
-    var modaltitle = modal.find('.modal-title');
 
     var button = $(event.relatedTarget); // Button that triggered the modal
     var imgsrc, iframesrc, title, target;
 
-    //set the title
-    modaltitle.html(button.attr('title'));
     // Load in the content
     modalbody.load(button.attr('href') + '?m=1', function (response, status, xhr) {
         if (status == "success") {

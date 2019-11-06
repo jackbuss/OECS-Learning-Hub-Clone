@@ -51,6 +51,8 @@
     <!-- lazy load JS renderer-->
     @Html.RenderJsHere("LazyLoadRenderer")
 
+
+
     @{
         if (Request.Cookies["cookies"] != null)
         {
@@ -58,7 +60,6 @@
             {
                 @Html.Partial("Meta/GoogleAnalytics")
             }
-
         }
     }
 
