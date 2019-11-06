@@ -16,9 +16,16 @@
         {
             if (Model.SearchResults.FeaturedResults.Any())
             {
-                //inject the top featured rather than include in the search
-                // TODO: check for a cookie to see if we watched the item
                 featuredTile = Model.SearchResults.FeaturedResults.First() as DtContentTile;
+                //inject the top featured rather than include in the search
+
+                List<String> cookieList = new List<String>();
+                if (Request.Cookies["viewedVideos"] != null)
+                {
+                    String[] cookie = Request.Cookies["viewedVideos"].Value.Split(',');
+                    cookieList = cookie.ToList();
+                    featuredTile = Model.SearchResults.FeaturedResults.Where(x => !cookieList.Contains(x.Key.ToString())).First() as DtContentTile;
+                }
                 @renderFeaturedTile(featuredTile, "primary", fOptions);
             }
         }
@@ -133,7 +140,7 @@
 {
     <div class="col-12 col-xs-12 col-md-8 col-lg-6 p-2">
         <div class="card bg-@(style) border-0 min-vh-30">
-            <a class="text-white" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">
+            <a class="text-white" href="@item.Url" @(item.TileType == "Video" ? $"data-key={@item.Key}" : "") data-toggle="modal" data-target="#modal" title="@(item.Name)">
                 @if (item.BannerImage != null)
                 {
                     <picture>
