@@ -9,8 +9,18 @@
 
         $(document).on("keyup", "#SearchTerm", tbSearch.debounce(function (e) {
             e.preventDefault();
+            //close up the browse options and remove any selection
+            $('#search-filters').collapse("hide");
+            $('input:radio[name=Browse]:checked').prop('checked', false);
+
+            if ($(this).val() === '') {
+                //show the browse options when search empty
+                $('#search-filters').collapse("show");
+            }
+
             var form = $(e.target).closest('form');
             $(form).submit();
+
         }, 300));
 
         $("#search-filters .custom-rb [type=radio]").on("click", function (e) {

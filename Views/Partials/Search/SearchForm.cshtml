@@ -30,7 +30,7 @@
         @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search", @class = "form-control", autocomplete = "off" })
     </div>
 
-    <div id="search-filters">
+    <div id="search-filters" class="collapse show">
         @renderBrowseOptions(Model.SearchThemes, true, "Themes", "tileTheme")
         @renderBrowseOptions(Model.SearchTypes, false, "Media", "tileType")
         @renderBrowseOptions(Model.SearchPersonas, false, "Interests", "tilePersonna")
