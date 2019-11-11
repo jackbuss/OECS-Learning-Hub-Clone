@@ -4445,6 +4445,12 @@
             Returns a list of all unique message templates and their counts
             </summary>
         </member>
+        <member name="M:Umbraco.Core.Logging.Viewer.ILogViewer.GetLogLevel">
+            <summary>
+            Gets the current Serilog minimum log level
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Umbraco.Core.Logging.Viewer.ILogViewer.GetLogs(Umbraco.Core.Logging.Viewer.LogTimePeriod,System.Int32,System.Int32,Umbraco.Core.Persistence.DatabaseModelDefinitions.Direction,System.String,System.String[])">
             <summary>
             Returns the collection of logs
@@ -4484,6 +4490,12 @@
             <summary>
             Get all logs from your chosen data source back as Serilog LogEvents
             </summary>
+        </member>
+        <member name="M:Umbraco.Core.Logging.Viewer.LogViewerSourceBase.GetLogLevel">
+            <summary>
+            Get the Serilog minimum-level value from the config file. 
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Umbraco.Core.Logging.IProfilingLogger">
             <summary>
@@ -8856,6 +8868,16 @@
             <param name="variations">The variations.</param>
             <remarks>Is used by <see cref="T:Umbraco.Core.Models.PublishedContent.PublishedContentType"/> constructor to create special property types.</remarks>
         </member>
+        <member name="M:Umbraco.Core.Models.PublishedContent.IPublishedContentTypeFactory.CreateCorePropertyType(Umbraco.Core.Models.PublishedContent.IPublishedContentType,System.String,System.Int32,Umbraco.Core.Models.ContentVariation)">
+            <summary>
+            Creates a core (non-user) published property type.
+            </summary>
+            <param name="contentType">The published content type owning the property.</param>
+            <param name="propertyTypeAlias">The property type alias.</param>
+            <param name="dataTypeId">The datatype identifier.</param>
+            <param name="variations">The variations.</param>
+            <remarks>Is used by <see cref="T:Umbraco.Core.Models.PublishedContent.PublishedContentType"/> constructor to create special property types.</remarks>
+        </member>
         <member name="M:Umbraco.Core.Models.PublishedContent.IPublishedContentTypeFactory.GetDataType(System.Int32)">
             <summary>
             Gets a published datatype.
@@ -9188,6 +9210,9 @@
             <inheritdoc />
         </member>
         <member name="M:Umbraco.Core.Models.PublishedContent.PublishedContentTypeFactory.CreatePropertyType(Umbraco.Core.Models.PublishedContent.IPublishedContentType,System.String,System.Int32,Umbraco.Core.Models.ContentVariation)">
+            <inheritdoc />
+        </member>
+        <member name="M:Umbraco.Core.Models.PublishedContent.PublishedContentTypeFactory.CreateCorePropertyType(Umbraco.Core.Models.PublishedContent.IPublishedContentType,System.String,System.Int32,Umbraco.Core.Models.ContentVariation)">
             <inheritdoc />
         </member>
         <member name="M:Umbraco.Core.Models.PublishedContent.PublishedContentTypeFactory.CreatePropertyType(System.String,System.Int32,System.Boolean,Umbraco.Core.Models.ContentVariation)">
@@ -15027,6 +15052,17 @@
             <summary>
             Determines whether an object has all required values for persistence.
             </summary>
+        </member>
+        <member name="M:Umbraco.Core.PropertyEditors.ConfigurationFieldsExtensions.Add(System.Collections.Generic.List{Umbraco.Core.PropertyEditors.ConfigurationField},System.String,System.String,System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Adds a configuration field.
+            </summary>
+            <param name="fields">The list of configuration fields.</param>
+            <param name="key">The key (alias) of the field.</param>
+            <param name="name">The name (label) of the field.</param>
+            <param name="description">The description for the field.</param>
+            <param name="view">The path to the editor view to be used for the field.</param>
+            <param name="config">Optional configuration used for field's editor.</param>
         </member>
         <member name="T:Umbraco.Core.PropertyEditors.IIgnoreUserStartNodesConfig">
             <summary>
@@ -22049,12 +22085,14 @@
             <param name="factory"></param>
             <returns></returns>
         </member>
-        <member name="M:Umbraco.Core.PublishedModelFactoryExtensions.WithSafeLiveFactory(Umbraco.Core.Models.PublishedContent.IPublishedModelFactory,System.Action)">
+        <member name="M:Umbraco.Core.PublishedModelFactoryExtensions.WithSafeLiveFactoryReset(Umbraco.Core.Models.PublishedContent.IPublishedModelFactory,System.Action)">
             <summary>
-            Executes an action with a safe live factory
+            Sets a flag to reset the ModelsBuilder models if the <see cref="T:Umbraco.Core.Models.PublishedContent.IPublishedModelFactory"/> is <see cref="T:Umbraco.Core.Models.PublishedContent.ILivePublishedModelFactory"/>
             </summary>
+            <param name="factory"></param>
+            <param name="action"></param>
             <remarks>
-            <para>If the factory is a live factory, ensures it is refreshed and locked while executing the action.</para>
+            This does not recompile the pure live models, only sets a flag to tell models builder to recompile when they are requested.
             </remarks>
         </member>
         <member name="M:Umbraco.Core.Services.PropertyValidationService.IsPropertyDataValid(Umbraco.Core.Models.IContent,Umbraco.Core.Models.Property[]@,Umbraco.Core.Models.CultureImpact)">
@@ -25707,7 +25745,14 @@
             <param name="mediaService"></param>
             <returns></returns>
         </member>
-        <member name="M:Umbraco.Core.Services.ContentTypeServiceExtensions.GetAvailableCompositeContentTypes(Umbraco.Core.Services.IContentTypeService,Umbraco.Core.Models.IContentTypeComposition,Umbraco.Core.Models.IContentTypeComposition[],System.String[],System.String[])">
+        <member name="M:Umbraco.Core.Services.ContentTypeServiceExtensions.GetAllElementTypes(Umbraco.Core.Services.IContentTypeService)">
+            <summary>
+            Gets all of the element types (e.g. content types that have been marked as an element type).
+            </summary>
+            <param name="contentTypeService">The content type service.</param>
+            <returns>Returns all the element types.</returns>
+        </member>
+        <member name="M:Umbraco.Core.Services.ContentTypeServiceExtensions.GetAvailableCompositeContentTypes(Umbraco.Core.Services.IContentTypeService,Umbraco.Core.Models.IContentTypeComposition,Umbraco.Core.Models.IContentTypeComposition[],System.String[],System.String[],System.Boolean)">
             <summary>
             Returns the available composite content types for a given content type
             </summary>
@@ -25723,6 +25768,7 @@
             This is required because in the case of creating/modifying a content type because new property types being added to it are not yet persisted so cannot
             be looked up via the db, they need to be passed in.
             </param>
+            <param name="isElement">Wether the composite content types should be applicable for an element type</param>
             <returns></returns>
         </member>
         <member name="M:Umbraco.Core.Services.ContentTypeServiceExtensions.GetDirectOrIndirect(Umbraco.Core.Models.IContentTypeComposition)">
@@ -29760,11 +29806,6 @@
             Gets a value indicating whether umbraco should force a secure (https) connection to the backoffice.
             </summary>
         </member>
-        <member name="M:Umbraco.Core.Configuration.GlobalSettingsExtensions.Reset">
-            <summary>
-            Used in unit testing to reset all config items, this is automatically called by GlobalSettings.Reset()
-            </summary>
-        </member>
         <member name="M:Umbraco.Core.Configuration.GlobalSettingsExtensions.GetUmbracoMvcArea(Umbraco.Core.Configuration.IGlobalSettings)">
              <summary>
              This returns the string of the MVC Area route.
@@ -29777,27 +29818,6 @@
              We also make sure that the virtual directory (SystemDirectories.Root) is stripped off first, otherwise we'd end up with something
              like "MyVirtualDirectory-Umbraco" instead of just "Umbraco".
              </remarks>
-        </member>
-        <member name="M:Umbraco.Core.Configuration.GlobalSettingsExtensions.IsReservedPathOrUrl(Umbraco.Core.Configuration.IGlobalSettings,System.String)">
-            <summary>
-            Determines whether the specified URL is reserved or is inside a reserved path.
-            </summary>
-            <param name="globalSettings"></param>
-            <param name="url">The URL to check.</param>
-            <returns>
-                <c>true</c> if the specified URL is reserved; otherwise, <c>false</c>.
-            </returns>
-        </member>
-        <member name="M:Umbraco.Core.Configuration.GlobalSettingsExtensions.IsReservedPathOrUrl(Umbraco.Core.Configuration.IGlobalSettings,System.String,System.Web.HttpContextBase,System.Web.Routing.RouteCollection)">
-            <summary>
-            Determines whether the current request is reserved based on the route table and
-            whether the specified URL is reserved or is inside a reserved path.
-            </summary>
-            <param name="globalSettings"></param>
-            <param name="url"></param>
-            <param name="httpContext"></param>
-            <param name="routes">The route collection to lookup the request in</param>
-            <returns></returns>
         </member>
         <member name="T:Umbraco.Core.Configuration.IGlobalSettings">
             <summary>
@@ -31030,6 +31050,11 @@
             The value type of property data (i.e., string, integer, etc)
             </summary>
             <remarks>Must be a valid <see cref="T:Umbraco.Core.PropertyEditors.ValueTypes"/> value.</remarks>
+        </member>
+        <member name="T:Umbraco.Core.Constants.PropertyEditors.Groups">
+            <summary>
+            Defines Umbraco's built-in property editor groups.
+            </summary>
         </member>
         <member name="T:Umbraco.Core.Constants.PropertyTypeGroups">
             <summary>
