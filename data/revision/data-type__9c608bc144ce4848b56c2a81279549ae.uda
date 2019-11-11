@@ -1,0 +1,12 @@
+{
+  "EditorAlias": "Umbraco.TextBox",
+  "DatabaseType": 1,
+  "Configuration": {},
+  "Parent": null,
+  "Udi": "umb://data-type/9c608bc144ce4848b56c2a81279549ae",
+  "Dependencies": [],
+  "Name": "Call to Action - URL - Textbox",
+  "Alias": null,
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
+  "__version": "3.1.5"
+}

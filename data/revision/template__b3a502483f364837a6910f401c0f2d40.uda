@@ -17,5 +17,5 @@
   "Name": "List Page",
   "Alias": "vListPage",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.TemplateArtifact",
-  "__version": "3.1.4"
+  "__version": "3.1.5"
 }

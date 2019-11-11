@@ -8,5 +8,5 @@
   "Name": "Tile Keywords - Tags",
   "Alias": null,
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
-  "__version": "3.0.1"
+  "__version": "3.1.5"
 }
