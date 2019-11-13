@@ -112,6 +112,14 @@
             Installs listeners on service events in order to refresh our caches.
             </summary>
         </member>
+        <member name="M:Umbraco.Web.Cache.ContentCacheRefresher.NotifyPublishedSnapshotService(Umbraco.Web.PublishedCache.IPublishedSnapshotService,Umbraco.Core.Cache.AppCaches,Umbraco.Web.Cache.ContentCacheRefresher.JsonPayload[])">
+            <summary>
+            Refreshes the publish snapshot service and if there are published changes ensures that partial view caches are refreshed too
+            </summary>
+            <param name="service"></param>
+            <param name="appCaches"></param>
+            <param name="payloads"></param>
+        </member>
         <member name="T:Umbraco.Web.Cache.IDistributedCacheBinder">
             <summary>
             Binds events to the distributed cache.
@@ -222,6 +230,31 @@
         <member name="T:Umbraco.Web.Cache.DistributedCacheExtensions">
             <summary>
             Extension methods for <see cref="T:Umbraco.Web.Cache.DistributedCache"/>.
+            </summary>
+        </member>
+        <member name="M:Umbraco.Web.Cache.LanguageCacheRefresher.RefreshDomains">
+            <summary>
+            Clears all domain caches
+            </summary>
+        </member>
+        <member name="F:Umbraco.Web.Cache.LanguageCacheRefresher.JsonPayload.LanguageChangeType.Add">
+            <summary>
+            A new languages has been added
+            </summary>
+        </member>
+        <member name="F:Umbraco.Web.Cache.LanguageCacheRefresher.JsonPayload.LanguageChangeType.Remove">
+            <summary>
+            A language has been deleted
+            </summary>
+        </member>
+        <member name="F:Umbraco.Web.Cache.LanguageCacheRefresher.JsonPayload.LanguageChangeType.Update">
+            <summary>
+            A language has been updated - but it's culture remains the same
+            </summary>
+        </member>
+        <member name="F:Umbraco.Web.Cache.LanguageCacheRefresher.JsonPayload.LanguageChangeType.ChangeCulture">
+            <summary>
+            A language has been updated - it's culture has changed
             </summary>
         </member>
         <member name="T:Umbraco.Web.Compose.PublicAccessComposer">
@@ -5999,6 +6032,11 @@
             The number of users assigned to this group
             </summary>
         </member>
+        <member name="P:Umbraco.Web.Models.ContentEditing.UserGroupBasic.IsSystemUserGroup">
+            <summary>
+            Is the user group a system group e.g. "Administrators", "Sensitive data" or "Translators"
+            </summary>
+        </member>
         <member name="P:Umbraco.Web.Models.ContentEditing.UserGroupDisplay.DefaultPermissions">
             <summary>
             The default permissions for the user group organized by permission group name
@@ -10822,6 +10860,13 @@
         </member>
         <member name="M:Umbraco.Web.PublishedCache.NuCache.PublishedSnapshotService.Notify(Umbraco.Web.Cache.ContentTypeCacheRefresher.JsonPayload[])">
             <inheritdoc />
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.PublishedSnapshotService.OnLanguageSaved(Umbraco.Core.Services.ILocalizationService,Umbraco.Core.Events.SaveEventArgs{Umbraco.Core.Models.ILanguage})">
+            <summary>
+            If a <see cref="T:Umbraco.Core.Models.ILanguage"/> is ever saved with a different culture, we need to rebuild all of the content nucache table
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="P:Umbraco.Web.PublishedCache.NuCache.PublishedContent.ContentType">
             <inheritdoc />

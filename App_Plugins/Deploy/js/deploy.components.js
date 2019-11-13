@@ -584,58 +584,6 @@
 
     angular
         .module('umbraco.deploy.components')
-        .directive('udRestoreComplete', udRestoreCompleteComponent);
-
-    function udRestoreCompleteComponent() {
-
-        var directive = {
-            restrict: 'E',
-            replace: true,
-            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestorecomplete/udrestorecomplete.html',
-            scope: {
-                'onBack': "&",
-                'timestamp': "=",
-                'serverTimestamp': "="
-            }
-        };
-
-        return directive;
-
-    }
-
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('umbraco.deploy.components')
-        .directive('udRestoreProgress', udRestoreProgressComponent);
-
-    function udRestoreProgressComponent() {
-
-        var directive = {
-            restrict: 'E',
-            replace: true,
-            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestoreprogress/udrestoreprogress.html',
-            scope: {
-                'targetName': "=",
-                'progress': "=",
-                'currentActivity': "=",
-                'timestamp': "=",
-                'serverTimestamp': "="
-            }
-        };
-
-        return directive;
-
-    }
-
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('umbraco.deploy.components')
         .directive('udBusyError', udBusyErrorComponent);
 
     function udBusyErrorComponent() {
@@ -960,6 +908,58 @@
     }
 })();
 
+(function() {
+    'use strict';
+
+    angular
+        .module('umbraco.deploy.components')
+        .directive('udRestoreComplete', udRestoreCompleteComponent);
+
+    function udRestoreCompleteComponent() {
+
+        var directive = {
+            restrict: 'E',
+            replace: true,
+            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestorecomplete/udrestorecomplete.html',
+            scope: {
+                'onBack': "&",
+                'timestamp': "=",
+                'serverTimestamp': "="
+            }
+        };
+
+        return directive;
+
+    }
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('umbraco.deploy.components')
+        .directive('udRestoreProgress', udRestoreProgressComponent);
+
+    function udRestoreProgressComponent() {
+
+        var directive = {
+            restrict: 'E',
+            replace: true,
+            templateUrl: '/App_Plugins/Deploy/views/components/restore/udrestoreprogress/udrestoreprogress.html',
+            scope: {
+                'targetName': "=",
+                'progress': "=",
+                'currentActivity': "=",
+                'timestamp': "=",
+                'serverTimestamp': "="
+            }
+        };
+
+        return directive;
+
+    }
+
+})();
 (function() {
     'use strict';
 

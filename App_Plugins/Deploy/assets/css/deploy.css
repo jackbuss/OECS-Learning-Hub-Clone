@@ -354,12 +354,17 @@
 .ud-workspace--active .ud-workspace__symbol {
   border-color: #03BFB3;
 }
-.ud-workspace--floating {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-  z-index: 1;
+.ud-workspaces :not(.ud-workspace--floating):nth-child(2) {
+  order: 1;
+}
+.ud-workspaces :not(.ud-workspace--floating):nth-child(3) {
+  order: 3;
+}
+.ud-workspaces :not(.ud-workspace--floating):nth-child(4) {
+  order: 4;
+}
+.ud-workspaces .ud-workspace--floating:nth-last-child(n+3) {
+  order: 2;
 }
 .ud-workspace__description {
   white-space: nowrap;

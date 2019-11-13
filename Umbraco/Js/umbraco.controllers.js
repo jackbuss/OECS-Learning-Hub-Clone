@@ -9165,7 +9165,7 @@
     'use strict';
     (function () {
         'use strict';
-        function LanguagesEditController($scope, $timeout, $location, $routeParams, navigationService, notificationsService, localizationService, languageResource, contentEditingHelper, formHelper, eventsService) {
+        function LanguagesEditController($scope, $q, $timeout, $location, $routeParams, overlayService, navigationService, notificationsService, localizationService, languageResource, contentEditingHelper, formHelper, eventsService) {
             var vm = this;
             vm.page = {};
             vm.showBackButton = true;
@@ -9180,6 +9180,7 @@
             vm.goToPage = goToPage;
             vm.toggleMandatory = toggleMandatory;
             vm.toggleDefault = toggleDefault;
+            var currCulture = null;
             function init() {
                 // localize labels
                 var labelKeys = [
@@ -9191,7 +9192,8 @@
                     'languages_addLanguage',
                     'languages_noFallbackLanguageOption',
                     'languages_fallbackLanguageDescription',
-                    'languages_fallbackLanguage'
+                    'languages_fallbackLanguage',
+                    'defaultdialogs_confirmSure'
                 ];
                 localizationService.localizeMany(labelKeys).then(function (values) {
                     vm.labels.languages = values[0];
@@ -9201,6 +9203,7 @@
                     vm.labels.defaultLanguageHelp = values[4];
                     vm.labels.addLanguage = values[5];
                     vm.labels.noFallbackLanguageOption = values[6];
+                    vm.labels.areYouSure = values[9];
                     $scope.properties = {
                         fallbackLanguage: {
                             alias: 'fallbackLanguage',
@@ -9210,37 +9213,43 @@
                     };
                     if ($routeParams.create) {
                         vm.page.name = vm.labels.addLanguage;
-                        languageResource.getCultures().then(function (culturesDictionary) {
-                            var cultures = [];
-                            angular.forEach(culturesDictionary, function (value, key) {
-                                cultures.push({
-                                    name: key,
-                                    displayName: value
-                                });
-                            });
-                            vm.availableCultures = cultures;
-                        });
                     }
                 });
                 vm.loading = true;
-                languageResource.getAll().then(function (languages) {
+                var promises = [];
+                //load all culture/languages
+                promises.push(languageResource.getCultures().then(function (culturesDictionary) {
+                    var cultures = [];
+                    angular.forEach(culturesDictionary, function (value, key) {
+                        cultures.push({
+                            name: key,
+                            displayName: value
+                        });
+                    });
+                    vm.availableCultures = cultures;
+                }));
+                //load all possible fallback languages
+                promises.push(languageResource.getAll().then(function (languages) {
                     vm.availableLanguages = languages.filter(function (l) {
                         return $routeParams.id != l.id;
                     });
                     vm.loading = false;
-                });
+                }));
                 if (!$routeParams.create) {
-                    vm.loading = true;
-                    languageResource.getById($routeParams.id).then(function (lang) {
+                    promises.push(languageResource.getById($routeParams.id).then(function (lang) {
                         vm.language = lang;
                         vm.page.name = vm.language.name;
-                        /* we need to store the initial default state so we can disabel the toggle if it is the default.
+                        /* we need to store the initial default state so we can disable the toggle if it is the default.
           we need to prevent from not having a default language. */
                         vm.initIsDefault = angular.copy(vm.language.isDefault);
-                        vm.loading = false;
                         makeBreadcrumbs();
-                    });
+                        //store to check if we are changing the lang culture
+                        currCulture = vm.language.culture;
+                    }));
                 }
+                $q.all(promises, function () {
+                    vm.loading = false;
+                });
                 $timeout(function () {
                     navigationService.syncTree({
                         tree: 'languages',
@@ -9251,25 +9260,46 @@
             function save() {
                 if (formHelper.submitForm({ scope: $scope })) {
                     vm.page.saveButtonState = 'busy';
-                    languageResource.save(vm.language).then(function (lang) {
-                        formHelper.resetForm({ scope: $scope });
-                        vm.language = lang;
-                        vm.page.saveButtonState = 'success';
-                        localizationService.localize('speechBubbles_languageSaved').then(function (value) {
-                            notificationsService.success(value);
-                        });
-                        // emit event when language is created or updated/saved
-                        var args = {
-                            language: lang,
-                            isNew: $routeParams.create ? true : false
+                    //check if the culture is being changed
+                    if (currCulture && vm.language.culture !== currCulture) {
+                        var changeCultureAlert = {
+                            title: vm.labels.areYouSure,
+                            view: 'views/languages/overlays/change.html',
+                            submitButtonLabelKey: 'general_continue',
+                            submit: function submit(model) {
+                                saveLanguage();
+                                overlayService.close();
+                            },
+                            close: function close() {
+                                overlayService.close();
+                                vm.page.saveButtonState = 'init';
+                            }
                         };
-                        eventsService.emit('editors.languages.languageSaved', args);
-                        back();
-                    }, function (err) {
-                        vm.page.saveButtonState = 'error';
-                        formHelper.handleError(err);
-                    });
+                        overlayService.open(changeCultureAlert);
+                    } else {
+                        saveLanguage();
+                    }
                 }
+            }
+            function saveLanguage() {
+                languageResource.save(vm.language).then(function (lang) {
+                    formHelper.resetForm({ scope: $scope });
+                    vm.language = lang;
+                    vm.page.saveButtonState = 'success';
+                    localizationService.localize('speechBubbles_languageSaved').then(function (value) {
+                        notificationsService.success(value);
+                    });
+                    // emit event when language is created or updated/saved
+                    var args = {
+                        language: lang,
+                        isNew: $routeParams.create ? true : false
+                    };
+                    eventsService.emit('editors.languages.languageSaved', args);
+                    back();
+                }, function (err) {
+                    vm.page.saveButtonState = 'error';
+                    formHelper.handleError(err);
+                });
             }
             function back() {
                 $location.path('settings/languages/overview');
@@ -23445,7 +23475,7 @@
                 }
                 // Disallow selection of the admin/translators group, the checkbox is not visible in the UI, but clicking(and thus selecting) is still possible.
                 // Currently selection can only be used for deleting, and the Controller will also disallow deleting the admin group.
-                if (userGroup.alias === 'admin' || userGroup.alias === 'translator')
+                if (userGroup.isSystemUserGroup)
                     return;
                 listViewHelper.selectHandler(userGroup, $index, vm.userGroups, vm.selection, $event);
                 if (event) {
