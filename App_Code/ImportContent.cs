@@ -137,13 +137,23 @@ public class ImportContentController : UmbracoApiController
 
 
         string gridContent;
-        gridContent = split[3].TrimStart(' ', '"').TrimEnd('"').Trim().Replace("\\", ",");
+        gridContent = split[3].TrimStart(' ', '"').TrimEnd('"').Trim().Replace("\\", ",").Replace(@"""", @"\""");
 
         toPrint.Add(new[] { $"STRING TO ADD {gridContent}" });
         //node.SetValue("contentGrid", @"{ ""name"": ""1 column layout"", ""sections"": [ { ""grid"": 12, ""rows"": [ { ""name"": ""Full Row"", ""areas"": [ { ""grid"": 12, ""allowAll"": false, ""allowed"": [ ""rte"", ""headline"", ""quote"" ], ""hasConfig"": false, ""controls"": [ { ""value"": """ + gridContent + @""", ""editor"": { ""name"": ""Headline"", ""alias"": ""headline"", ""view"": ""textstring"", ""render"": null, ""icon"": ""icon - coin"", ""config"": { ""style"": ""font - size: 36px; line - height: 45px; font - weight: bold"", ""markup"": "" < h1 >#value#</h1>"" } } } ] } ], ""hasConfig"": false, ""id"": ""894c2705-70c9-4674-a30d-36a07e8c006c"" } ] } ] }");
 
-        node.SetValue("contentGrid", @"{ ""name"": ""1 column layout"", ""sections"": [ { ""grid"": 12, ""rows"": [ { ""name"": ""Full Row"", ""areas"": [ { ""grid"": 12, ""allowAll"": false, ""allowed"": [ ""rte"", ""headline"", ""quote"" ], ""hasConfig"": false, ""controls"": [ { ""value"": "" " + gridContent + @""", ""editor"": { ""name"": ""Rich text editor"", ""alias"": ""rte"", ""view"": ""rte"", ""render"": null, ""icon"": ""icon - article"", ""config"": {} } } ] } ], ""label"": ""Modal Content Editorial"", ""hasConfig"": false, ""id"": ""a120f627-e08d-850d-5497-2b307e17310e"" } ] } ] }");
+        try
+        {
+            var jsonn = Newtonsoft.Json.Linq.JObject.Parse(@"{ ""name"": ""1 column layout"", ""sections"": [ { ""grid"": 12, ""rows"": [ { ""name"": ""Full Row"", ""areas"": [ { ""grid"": 12, ""allowAll"": false, ""allowed"": [ ""rte"", ""headline"", ""quote"" ], ""hasConfig"": false, ""controls"": [ { ""value"": "" " + gridContent + @""", ""editor"": { ""name"": ""Rich text editor"", ""alias"": ""rte"", ""view"": ""rte"", ""render"": null, ""icon"": ""icon - article"", ""config"": {} } } ] } ], ""label"": ""Modal Content Editorial"", ""hasConfig"": false, ""id"": ""a120f627-e08d-850d-5497-2b307e17310e"" } ] } ] }");
 
+            node.SetValue("contentGrid", @"{ ""name"": ""1 column layout"", ""sections"": [ { ""grid"": 12, ""rows"": [ { ""name"": ""Full Row"", ""areas"": [ { ""grid"": 12, ""allowAll"": false, ""allowed"": [ ""rte"", ""headline"", ""quote"" ], ""hasConfig"": false, ""controls"": [ { ""value"": "" " + gridContent + @""", ""editor"": { ""name"": ""Rich text editor"", ""alias"": ""rte"", ""view"": ""rte"", ""render"": null, ""icon"": ""icon - article"", ""config"": {} } } ] } ], ""label"": ""Modal Content Editorial"", ""hasConfig"": false, ""id"": ""a120f627-e08d-850d-5497-2b307e17310e"" } ] } ] }");
+
+        }
+        catch
+        {
+            toPrint.Add(new[] { $"ERROR - STRING TO ADD {gridContent}" });
+            
+        }   
 
         #endregion
 
