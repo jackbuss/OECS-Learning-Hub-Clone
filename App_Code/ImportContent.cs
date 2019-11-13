@@ -46,9 +46,13 @@ public class ImportContentController : UmbracoApiController
         if (title.Contains("\\"))
             title = title.Replace("\\", ",");
 
-        if (type.ToLower() == "website" || type == "" || type == null)
+        if (type.ToLower() == "website" || type.ToLower() == "web link" || type == "" || type == null)
         {
-            tileType = "Website";
+            tileType = "External Link";
+        }
+        else if(type.ToLower() == "paper")
+        {
+            tileType = "Academic Paper";
         }
         else
         {

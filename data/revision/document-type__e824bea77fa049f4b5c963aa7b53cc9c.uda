@@ -166,5 +166,5 @@
   "Name": "Content Tile",
   "Alias": "dtContentTile",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.1.5"
+  "__version": "3.2.0"
 }
