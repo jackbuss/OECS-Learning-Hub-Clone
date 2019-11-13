@@ -8,5 +8,5 @@
   "Name": "Tile Origination Type",
   "Alias": null,
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
-  "__version": "3.1.4"
+  "__version": "3.1.5"
 }

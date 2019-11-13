@@ -1,72 +1,80 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
 
-<div class="row">
-    @{
 
-        List<DtContentTile> items;
+@{
+    var tilesParent = Umbraco.Content("702f7185-50cb-49ff-9df0-b123d93b2874");
+    if (tilesParent != null)
+    {
 
-        var nodes = Umbraco.ContentAtXPath("//dtContentTile").Select(x => new DtContentTile(x)).Where(x => (x.TileContentOrigination == "Original" || x.TileContentOrigination == "Partner") && x.Key != Model.Key);
+        var items = tilesParent.Descendants<DtContentTile>().Where(x => (x.TileContentOrigination == "Original" || x.TileContentOrigination == "Partner") && x.Key != Model.Key);
 
-        items = nodes.ToList();
-        var rnd = new Random();
-
-        try
+        if (items.Any())
         {
-            foreach (DtContentTile item in items.OrderBy(x => rnd.Next()).Take(3))
-            {
-                try
-                {
-                    var fOptions = "";
+            var rnd = new Random();
 
-                    @renderPrimaryTile(item, "primary", fOptions)
-                }
-                catch
-                {
-                }
-            }
+            <div class="3-random card border-0">
+                <h5 class="text-center"><strong>These may also be of interest:</strong></h5>
+                <div class="row">
+                    @try
+                    {
+                        foreach (DtContentTile item in items.OrderBy(x => rnd.Next()).Take(3))
+                        {
+                            try
+                            {
+                                var fOptions = "";
+
+                                @renderPrimaryTile(item, "primary", fOptions)
+                            }
+                            catch
+                            {
+                            }
+                        }
+                    }
+                    catch { }
+                </div>
+            </div>
+            <hr/>
         }
-        catch { }
-
     }
-</div>
+}
 
 @helper renderPrimaryTile(DtContentTile item, string style, string fOptions)
-    {
-        <div class="col-12 col-xs-12 col-md-4 p-2">
-            <div class="card">
-                <a class="suggestedContent" href="#" data-forward="@item.Url" @*data-toggle="modal" data-target="#modal" *@title="@(item.Name)">
-                    <div class="card-img">
-                        @if (item.BannerImage != null)
-                        {
-                            <picture>
-                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 480, furtherOptions:fOptions))" media="(min-width: 1200px)" />
-                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 300, furtherOptions:fOptions))" media="(min-width: 996px)" />
-                                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 498, furtherOptions:fOptions))" media="(min-width: 576px)" />
-                                <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 288, furtherOptions:fOptions))" alt="@(item.BannerImage.Name)" class="bg-@(style) card-img-top rounded-top" />
-                            </picture>
-                        }
-                        else
-                        {
-                            <div class="bg-@(style) text-white text-center rounded-top min-vh-30">
-                                <div class="p-4">@renderThemeIcon(item.TileType, 4)</div>
-                            </div>
-                        }
+{
+<div class="col-12 col-xs-12 col-md-4 p-2">
+    <div class="card">
+        <a class="suggestedContent" href="@item.Url" title="@(item.Name)">
+            <div class="card-img">
+                @if (item.BannerImage != null)
+                {
+                    <picture>
+                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 480, furtherOptions:fOptions))" media="(min-width: 1200px)" />
+                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 300, furtherOptions:fOptions))" media="(min-width: 996px)" />
+                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 498, furtherOptions:fOptions))" media="(min-width: 576px)" />
+                        <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 288, furtherOptions:fOptions))" alt="@(item.BannerImage.Name)" class="bg-@(style) card-img-top rounded-top" />
+                    </picture>
+                }
+                else
+                {
+                    <div class="bg-@(style) text-white rounded-top min-vh-20 d-flex flex-column justify-content-center align-items-center">
+                        @renderThemeIcon(item.TileType, 4)
                     </div>
-                    @if (item.BannerImage != null)
-                    {
-                        <div class="card-img-overlay text-white p-2">@renderThemeIcon(item.TileType, 2)</div>
-                    }
-
-                    <div class="card-body p-2 z-100">
-                        <small class="card-text text-info mb-0">@(item.Parent.Name.ToUpper())</small>
-                        <h5 class="card-title mb-1">
-                            @(item.Name)
-                        </h5>
-                    </div>
-                </a>
+                }
             </div>
-        </div>
-    }
+            @if (item.BannerImage != null)
+            {
+                <div class="card-img-overlay text-white p-2">@renderThemeIcon(item.TileType, 2)</div>
+            }
+
+            <div class="card-body p-2 z-100">
+                <small class="card-text text-info mb-0">@(item.Parent.Name.ToUpper())</small>
+                <h5 class="card-title mb-1">
+                    @(item.Name)
+                </h5>
+            </div>
+        </a>
+    </div>
+</div>
+}
 
 
 

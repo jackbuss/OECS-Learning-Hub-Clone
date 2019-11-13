@@ -59,13 +59,12 @@
             myFieldName_en-us will match the "en-us"
             </remarks>
         </member>
-        <member name="M:Umbraco.Examine.ExamineExtensions.EnsureUnlocked(Examine.IExamineManager,Umbraco.Core.IMainDom,Umbraco.Core.Logging.ILogger)">
+        <member name="M:Umbraco.Examine.ExamineExtensions.ConfigureIndexes(Examine.IExamineManager,Umbraco.Core.IMainDom,Umbraco.Core.Logging.ILogger)">
             <summary>
-            Unlocks all Lucene based indexes registered with the <see cref="T:Examine.IExamineManager"/>
+            Called on startup to configure each index.
             </summary>
             <remarks>
-            Indexing rebuilding can occur on a normal boot if the indexes are empty or on a cold boot by the database server messenger. Before
-            either of these happens, we need to configure the indexes.
+            Configures and unlocks all Lucene based indexes registered with the <see cref="T:Examine.IExamineManager"/>.
             </remarks>
         </member>
         <member name="M:Umbraco.Examine.ExamineExtensions.GetCultureFields(Umbraco.Examine.IUmbracoIndex,System.String)">
@@ -84,7 +83,7 @@
             <param name="culture"></param>
             <returns></returns>
         </member>
-        <member name="M:Umbraco.Examine.ExamineExtensions.UnlockLuceneIndexes(Examine.IExamineManager,Umbraco.Core.Logging.ILogger)">
+        <member name="M:Umbraco.Examine.ExamineExtensions.ConfigureLuceneIndexes(Examine.IExamineManager,Umbraco.Core.Logging.ILogger,System.Boolean)">
             <summary>
             Forcibly unlocks all lucene based indexes
             </summary>

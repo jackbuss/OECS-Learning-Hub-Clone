@@ -112,6 +112,14 @@
             Installs listeners on service events in order to refresh our caches.
             </summary>
         </member>
+        <member name="M:Umbraco.Web.Cache.ContentCacheRefresher.NotifyPublishedSnapshotService(Umbraco.Web.PublishedCache.IPublishedSnapshotService,Umbraco.Core.Cache.AppCaches,Umbraco.Web.Cache.ContentCacheRefresher.JsonPayload[])">
+            <summary>
+            Refreshes the publish snapshot service and if there are published changes ensures that partial view caches are refreshed too
+            </summary>
+            <param name="service"></param>
+            <param name="appCaches"></param>
+            <param name="payloads"></param>
+        </member>
         <member name="T:Umbraco.Web.Cache.IDistributedCacheBinder">
             <summary>
             Binds events to the distributed cache.
@@ -222,6 +230,31 @@
         <member name="T:Umbraco.Web.Cache.DistributedCacheExtensions">
             <summary>
             Extension methods for <see cref="T:Umbraco.Web.Cache.DistributedCache"/>.
+            </summary>
+        </member>
+        <member name="M:Umbraco.Web.Cache.LanguageCacheRefresher.RefreshDomains">
+            <summary>
+            Clears all domain caches
+            </summary>
+        </member>
+        <member name="F:Umbraco.Web.Cache.LanguageCacheRefresher.JsonPayload.LanguageChangeType.Add">
+            <summary>
+            A new languages has been added
+            </summary>
+        </member>
+        <member name="F:Umbraco.Web.Cache.LanguageCacheRefresher.JsonPayload.LanguageChangeType.Remove">
+            <summary>
+            A language has been deleted
+            </summary>
+        </member>
+        <member name="F:Umbraco.Web.Cache.LanguageCacheRefresher.JsonPayload.LanguageChangeType.Update">
+            <summary>
+            A language has been updated - but it's culture remains the same
+            </summary>
+        </member>
+        <member name="F:Umbraco.Web.Cache.LanguageCacheRefresher.JsonPayload.LanguageChangeType.ChangeCulture">
+            <summary>
+            A language has been updated - it's culture has changed
             </summary>
         </member>
         <member name="T:Umbraco.Web.Compose.PublicAccessComposer">
@@ -1691,7 +1724,7 @@
             Am abstract API controller providing functionality used for dealing with content and media types
             </summary>
         </member>
-        <member name="M:Umbraco.Web.Editors.ContentTypeControllerBase`1.PerformGetAvailableCompositeContentTypes(System.Int32,Umbraco.Core.Models.UmbracoObjectTypes,System.String[],System.String[])">
+        <member name="M:Umbraco.Web.Editors.ContentTypeControllerBase`1.PerformGetAvailableCompositeContentTypes(System.Int32,Umbraco.Core.Models.UmbracoObjectTypes,System.String[],System.String[],System.Boolean)">
             <summary>
             Returns the available composite content types for a given content type
             </summary>
@@ -1706,6 +1739,7 @@
             be looked up via the db, they need to be passed in.
             </param>
             <param name="contentTypeId"></param>
+            <param name="isElement">Wether the composite content types should be applicable for an element type</param>
             <returns></returns>
         </member>
         <member name="M:Umbraco.Web.Editors.ContentTypeControllerBase`1.PerformGetWhereCompositionIsUsedInContentTypes(System.Int32,Umbraco.Core.Models.UmbracoObjectTypes)">
@@ -5916,6 +5950,11 @@
             along with any content types that have matching property types that are included in the filtered content types
             </summary>
         </member>
+        <member name="P:Umbraco.Web.Models.ContentEditing.GetAvailableCompositionsFilter.IsElement">
+            <summary>
+            Wether the content type is currently marked as an element type
+            </summary>
+        </member>
         <member name="P:Umbraco.Web.Models.ContentEditing.NotifySetting.NotifyCode">
             <summary>
             The letter from the IAction
@@ -5991,6 +6030,11 @@
         <member name="P:Umbraco.Web.Models.ContentEditing.UserGroupBasic.UserCount">
             <summary>
             The number of users assigned to this group
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Models.ContentEditing.UserGroupBasic.IsSystemUserGroup">
+            <summary>
+            Is the user group a system group e.g. "Administrators", "Sensitive data" or "Translators"
             </summary>
         </member>
         <member name="P:Umbraco.Web.Models.ContentEditing.UserGroupDisplay.DefaultPermissions">
@@ -8166,8 +8210,12 @@
         </member>
         <member name="T:Umbraco.Web.Mvc.ModelBindingExceptionFilter">
             <summary>
-                An exception filter checking if we get a <see cref="T:Umbraco.Web.Mvc.ModelBindingException" /> or <see cref="T:System.InvalidCastException" /> with the same model. in which case it returns a redirect to the same page after 1 sec.
+                An exception filter checking if we get a <see cref="T:Umbraco.Web.Mvc.ModelBindingException" /> or <see cref="T:System.InvalidCastException" /> with the same model.
+                In which case it returns a redirect to the same page after 1 sec if not in debug mode.
             </summary>
+            <remarks>
+            This is only enabled when running PureLive
+            </remarks>
         </member>
         <member name="M:Umbraco.Web.Mvc.ModelBindingExceptionFilter.IsMessageAboutTheSameModelType(System.String)">
              <summary>
@@ -10014,6 +10062,26 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Umbraco.Web.PropertyEditors.GridPropertyEditor.GridPropertyValueEditor.FromEditor(Umbraco.Core.Models.Editors.ContentPropertyData,System.Object)">
+            <summary>
+            Format the data for persistence
+            This to ensure if a RTE is used in a Grid cell/control that we parse it for tmp stored images
+            to persist to the media library when we go to persist this to the DB
+            </summary>
+            <param name="editorValue"></param>
+            <param name="currentValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Umbraco.Web.PropertyEditors.GridPropertyEditor.GridPropertyValueEditor.ToEditor(Umbraco.Core.Models.Property,Umbraco.Core.Services.IDataTypeService,System.String,System.String)">
+            <summary>
+            Ensures that the rich text editor values are processed within the grid
+            </summary>
+            <param name="property"></param>
+            <param name="dataTypeService"></param>
+            <param name="culture"></param>
+            <param name="segment"></param>
+            <returns></returns>
+        </member>
         <member name="T:Umbraco.Web.PropertyEditors.TagsDataController">
             <summary>
             A controller used for type-ahead values for tags
@@ -10488,7 +10556,7 @@
             Represents a rich text property editor.
             </summary>
         </member>
-        <member name="M:Umbraco.Web.PropertyEditors.RichTextPropertyEditor.#ctor(Umbraco.Core.Logging.ILogger)">
+        <member name="M:Umbraco.Web.PropertyEditors.RichTextPropertyEditor.#ctor(Umbraco.Core.Logging.ILogger,Umbraco.Core.Services.IMediaService,Umbraco.Core.Services.IContentTypeBaseServiceProvider,Umbraco.Web.IUmbracoContextAccessor)">
             <summary>
             The constructor will setup the property editor based on the attribute if one is found
             </summary>
@@ -10515,7 +10583,6 @@
             <param name="dataTypeService"></param>
             <param name="culture"></param>
             <param name="segment"></param>
-            <returns></returns>
         </member>
         <member name="M:Umbraco.Web.PropertyEditors.RichTextPropertyEditor.RichTextPropertyValueEditor.FromEditor(Umbraco.Core.Models.Editors.ContentPropertyData,System.Object)">
             <summary>
@@ -10586,6 +10653,12 @@
             the in memory cache isn't that slow and is only marginally slower than reading from the locally persisted cache files.
             </remarks>
         </member>
+        <member name="T:Umbraco.Web.PublishedCache.NuCache.Snap.LinkedNode`1">
+            <summary>
+            Used to represent an item in a linked list
+            </summary>
+            <typeparam name="TValue"></typeparam>
+        </member>
         <member name="T:Umbraco.Web.PublishedCache.NuCache.DataSource.ContentNestedData">
             <summary>
             The content item 1:M data that is serialized to JSON
@@ -10601,10 +10674,138 @@
             Defines a data source for NuCache.
             </summary>
         </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.DataSource.IDataSource.GetAllContentSources(Umbraco.Core.Scoping.IScope)">
+            <summary>
+            Returns all content ordered by level + sortOrder
+            </summary>
+            <param name="scope"></param>
+            <returns></returns>
+            <remarks>
+            MUST be ordered by level + parentId + sortOrder!
+            </remarks>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.DataSource.IDataSource.GetBranchContentSources(Umbraco.Core.Scoping.IScope,System.Int32)">
+            <summary>
+            Returns branch for content ordered by level + sortOrder
+            </summary>
+            <param name="scope"></param>
+            <returns></returns>
+            <remarks>
+            MUST be ordered by level + parentId + sortOrder!
+            </remarks>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.DataSource.IDataSource.GetTypeContentSources(Umbraco.Core.Scoping.IScope,System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Returns content by Ids ordered by level + sortOrder
+            </summary>
+            <param name="scope"></param>
+            <returns></returns>
+            <remarks>
+            MUST be ordered by level + parentId + sortOrder!
+            </remarks>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.DataSource.IDataSource.GetAllMediaSources(Umbraco.Core.Scoping.IScope)">
+            <summary>
+            Returns all media ordered by level + sortOrder
+            </summary>
+            <param name="scope"></param>
+            <returns></returns>
+            <remarks>
+            MUST be ordered by level + parentId + sortOrder!
+            </remarks>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.DataSource.IDataSource.GetBranchMediaSources(Umbraco.Core.Scoping.IScope,System.Int32)">
+            <summary>
+            Returns branch for media ordered by level + sortOrder
+            </summary>
+            <param name="scope"></param>
+            <returns></returns>
+            <remarks>
+            MUST be ordered by level + parentId + sortOrder!
+            </remarks>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.DataSource.IDataSource.GetTypeMediaSources(Umbraco.Core.Scoping.IScope,System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Returns media by Ids ordered by level + sortOrder
+            </summary>
+            <param name="scope"></param>
+            <returns></returns>
+            <remarks>
+            MUST be ordered by level + parentId + sortOrder!
+            </remarks>
+        </member>
         <member name="P:Umbraco.Web.PublishedCache.NuCache.DataSource.ContentData.CultureInfos">
             <summary>
             The collection of language Id to name for the content item
             </summary>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.ContentStore.GetHead``2(System.Collections.Concurrent.ConcurrentDictionary{``0,Umbraco.Web.PublishedCache.NuCache.Snap.LinkedNode{``1}},``0)">
+            <summary>
+            Get the most recent version of the LinkedNode stored in the dictionary for the supplied key
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="dict"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.ContentStore.SetAllFastSorted(System.Collections.Generic.IEnumerable{Umbraco.Web.PublishedCache.NuCache.ContentNodeKit},System.Boolean)">
+            <summary>
+            Builds all kits on startup using a fast forward only cursor
+            </summary>
+            <param name="kits">
+            All kits sorted by Level + Parent Id + Sort order
+            </param>
+            <param name="fromDb">True if the data is coming from the database (not the local cache db)</param>
+            <returns></returns>
+            <remarks>
+            This requires that the collection is sorted by Level + ParentId + Sort Order. 
+            This should be used only on a site startup as the first generations.
+            This CANNOT be used after startup since it bypasses all checks for Generations.
+            </remarks>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.ContentStore.GetRequiredLinkedNode(System.Int32,System.String,System.Nullable{System.Int64})">
+            <summary>
+            Gets the link node and if it doesn't exist throw a <see cref="T:Umbraco.Core.Exceptions.PanicException"/>
+            </summary>
+            <param name="id"></param>
+            <param name="description"></param>
+            <param name="gen">the generation requested, null for the latest stored</param>
+            <returns></returns>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.ContentStore.GetParentLink(Umbraco.Web.PublishedCache.NuCache.ContentNode,System.Nullable{System.Int64})">
+            <summary>
+            Gets the parent link node, may be null or root if ParentContentId is less than 0
+            </summary>
+            <param name="gen">the generation requested, null for the latest stored</param>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.ContentStore.GetRequiredParentLink(Umbraco.Web.PublishedCache.NuCache.ContentNode,System.Nullable{System.Int64})">
+            <summary>
+            Gets the linked parent node and if it doesn't exist throw a <see cref="T:Umbraco.Core.Exceptions.PanicException"/>
+            </summary>
+            <param name="content"></param>
+            <param name="gen">the generation requested, null for the latest stored</param>
+            <returns></returns>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.ContentStore.GetLinkedNodeGen``1(Umbraco.Web.PublishedCache.NuCache.Snap.LinkedNode{``0},System.Nullable{System.Int64})">
+            <summary>
+            Iterates over the LinkedNode's generations to find the correct one
+            </summary>
+            <param name="link"></param>
+            <param name="gen">The generation requested, use null to avoid the lookup</param>
+            <returns></returns>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.ContentStore.AddTreeNodeLocked(Umbraco.Web.PublishedCache.NuCache.ContentNode,Umbraco.Web.PublishedCache.NuCache.Snap.LinkedNode{Umbraco.Web.PublishedCache.NuCache.ContentNode})">
+            <summary>
+            Adds a node to the tree structure.
+            </summary>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.ContentStore.TestHelper.GetValues(System.Int32)">
+            <summary>
+            Return a list of Gen/ContentNode values
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
         </member>
         <member name="T:Umbraco.Web.PublishedCache.NuCache.DomainCache">
             <summary>
@@ -10628,11 +10829,44 @@
         <member name="P:Umbraco.Web.PublishedCache.NuCache.DomainCache.DefaultCulture">
             <inheritdoc />
         </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.PublishedSnapshotService.MainDomRegister">
+            <summary>
+            Install phase of <see cref="T:Umbraco.Core.IMainDom"/>
+            </summary>
+            <remarks>
+            This is inside of a lock in MainDom so this is guaranteed to run if MainDom was acquired and guaranteed
+            to not run if MainDom wasn't acquired.
+            If MainDom was not acquired, then _localContentDb and _localMediaDb will remain null which means this appdomain
+            will load in published content via the DB and in that case this appdomain will probably not exist long enough to
+            serve more than a page of content. 
+            </remarks>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.PublishedSnapshotService.MainDomRelease">
+            <summary>
+            Release phase of MainDom
+            </summary>
+            <remarks>
+            This will execute on a threadpool thread
+            </remarks>
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.PublishedSnapshotService.LoadCachesOnStartup">
+            <summary>
+            Populates the stores
+            </summary>
+            <remarks>This is called inside of a lock for _storesLock</remarks>
+        </member>
         <member name="M:Umbraco.Web.PublishedCache.NuCache.PublishedSnapshotService.Notify(Umbraco.Web.Cache.MediaCacheRefresher.JsonPayload[],System.Boolean@)">
             <inheritdoc />
         </member>
         <member name="M:Umbraco.Web.PublishedCache.NuCache.PublishedSnapshotService.Notify(Umbraco.Web.Cache.ContentTypeCacheRefresher.JsonPayload[])">
             <inheritdoc />
+        </member>
+        <member name="M:Umbraco.Web.PublishedCache.NuCache.PublishedSnapshotService.OnLanguageSaved(Umbraco.Core.Services.ILocalizationService,Umbraco.Core.Events.SaveEventArgs{Umbraco.Core.Models.ILanguage})">
+            <summary>
+            If a <see cref="T:Umbraco.Core.Models.ILanguage"/> is ever saved with a different culture, we need to rebuild all of the content nucache table
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="P:Umbraco.Web.PublishedCache.NuCache.PublishedContent.ContentType">
             <inheritdoc />
@@ -11247,6 +11481,47 @@
             <param name="contentId">The content unique identifier.</param>
             <returns>The route.</returns>
             <remarks>Considers published or unpublished content depending on defaults.</remarks>
+        </member>
+        <member name="T:Umbraco.Web.RoutableDocumentFilter">
+            <summary>
+            Utility class used to check if the current request is for a front-end request
+            </summary>
+            <remarks>
+            There are various checks to determine if this is a front-end request such as checking if the request is part of any reserved paths or existing MVC routes.
+            </remarks>
+        </member>
+        <member name="M:Umbraco.Web.RoutableDocumentFilter.IsDocumentRequest(System.Web.HttpContextBase,System.Uri)">
+            <summary>
+            Checks if the request is a document request (i.e. one that the module should handle)
+            </summary>
+            <param name="httpContext"></param>
+            <param name="uri"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Umbraco.Web.RoutableDocumentFilter.IsReservedPathOrUrl(System.String)">
+            <summary>
+            Determines whether the specified URL is reserved or is inside a reserved path.
+            </summary>
+            <param name="url">The URL to check.</param>
+            <returns>
+                <c>true</c> if the specified URL is reserved; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Umbraco.Web.RoutableDocumentFilter.IsReservedPathOrUrl(System.String,System.Web.HttpContextBase,System.Web.Routing.RouteCollection)">
+            <summary>
+            Determines whether the current request is reserved based on the route table and
+            whether the specified URL is reserved or is inside a reserved path.
+            </summary>
+            <param name="url"></param>
+            <param name="httpContext"></param>
+            <param name="routes">The route collection to lookup the request in</param>
+            <returns></returns>
+        </member>
+        <member name="F:Umbraco.Web.RoutableDocumentFilter.ReservedPaths">
+            <summary>
+            This is used internally to track any registered callback paths for Identity providers. If the request path matches
+            any of the registered paths, then the module will let the request keep executing
+            </summary>
         </member>
         <member name="T:Umbraco.Web.Routing.DefaultMediaUrlProvider">
             <summary>
@@ -12440,6 +12715,406 @@
             <param name="request">The <c>PublishedRequest</c>.</param>
             <returns>A value indicating whether an Umbraco document was found and assigned.</returns>
             <remarks>Optionally, can also assign the template or anything else on the document request, although that is not required.</remarks>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.TempFileCleanup">
+            <summary>
+            Used to cleanup temporary file locations
+            </summary>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.SchedulerComposer">
+            <summary>
+            Used to do the scheduling for tasks, publishing, etc...
+            </summary>
+            <remarks>
+            All tasks are run in a background task runner which is web aware and will wind down
+            the task correctly instead of killing it completely when the app domain shuts down.
+            </remarks>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.LatchedBackgroundTaskBase.Run">
+            <summary>
+            Implements IBackgroundTask.Run().
+            </summary>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.LatchedBackgroundTaskBase.RunAsync(System.Threading.CancellationToken)">
+            <summary>
+            Implements IBackgroundTask.RunAsync().
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.LatchedBackgroundTaskBase.IsAsync">
+            <summary>
+            Indicates whether the background task can run asynchronously.
+            </summary>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.ThreadingTaskImmutable">
+            <summary>
+            Wraps a <see cref="T:System.Threading.Tasks.Task"/> within an object that gives access to its GetAwaiter method and Status
+            property while ensuring that it cannot be modified in any way.
+            </summary>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.ThreadingTaskImmutable.#ctor(System.Threading.Tasks.Task)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.ThreadingTaskImmutable"/> class with a Task.
+            </summary>
+            <param name="task">The task.</param>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.ThreadingTaskImmutable.GetAwaiter">
+            <summary>
+            Gets an awaiter used to await the task.
+            </summary>
+            <returns>An awaiter instance.</returns>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.ThreadingTaskImmutable.Status">
+            <summary>
+            Gets the TaskStatus of the task.
+            </summary>
+            <returns>The current TaskStatus of the task.</returns>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.BackgroundTaskRunner">
+            <summary>
+            Manages a queue of tasks and runs them in the background.
+            </summary>
+            <remarks>This class exists for logging purposes - the one you want to use is BackgroundTaskRunner{T}.</remarks>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook">
+            <summary>
+            Represents a MainDom hook.
+            </summary>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook.#ctor(Umbraco.Core.IMainDom,System.Action,System.Action)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook"/> class.
+            </summary>
+            <param name="mainDom">The <see cref="T:Umbraco.Core.IMainDom"/> object.</param>
+            <param name="install">A method to execute when hooking into the main domain.</param>
+            <param name="release">A method to execute when the main domain releases.</param>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook.MainDom">
+            <summary>
+            Gets the <see cref="T:Umbraco.Core.IMainDom"/> object.
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook.Install">
+            <summary>
+            Gets the method to execute when hooking into the main domain.
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook.Release">
+            <summary>
+            Gets the method to execute when the main domain releases.
+            </summary>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1">
+            <summary>
+            Manages a queue of tasks of type <typeparamref name="T"/> and runs them in the background.
+            </summary>
+            <typeparam name="T">The type of the managed tasks.</typeparam>
+            <remarks>The task runner is web-aware and will ensure that it shuts down correctly when the AppDomain
+            shuts down (ie is unloaded).</remarks>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.#ctor(Umbraco.Core.Logging.ILogger,Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1"/> class.
+            </summary>
+            <param name="logger">A logger.</param>
+            <param name="hook">An optional main domain hook.</param>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.#ctor(System.String,Umbraco.Core.Logging.ILogger,Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1"/> class.
+            </summary>
+            <param name="name">The name of the runner.</param>
+            <param name="logger">A logger.</param>
+            <param name="hook">An optional main domain hook.</param>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.#ctor(Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions,Umbraco.Core.Logging.ILogger,Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1"/> class with a set of options.
+            </summary>
+            <param name="options">The set of options.</param>
+            <param name="logger">A logger.</param>
+            <param name="hook">An optional main domain hook.</param>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.#ctor(System.String,Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions,Umbraco.Core.Logging.ILogger,Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1"/> class with a set of options.
+            </summary>
+            <param name="name">The name of the runner.</param>
+            <param name="options">The set of options.</param>
+            <param name="logger">A logger.</param>
+            <param name="hook">An optional main domain hook.</param>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.TaskCount">
+            <summary>
+            Gets the number of tasks in the queue.
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.IsRunning">
+            <summary>
+            Gets a value indicating whether a threading task is currently running.
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.IsCompleted">
+            <summary>
+            Gets a value indicating whether the runner has completed and cannot accept tasks anymore.
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.CurrentThreadingTask">
+            <summary>
+            Gets the running threading task as an immutable awaitable.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">There is no running task.</exception>
+            <remarks>
+            <para>Unless the AutoStart option is true, there will be no current threading task until
+            a background task is added to the queue, and there will be no current threading task
+            when the queue is empty. In which case this method returns null.</para>
+            <para>The returned value can be awaited and that is all (eg no continuation).</para>
+            </remarks>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.StoppedAwaitable">
+            <summary>
+            Gets an awaitable used to await the runner running operation.
+            </summary>
+            <returns>An awaitable instance.</returns>
+            <remarks>Used to wait until the runner is no longer running (IsRunning == false),
+            though the runner could be started again afterwards by adding tasks to it. If
+            the runner is not running, returns a completed awaitable.</remarks>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.TerminatedAwaitable">
+            <summary>
+            Gets an awaitable object that can be used to await for the runner to terminate.
+            </summary>
+            <returns>An awaitable object.</returns>
+            <remarks>
+            <para>Used to wait until the runner has terminated.</para>
+            <para>This is for unit tests and should not be used otherwise. In most cases when the runner
+            has terminated, the application domain is going down and it is not the right time to do things.</para>
+            </remarks>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.Add(`0)">
+            <summary>
+            Adds a task to the queue.
+            </summary>
+            <param name="task">The task to add.</param>
+            <exception cref="T:System.InvalidOperationException">The task runner has completed.</exception>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.TryAdd(`0)">
+            <summary>
+            Tries to add a task to the queue.
+            </summary>
+            <param name="task">The task to add.</param>
+            <returns>true if the task could be added to the queue; otherwise false.</returns>
+            <remarks>Returns false if the runner is completed.</remarks>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.CancelCurrentBackgroundTask">
+            <summary>
+            Cancels to current task, if any.
+            </summary>
+            <remarks>Has no effect if the task runs synchronously, or does not want to cancel.</remarks>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.StartUp">
+            <summary>
+            Starts the tasks runner, if not already running.
+            </summary>
+            <remarks>Is invoked each time a task is added, to ensure it is going to be processed.</remarks>
+            <exception cref="T:System.InvalidOperationException">The task runner has completed.</exception>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.StartUpLocked">
+            <summary>
+            Starts the tasks runner, if not already running.
+            </summary>
+            <remarks>Must be invoked within lock(_locker) and with _isCompleted being false.</remarks>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.Shutdown(System.Boolean,System.Boolean)">
+            <summary>
+            Shuts the tasks runner down.
+            </summary>
+            <param name="force">True for force the runner to stop.</param>
+            <param name="wait">True to wait until the runner has stopped.</param>
+            <remarks>If <paramref name="force"/> is false, no more tasks can be queued but all queued tasks
+            will run. If it is true, then only the current one (if any) will end and no other task will run.</remarks>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.Stop(System.Boolean)">
+            <summary>
+            Requests a registered object to un-register.
+            </summary>
+            <param name="immediate">true to indicate the registered object should un-register from the hosting
+            environment before returning; otherwise, false.</param>
+            <remarks>
+            <para>"When the application manager needs to stop a registered object, it will call the Stop method."</para>
+            <para>The application manager will call the Stop method to ask a registered object to un-register. During
+            processing of the Stop method, the registered object must call the HostingEnvironment.UnregisterObject method.</para>
+            </remarks>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions">
+            <summary>
+            Provides options to the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions"/> class.
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.LongRunning">
+            <summary>
+            Gets or sets a value indicating whether the running task should be a long-running,
+            coarse grained operation.
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.KeepAlive">
+            <summary>
+            Gets or sets a value indicating whether the running task should block and wait
+            on the queue, or end, when the queue is empty.
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.AutoStart">
+            <summary>
+            Gets or sets a value indicating whether the running task should start immediately
+            or only once a task has been added to the queue.
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.PreserveRunningTask">
+            <summary>
+            Gets or sets a value indicating whether the running task should be preserved
+            once completed, or reset to null. For unit tests.
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.Hosted">
+            <summary>
+            Gets or sets a value indicating whether the runner should register with (and be
+            stopped by) the hosting. Otherwise, something else should take care of stopping
+            the runner. True by default.
+            </summary>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.IBackgroundTaskRunner`1">
+            <summary>
+            Defines a service managing a queue of tasks of type <typeparamref name="T"/> and running them in the background.
+            </summary>
+            <typeparam name="T">The type of the managed tasks.</typeparam>
+            <remarks>The interface is not complete and exists only to have the contravariance on T.</remarks>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.ILatchedBackgroundTask">
+            <summary>
+            Represents a latched background task.
+            </summary>
+            <remarks>Latched background tasks can suspend their execution until
+            a condition is met. However if the tasks runner has to terminate,
+            latched background tasks can be executed immediately, depending on
+            the value returned by RunsOnShutdown.</remarks>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.ILatchedBackgroundTask.Latch">
+            <summary>
+            Gets a task on latch.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The task is not latched.</exception>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.ILatchedBackgroundTask.IsLatched">
+            <summary>
+            Gets a value indicating whether the task is latched.
+            </summary>
+            <remarks>Should return false as soon as the condition is met.</remarks>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.ILatchedBackgroundTask.RunsOnShutdown">
+            <summary>
+             Gets a value indicating whether the task can be executed immediately if the task runner has to terminate.
+            </summary>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.RecurringTaskBase">
+            <summary>
+            Provides a base class for recurring background tasks.
+            </summary>
+            <remarks>Implement by overriding PerformRun or PerformRunAsync and then IsAsync accordingly,
+            depending on whether the task is implemented as a sync or async method. Run nor RunAsync are
+            sealed here as overriding them would break recurrence. And then optionally override
+            RunsOnShutdown, in order to indicate whether the latched task should run immediately on
+            shutdown, or just be abandoned (default).</remarks>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.RecurringTaskBase.#ctor(Umbraco.Web.Scheduling.IBackgroundTaskRunner{Umbraco.Web.Scheduling.RecurringTaskBase},System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.RecurringTaskBase"/> class.
+            </summary>
+            <param name="runner">The task runner.</param>
+            <param name="delayMilliseconds">The delay.</param>
+            <param name="periodMilliseconds">The period.</param>
+            <remarks>The task will repeat itself periodically. Use this constructor to create a new task.</remarks>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.RecurringTaskBase.Run">
+            <summary>
+            Implements IBackgroundTask.Run().
+            </summary>
+            <remarks>Classes inheriting from <c>RecurringTaskBase</c> must implement <c>PerformRun</c>.</remarks>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.RecurringTaskBase.RunAsync(System.Threading.CancellationToken)">
+            <summary>
+            Implements IBackgroundTask.RunAsync().
+            </summary>
+            <remarks>Classes inheriting from <c>RecurringTaskBase</c> must implement <c>PerformRun</c>.</remarks>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.RecurringTaskBase.PerformRun">
+            <summary>
+            Runs the background task.
+            </summary>
+            <returns>A value indicating whether to repeat the task.</returns>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.RecurringTaskBase.PerformRunAsync(System.Threading.CancellationToken)">
+            <summary>
+            Runs the task asynchronously.
+            </summary>
+            <param name="token">A cancellation token.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> instance representing the execution of the background task,
+            and returning a value indicating whether to repeat the task.</returns>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.IBackgroundTask">
+            <summary>
+            Represents a background task.
+            </summary>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.IBackgroundTask.Run">
+            <summary>
+            Runs the background task.
+            </summary>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.IBackgroundTask.RunAsync(System.Threading.CancellationToken)">
+            <summary>
+            Runs the task asynchronously.
+            </summary>
+            <param name="token">A cancellation token.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> instance representing the execution of the background task.</returns>
+            <exception cref="T:System.NotImplementedException">The background task cannot run asynchronously.</exception>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.IBackgroundTask.IsAsync">
+            <summary>
+            Indicates whether the background task can run asynchronously.
+            </summary>
+        </member>
+        <member name="T:Umbraco.Web.Scheduling.TaskEventArgs`1">
+            <summary>
+            Provides arguments for task runner events.
+            </summary>
+            <typeparam name="T">The type of the task.</typeparam>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.TaskEventArgs`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.TaskEventArgs`1"/> class with a task.
+            </summary>
+            <param name="task">The task.</param>
+        </member>
+        <member name="M:Umbraco.Web.Scheduling.TaskEventArgs`1.#ctor(`0,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.TaskEventArgs`1"/> class with a task and an exception.
+            </summary>
+            <param name="task">The task.</param>
+            <param name="exception">An exception.</param>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.TaskEventArgs`1.Task">
+            <summary>
+            Gets or sets the task.
+            </summary>
+        </member>
+        <member name="P:Umbraco.Web.Scheduling.TaskEventArgs`1.Exception">
+            <summary>
+            Gets or sets the exception.
+            </summary>
         </member>
         <member name="T:Umbraco.Web.Search.BackgroundIndexRebuilder">
             <summary>
@@ -14412,401 +15087,6 @@
         <member name="M:Umbraco.Web.Runtime.WebRuntime.Boot(Umbraco.Core.Composing.IRegister)">
             <inheritdoc/>
         </member>
-        <member name="T:Umbraco.Web.Scheduling.SchedulerComposer">
-            <summary>
-            Used to do the scheduling for tasks, publishing, etc...
-            </summary>
-            <remarks>
-            All tasks are run in a background task runner which is web aware and will wind down
-            the task correctly instead of killing it completely when the app domain shuts down.
-            </remarks>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.LatchedBackgroundTaskBase.Run">
-            <summary>
-            Implements IBackgroundTask.Run().
-            </summary>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.LatchedBackgroundTaskBase.RunAsync(System.Threading.CancellationToken)">
-            <summary>
-            Implements IBackgroundTask.RunAsync().
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.LatchedBackgroundTaskBase.IsAsync">
-            <summary>
-            Indicates whether the background task can run asynchronously.
-            </summary>
-        </member>
-        <member name="T:Umbraco.Web.Scheduling.ThreadingTaskImmutable">
-            <summary>
-            Wraps a <see cref="T:System.Threading.Tasks.Task"/> within an object that gives access to its GetAwaiter method and Status
-            property while ensuring that it cannot be modified in any way.
-            </summary>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.ThreadingTaskImmutable.#ctor(System.Threading.Tasks.Task)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.ThreadingTaskImmutable"/> class with a Task.
-            </summary>
-            <param name="task">The task.</param>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.ThreadingTaskImmutable.GetAwaiter">
-            <summary>
-            Gets an awaiter used to await the task.
-            </summary>
-            <returns>An awaiter instance.</returns>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.ThreadingTaskImmutable.Status">
-            <summary>
-            Gets the TaskStatus of the task.
-            </summary>
-            <returns>The current TaskStatus of the task.</returns>
-        </member>
-        <member name="T:Umbraco.Web.Scheduling.BackgroundTaskRunner">
-            <summary>
-            Manages a queue of tasks and runs them in the background.
-            </summary>
-            <remarks>This class exists for logging purposes - the one you want to use is BackgroundTaskRunner{T}.</remarks>
-        </member>
-        <member name="T:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook">
-            <summary>
-            Represents a MainDom hook.
-            </summary>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook.#ctor(Umbraco.Core.IMainDom,System.Action,System.Action)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook"/> class.
-            </summary>
-            <param name="mainDom">The <see cref="T:Umbraco.Core.IMainDom"/> object.</param>
-            <param name="install">A method to execute when hooking into the main domain.</param>
-            <param name="release">A method to execute when the main domain releases.</param>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook.MainDom">
-            <summary>
-            Gets the <see cref="T:Umbraco.Core.IMainDom"/> object.
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook.Install">
-            <summary>
-            Gets the method to execute when hooking into the main domain.
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook.Release">
-            <summary>
-            Gets the method to execute when the main domain releases.
-            </summary>
-        </member>
-        <member name="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1">
-            <summary>
-            Manages a queue of tasks of type <typeparamref name="T"/> and runs them in the background.
-            </summary>
-            <typeparam name="T">The type of the managed tasks.</typeparam>
-            <remarks>The task runner is web-aware and will ensure that it shuts down correctly when the AppDomain
-            shuts down (ie is unloaded).</remarks>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.#ctor(Umbraco.Core.Logging.ILogger,Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1"/> class.
-            </summary>
-            <param name="logger">A logger.</param>
-            <param name="hook">An optional main domain hook.</param>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.#ctor(System.String,Umbraco.Core.Logging.ILogger,Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1"/> class.
-            </summary>
-            <param name="name">The name of the runner.</param>
-            <param name="logger">A logger.</param>
-            <param name="hook">An optional main domain hook.</param>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.#ctor(Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions,Umbraco.Core.Logging.ILogger,Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1"/> class with a set of options.
-            </summary>
-            <param name="options">The set of options.</param>
-            <param name="logger">A logger.</param>
-            <param name="hook">An optional main domain hook.</param>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.#ctor(System.String,Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions,Umbraco.Core.Logging.ILogger,Umbraco.Web.Scheduling.BackgroundTaskRunner.MainDomHook)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1"/> class with a set of options.
-            </summary>
-            <param name="name">The name of the runner.</param>
-            <param name="options">The set of options.</param>
-            <param name="logger">A logger.</param>
-            <param name="hook">An optional main domain hook.</param>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.TaskCount">
-            <summary>
-            Gets the number of tasks in the queue.
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.IsRunning">
-            <summary>
-            Gets a value indicating whether a threading task is currently running.
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.IsCompleted">
-            <summary>
-            Gets a value indicating whether the runner has completed and cannot accept tasks anymore.
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.CurrentThreadingTask">
-            <summary>
-            Gets the running threading task as an immutable awaitable.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">There is no running task.</exception>
-            <remarks>
-            <para>Unless the AutoStart option is true, there will be no current threading task until
-            a background task is added to the queue, and there will be no current threading task
-            when the queue is empty. In which case this method returns null.</para>
-            <para>The returned value can be awaited and that is all (eg no continuation).</para>
-            </remarks>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.StoppedAwaitable">
-            <summary>
-            Gets an awaitable used to await the runner running operation.
-            </summary>
-            <returns>An awaitable instance.</returns>
-            <remarks>Used to wait until the runner is no longer running (IsRunning == false),
-            though the runner could be started again afterwards by adding tasks to it. If
-            the runner is not running, returns a completed awaitable.</remarks>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.TerminatedAwaitable">
-            <summary>
-            Gets an awaitable object that can be used to await for the runner to terminate.
-            </summary>
-            <returns>An awaitable object.</returns>
-            <remarks>
-            <para>Used to wait until the runner has terminated.</para>
-            <para>This is for unit tests and should not be used otherwise. In most cases when the runner
-            has terminated, the application domain is going down and it is not the right time to do things.</para>
-            </remarks>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.Add(`0)">
-            <summary>
-            Adds a task to the queue.
-            </summary>
-            <param name="task">The task to add.</param>
-            <exception cref="T:System.InvalidOperationException">The task runner has completed.</exception>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.TryAdd(`0)">
-            <summary>
-            Tries to add a task to the queue.
-            </summary>
-            <param name="task">The task to add.</param>
-            <returns>true if the task could be added to the queue; otherwise false.</returns>
-            <remarks>Returns false if the runner is completed.</remarks>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.CancelCurrentBackgroundTask">
-            <summary>
-            Cancels to current task, if any.
-            </summary>
-            <remarks>Has no effect if the task runs synchronously, or does not want to cancel.</remarks>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.StartUp">
-            <summary>
-            Starts the tasks runner, if not already running.
-            </summary>
-            <remarks>Is invoked each time a task is added, to ensure it is going to be processed.</remarks>
-            <exception cref="T:System.InvalidOperationException">The task runner has completed.</exception>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.StartUpLocked">
-            <summary>
-            Starts the tasks runner, if not already running.
-            </summary>
-            <remarks>Must be invoked within lock(_locker) and with _isCompleted being false.</remarks>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.Shutdown(System.Boolean,System.Boolean)">
-            <summary>
-            Shuts the tasks runner down.
-            </summary>
-            <param name="force">True for force the runner to stop.</param>
-            <param name="wait">True to wait until the runner has stopped.</param>
-            <remarks>If <paramref name="force"/> is false, no more tasks can be queued but all queued tasks
-            will run. If it is true, then only the current one (if any) will end and no other task will run.</remarks>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunner`1.Stop(System.Boolean)">
-            <summary>
-            Requests a registered object to un-register.
-            </summary>
-            <param name="immediate">true to indicate the registered object should un-register from the hosting
-            environment before returning; otherwise, false.</param>
-            <remarks>
-            <para>"When the application manager needs to stop a registered object, it will call the Stop method."</para>
-            <para>The application manager will call the Stop method to ask a registered object to un-register. During
-            processing of the Stop method, the registered object must call the HostingEnvironment.UnregisterObject method.</para>
-            </remarks>
-        </member>
-        <member name="T:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions">
-            <summary>
-            Provides options to the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunner`1"/> class.
-            </summary>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions"/> class.
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.LongRunning">
-            <summary>
-            Gets or sets a value indicating whether the running task should be a long-running,
-            coarse grained operation.
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.KeepAlive">
-            <summary>
-            Gets or sets a value indicating whether the running task should block and wait
-            on the queue, or end, when the queue is empty.
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.AutoStart">
-            <summary>
-            Gets or sets a value indicating whether the running task should start immediately
-            or only once a task has been added to the queue.
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.PreserveRunningTask">
-            <summary>
-            Gets or sets a value indicating whether the running task should be preserved
-            once completed, or reset to null. For unit tests.
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.BackgroundTaskRunnerOptions.Hosted">
-            <summary>
-            Gets or sets a value indicating whether the runner should register with (and be
-            stopped by) the hosting. Otherwise, something else should take care of stopping
-            the runner. True by default.
-            </summary>
-        </member>
-        <member name="T:Umbraco.Web.Scheduling.IBackgroundTaskRunner`1">
-            <summary>
-            Defines a service managing a queue of tasks of type <typeparamref name="T"/> and running them in the background.
-            </summary>
-            <typeparam name="T">The type of the managed tasks.</typeparam>
-            <remarks>The interface is not complete and exists only to have the contravariance on T.</remarks>
-        </member>
-        <member name="T:Umbraco.Web.Scheduling.ILatchedBackgroundTask">
-            <summary>
-            Represents a latched background task.
-            </summary>
-            <remarks>Latched background tasks can suspend their execution until
-            a condition is met. However if the tasks runner has to terminate,
-            latched background tasks can be executed immediately, depending on
-            the value returned by RunsOnShutdown.</remarks>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.ILatchedBackgroundTask.Latch">
-            <summary>
-            Gets a task on latch.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">The task is not latched.</exception>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.ILatchedBackgroundTask.IsLatched">
-            <summary>
-            Gets a value indicating whether the task is latched.
-            </summary>
-            <remarks>Should return false as soon as the condition is met.</remarks>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.ILatchedBackgroundTask.RunsOnShutdown">
-            <summary>
-             Gets a value indicating whether the task can be executed immediately if the task runner has to terminate.
-            </summary>
-        </member>
-        <member name="T:Umbraco.Web.Scheduling.RecurringTaskBase">
-            <summary>
-            Provides a base class for recurring background tasks.
-            </summary>
-            <remarks>Implement by overriding PerformRun or PerformRunAsync and then IsAsync accordingly,
-            depending on whether the task is implemented as a sync or async method. Run nor RunAsync are
-            sealed here as overriding them would break recurrence. And then optionally override
-            RunsOnShutdown, in order to indicate whether the latched task should run immediately on
-            shutdown, or just be abandoned (default).</remarks>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.RecurringTaskBase.#ctor(Umbraco.Web.Scheduling.IBackgroundTaskRunner{Umbraco.Web.Scheduling.RecurringTaskBase},System.Int32,System.Int32)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.RecurringTaskBase"/> class.
-            </summary>
-            <param name="runner">The task runner.</param>
-            <param name="delayMilliseconds">The delay.</param>
-            <param name="periodMilliseconds">The period.</param>
-            <remarks>The task will repeat itself periodically. Use this constructor to create a new task.</remarks>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.RecurringTaskBase.Run">
-            <summary>
-            Implements IBackgroundTask.Run().
-            </summary>
-            <remarks>Classes inheriting from <c>RecurringTaskBase</c> must implement <c>PerformRun</c>.</remarks>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.RecurringTaskBase.RunAsync(System.Threading.CancellationToken)">
-            <summary>
-            Implements IBackgroundTask.RunAsync().
-            </summary>
-            <remarks>Classes inheriting from <c>RecurringTaskBase</c> must implement <c>PerformRun</c>.</remarks>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.RecurringTaskBase.PerformRun">
-            <summary>
-            Runs the background task.
-            </summary>
-            <returns>A value indicating whether to repeat the task.</returns>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.RecurringTaskBase.PerformRunAsync(System.Threading.CancellationToken)">
-            <summary>
-            Runs the task asynchronously.
-            </summary>
-            <param name="token">A cancellation token.</param>
-            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> instance representing the execution of the background task,
-            and returning a value indicating whether to repeat the task.</returns>
-        </member>
-        <member name="T:Umbraco.Web.Scheduling.IBackgroundTask">
-            <summary>
-            Represents a background task.
-            </summary>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.IBackgroundTask.Run">
-            <summary>
-            Runs the background task.
-            </summary>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.IBackgroundTask.RunAsync(System.Threading.CancellationToken)">
-            <summary>
-            Runs the task asynchronously.
-            </summary>
-            <param name="token">A cancellation token.</param>
-            <returns>A <see cref="T:System.Threading.Tasks.Task"/> instance representing the execution of the background task.</returns>
-            <exception cref="T:System.NotImplementedException">The background task cannot run asynchronously.</exception>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.IBackgroundTask.IsAsync">
-            <summary>
-            Indicates whether the background task can run asynchronously.
-            </summary>
-        </member>
-        <member name="T:Umbraco.Web.Scheduling.TaskEventArgs`1">
-            <summary>
-            Provides arguments for task runner events.
-            </summary>
-            <typeparam name="T">The type of the task.</typeparam>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.TaskEventArgs`1.#ctor(`0)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.TaskEventArgs`1"/> class with a task.
-            </summary>
-            <param name="task">The task.</param>
-        </member>
-        <member name="M:Umbraco.Web.Scheduling.TaskEventArgs`1.#ctor(`0,System.Exception)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Umbraco.Web.Scheduling.TaskEventArgs`1"/> class with a task and an exception.
-            </summary>
-            <param name="task">The task.</param>
-            <param name="exception">An exception.</param>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.TaskEventArgs`1.Task">
-            <summary>
-            Gets or sets the task.
-            </summary>
-        </member>
-        <member name="P:Umbraco.Web.Scheduling.TaskEventArgs`1.Exception">
-            <summary>
-            Gets or sets the exception.
-            </summary>
-        </member>
         <member name="M:Umbraco.Web.Security.BackOfficeClaimsIdentityFactory`1.CreateAsync(Microsoft.AspNet.Identity.UserManager{`0,System.Int32},`0,System.String)">
             <summary>
             Create a ClaimsIdentity from a user
@@ -15804,7 +16084,7 @@
         </member>
         <member name="M:Umbraco.Web.Security.MembershipHelper.GetCurrentLoginStatus">
             <summary>
-            Returns the login status model of the currently logged in member, if no member is logged in it returns null;
+            Returns the login status model of the currently logged in member.
             </summary>
             <returns></returns>
         </member>
@@ -16625,6 +16905,14 @@
              </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "P:Umbraco.Web.JavaScript.Resources.ServerVariables" -->
+        <member name="P:Umbraco.Web.JavaScript.Resources.TinyMceInitialize">
+             <summary>
+               Looks up a localized string similar to [
+                &apos;../lib/tinymce/tinymce.min.js&apos;,
+            ]
+            .
+             </summary>
+        </member>
         <member name="E:Umbraco.Web.JavaScript.ServerVariablesParser.Parsing">
             <summary>
             Allows developers to add custom variables on parsing
@@ -17336,12 +17624,6 @@
             Triggers the EndRequest event.
             </summary>
         </member>
-        <member name="F:Umbraco.Web.UmbracoModule.ReservedPaths">
-            <summary>
-            This is used internally to track any registered callback paths for Identity providers. If the request path matches
-            any of the registered paths, then the module will let the request keep executing
-            </summary>
-        </member>
         <member name="T:Umbraco.Web.Actions.ActionAssignDomain">
             <summary>
             This action is invoked when a domain is being assigned to a document
@@ -17973,408 +18255,6 @@
             <param name="parameters">The parameters.</param>
             <param name="content">The content used for macro rendering</param>
             <returns></returns>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.Repository">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.#ctor">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.our.Repository.CategoriesCompleted">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.our.Repository.ModulesCompleted">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.our.Repository.ModulesCategorizedCompleted">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.our.Repository.NitrosCompleted">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.our.Repository.NitrosCategorizedCompleted">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.our.Repository.authenticateCompleted">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.our.Repository.fetchPackageCompleted">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.our.Repository.fetchPackageByVersionCompleted">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.our.Repository.fetchProtectedPackageCompleted">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.our.Repository.SubmitPackageCompleted">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.our.Repository.PackageByGuidCompleted">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.Categories(System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.CategoriesAsync(System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.CategoriesAsync(System.String,System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.Modules">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.ModulesAsync">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.ModulesAsync(System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.ModulesCategorized">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.ModulesCategorizedAsync">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.ModulesCategorizedAsync(System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.Nitros">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.NitrosAsync">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.NitrosAsync(System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.NitrosCategorized">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.NitrosCategorizedAsync">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.NitrosCategorizedAsync(System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.authenticate(System.String,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.authenticateAsync(System.String,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.authenticateAsync(System.String,System.String,System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.fetchPackage(System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.fetchPackageAsync(System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.fetchPackageAsync(System.String,System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.fetchPackageByVersion(System.String,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.fetchPackageByVersionAsync(System.String,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.fetchPackageByVersionAsync(System.String,System.String,System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.fetchProtectedPackage(System.String,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.fetchProtectedPackageAsync(System.String,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.fetchProtectedPackageAsync(System.String,System.String,System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.SubmitPackage(System.String,System.String,System.String,System.Byte[],System.Byte[],System.Byte[],System.String,System.String,System.String,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.SubmitPackageAsync(System.String,System.String,System.String,System.Byte[],System.Byte[],System.Byte[],System.String,System.String,System.String,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.SubmitPackageAsync(System.String,System.String,System.String,System.Byte[],System.Byte[],System.Byte[],System.String,System.String,System.String,System.String,System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.PackageByGuid(System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.PackageByGuidAsync(System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.PackageByGuidAsync(System.String,System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.our.Repository.CancelAsync(System.Object)">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.Category">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Category.Text">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Category.Description">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Category.Url">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Category.Id">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Category.Packages">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.Package">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.RepoGuid">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.Text">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.Description">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.Icon">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.Thumbnail">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.Documentation">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.Demo">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.Accepted">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.IsModule">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.EditorsPick">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.Protected">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.HasUpgrade">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.UpgradeVersion">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.UpgradeReadMe">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.Package.Url">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.SubmitStatus">
-            <remarks/>
-        </member>
-        <member name="F:Umbraco.Web.org.umbraco.our.SubmitStatus.Complete">
-            <remarks/>
-        </member>
-        <member name="F:Umbraco.Web.org.umbraco.our.SubmitStatus.Exists">
-            <remarks/>
-        </member>
-        <member name="F:Umbraco.Web.org.umbraco.our.SubmitStatus.NoAccess">
-            <remarks/>
-        </member>
-        <member name="F:Umbraco.Web.org.umbraco.our.SubmitStatus.Error">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.CategoriesCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.CategoriesCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.CategoriesCompletedEventArgs.Result">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.ModulesCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.ModulesCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.ModulesCompletedEventArgs.Result">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.ModulesCategorizedCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.ModulesCategorizedCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.ModulesCategorizedCompletedEventArgs.Result">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.NitrosCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.NitrosCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.NitrosCompletedEventArgs.Result">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.NitrosCategorizedCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.NitrosCategorizedCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.NitrosCategorizedCompletedEventArgs.Result">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.authenticateCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.authenticateCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.authenticateCompletedEventArgs.Result">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.fetchPackageCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.fetchPackageCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.fetchPackageCompletedEventArgs.Result">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.fetchPackageByVersionCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.fetchPackageByVersionCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.fetchPackageByVersionCompletedEventArgs.Result">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.fetchProtectedPackageCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.fetchProtectedPackageCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.fetchProtectedPackageCompletedEventArgs.Result">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.SubmitPackageCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.SubmitPackageCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.SubmitPackageCompletedEventArgs.Result">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.PackageByGuidCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.our.PackageByGuidCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.our.PackageByGuidCompletedEventArgs.Result">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.update.CheckForUpgrade">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.#ctor">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.update.CheckForUpgrade.InstallCompleted">
-            <remarks/>
-        </member>
-        <member name="E:Umbraco.Web.org.umbraco.update.CheckForUpgrade.CheckUpgradeCompleted">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.Install(System.Guid,System.Boolean,System.Boolean,System.DateTime,System.Int32,System.Int32,System.Int32,System.String,System.String,System.String,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.InstallAsync(System.Guid,System.Boolean,System.Boolean,System.DateTime,System.Int32,System.Int32,System.Int32,System.String,System.String,System.String,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.InstallAsync(System.Guid,System.Boolean,System.Boolean,System.DateTime,System.Int32,System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.CheckUpgrade(System.Int32,System.Int32,System.Int32,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.CheckUpgradeAsync(System.Int32,System.Int32,System.Int32,System.String)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.CheckUpgradeAsync(System.Int32,System.Int32,System.Int32,System.String,System.Object)">
-            <remarks/>
-        </member>
-        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.CancelAsync(System.Object)">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.update.UpgradeResult">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.update.UpgradeResult.Comment">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.update.UpgradeResult.UpgradeType">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.update.UpgradeResult.UpgradeUrl">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.update.UpgradeType">
-            <remarks/>
-        </member>
-        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.None">
-            <remarks/>
-        </member>
-        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.Patch">
-            <remarks/>
-        </member>
-        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.Minor">
-            <remarks/>
-        </member>
-        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.Major">
-            <remarks/>
-        </member>
-        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.Critical">
-            <remarks/>
-        </member>
-        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.Error">
-            <remarks/>
-        </member>
-        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.OutOfSync">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.update.InstallCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.update.CheckUpgradeCompletedEventHandler">
-            <remarks/>
-        </member>
-        <member name="T:Umbraco.Web.org.umbraco.update.CheckUpgradeCompletedEventArgs">
-            <remarks/>
-        </member>
-        <member name="P:Umbraco.Web.org.umbraco.update.CheckUpgradeCompletedEventArgs.Result">
-            <remarks/>
         </member>
         <member name="T:Umbraco.Web.PublishedPropertyExtension">
             <summary>
@@ -20607,14 +20487,6 @@
             <param name="httpContext"></param>
             <returns></returns>
         </member>
-        <member name="M:Umbraco.Web.UmbracoInjectedModule.EnsureDocumentRequest(System.Web.HttpContextBase,System.Uri)">
-            <summary>
-            Ensures that the request is a document request (i.e. one that the module should handle)
-            </summary>
-            <param name="httpContext"></param>
-            <param name="uri"></param>
-            <returns></returns>
-        </member>
         <member name="M:Umbraco.Web.UmbracoInjectedModule.RewriteToBackOfficeHandler(System.Web.HttpContextBase)">
             <summary>
             Rewrites to the default back office page.
@@ -20642,15 +20514,6 @@
             </summary>
             <param name="app"></param>
         </member>
-        <member name="F:Umbraco.Web.UmbracoInjectedModule._combinedRouteCollection">
-            <summary>
-            This is used to be passed into the GlobalSettings.IsReservedPathOrUrl and will include some 'fake' routes
-            used to determine if a path is reserved.
-            </summary>
-            <remarks>
-            This is basically used to reserve paths dynamically
-            </remarks>
-        </member>
         <member name="M:Umbraco.Web.UriUtility.ToFullUrl(System.String,System.Web.HttpContextBase)">
             <summary>
             Returns an full url with the host, port, etc...
@@ -20661,6 +20524,87 @@
             <remarks>
             Based on http://stackoverflow.com/questions/3681052/get-absolute-url-from-relative-path-refactored-method
             </remarks>
+        </member>
+        <member name="T:Umbraco.Web.org.umbraco.update.CheckForUpgrade">
+            <remarks/>
+        </member>
+        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.#ctor">
+            <remarks/>
+        </member>
+        <member name="E:Umbraco.Web.org.umbraco.update.CheckForUpgrade.InstallCompleted">
+            <remarks/>
+        </member>
+        <member name="E:Umbraco.Web.org.umbraco.update.CheckForUpgrade.CheckUpgradeCompleted">
+            <remarks/>
+        </member>
+        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.Install(System.Guid,System.Boolean,System.Boolean,System.DateTime,System.Int32,System.Int32,System.Int32,System.String,System.String,System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.InstallAsync(System.Guid,System.Boolean,System.Boolean,System.DateTime,System.Int32,System.Int32,System.Int32,System.String,System.String,System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.InstallAsync(System.Guid,System.Boolean,System.Boolean,System.DateTime,System.Int32,System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.CheckUpgrade(System.Int32,System.Int32,System.Int32,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.CheckUpgradeAsync(System.Int32,System.Int32,System.Int32,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.CheckUpgradeAsync(System.Int32,System.Int32,System.Int32,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:Umbraco.Web.org.umbraco.update.CheckForUpgrade.CancelAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="T:Umbraco.Web.org.umbraco.update.UpgradeResult">
+            <remarks/>
+        </member>
+        <member name="P:Umbraco.Web.org.umbraco.update.UpgradeResult.Comment">
+            <remarks/>
+        </member>
+        <member name="P:Umbraco.Web.org.umbraco.update.UpgradeResult.UpgradeType">
+            <remarks/>
+        </member>
+        <member name="P:Umbraco.Web.org.umbraco.update.UpgradeResult.UpgradeUrl">
+            <remarks/>
+        </member>
+        <member name="T:Umbraco.Web.org.umbraco.update.UpgradeType">
+            <remarks/>
+        </member>
+        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.None">
+            <remarks/>
+        </member>
+        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.Patch">
+            <remarks/>
+        </member>
+        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.Minor">
+            <remarks/>
+        </member>
+        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.Major">
+            <remarks/>
+        </member>
+        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.Critical">
+            <remarks/>
+        </member>
+        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.Error">
+            <remarks/>
+        </member>
+        <member name="F:Umbraco.Web.org.umbraco.update.UpgradeType.OutOfSync">
+            <remarks/>
+        </member>
+        <member name="T:Umbraco.Web.org.umbraco.update.InstallCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:Umbraco.Web.org.umbraco.update.CheckUpgradeCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:Umbraco.Web.org.umbraco.update.CheckUpgradeCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:Umbraco.Web.org.umbraco.update.CheckUpgradeCompletedEventArgs.Result">
+            <remarks/>
         </member>
         <member name="M:Umbraco.Web.UmbracoAuthorizedHttpHandler.ValidateUserContextId(System.String)">
             <summary>

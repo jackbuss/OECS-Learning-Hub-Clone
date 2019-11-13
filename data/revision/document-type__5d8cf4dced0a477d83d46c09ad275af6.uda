@@ -49,5 +49,5 @@
   "Name": "Info Pages",
   "Alias": "dtInfoPages",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.1.4"
+  "__version": "3.1.5"
 }

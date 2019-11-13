@@ -52,5 +52,5 @@
   "Name": "Common Images",
   "Alias": "dtcCommonImages",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.1.2"
+  "__version": "3.1.5"
 }

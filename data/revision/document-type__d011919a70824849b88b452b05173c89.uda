@@ -92,5 +92,5 @@
   "Name": "Home Page",
   "Alias": "dtHomePage",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.0.2"
+  "__version": "3.1.5"
 }
