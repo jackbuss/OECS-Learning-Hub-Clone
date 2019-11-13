@@ -56,7 +56,7 @@
         });
 
         $('#modal').on('hidden.bs.modal', function (event) {
-            history.pushState(null, null, location.href);
+            history.pushState(null, null, '/');
         });
     });
     //public 
