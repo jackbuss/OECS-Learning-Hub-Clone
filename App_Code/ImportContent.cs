@@ -88,35 +88,42 @@ public class ImportContentController : UmbracoApiController
 
         if (tileType.ToLower() == "video")
         {
+            toPrint.Add(new[] { "adding: " + link });
+            if (link.Contains("youtube") || link.Contains("vimeo") || link.Contains("youtu.be") || (link.Contains("ted.com") && !link.Contains("ed.ted.com")))
+            {
+                toPrint.Add(new[] { "VIDEO" });
+                String rt;
+                WebRequest request = WebRequest.Create($"https://localhost:44384/umbraco/Api/UnristrictedRteEmbed/GetEmbed?height=240&url={link}&width=360");
+                ((System.Net.HttpWebRequest)request).UserAgent =
+                "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)";
 
-            toPrint.Add(new[] { "VIDEO" });
-            String rt;
-            WebRequest request = WebRequest.Create($"https://localhost:44384/umbraco/Api/UnristrictedRteEmbed/GetEmbed?height=240&url={link}&width=360");
-            ((System.Net.HttpWebRequest)request).UserAgent =
-            "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)";
+                WebResponse response = request.GetResponse();
 
-            WebResponse response = request.GetResponse();
+                Stream dataStream = response.GetResponseStream();
 
-            Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
 
-            StreamReader reader = new StreamReader(dataStream);
+                rt = reader.ReadToEnd();
 
-            rt = reader.ReadToEnd();
+                toPrint.Add(new[] { rt });
 
-            toPrint.Add(new[] { rt });
+                var newRt = rt.Replace("\\\"", "'");
 
-            var newRt = rt.Replace("\\\"", "'");
+                toPrint.Add(new[] { newRt });
 
-            toPrint.Add(new[] { newRt });
+                var jsonised = Newtonsoft.Json.JsonConvert.DeserializeObject<TWS.ThinkBlue.Core.MarkupFinder>(newRt);
 
-            var jsonised = Newtonsoft.Json.JsonConvert.DeserializeObject<TWS.ThinkBlue.Core.MarkupFinder>(newRt);
+                var json = $"[{{\"url\": \"{link}\",\"width\": 360,\"height\": 240,\"preview\": \"{jsonised.Markup.ToString()/*.Replace("'", "\\\"")*/}\"}}]";
 
-            var json = $"[{{\"url\": \"{link}\",\"width\": 360,\"height\": 240,\"preview\": \"{jsonised.Markup.ToString()/*.Replace("'", "\\\"")*/}\"}}]";
+                toPrint.Add(new[] { json.ToString() });
 
-            toPrint.Add(new[] { json.ToString() });
+                node.SetValue("TileExternalVideo", json);
 
-            node.SetValue("TileExternalVideo", json);
+            }
+            else
+            {
 
+            }
         }
 
         var originationValue = Newtonsoft.Json.JsonConvert.SerializeObject(new[] { (string)"External" });
@@ -131,7 +138,7 @@ public class ImportContentController : UmbracoApiController
         toPrint.Add(new[] { $"STRING TO ADD {gridContent}" });
         //node.SetValue("contentGrid", @"{ ""name"": ""1 column layout"", ""sections"": [ { ""grid"": 12, ""rows"": [ { ""name"": ""Full Row"", ""areas"": [ { ""grid"": 12, ""allowAll"": false, ""allowed"": [ ""rte"", ""headline"", ""quote"" ], ""hasConfig"": false, ""controls"": [ { ""value"": """ + gridContent + @""", ""editor"": { ""name"": ""Headline"", ""alias"": ""headline"", ""view"": ""textstring"", ""render"": null, ""icon"": ""icon - coin"", ""config"": { ""style"": ""font - size: 36px; line - height: 45px; font - weight: bold"", ""markup"": "" < h1 >#value#</h1>"" } } } ] } ], ""hasConfig"": false, ""id"": ""894c2705-70c9-4674-a30d-36a07e8c006c"" } ] } ] }");
 
-        node.SetValue("contentGrid", @"{ ""name"": ""1 column layout"", ""sections"": [ { ""grid"": 12, ""rows"": [ { ""name"": ""Full Row"", ""areas"": [ { ""grid"": 12, ""allowAll"": false, ""allowed"": [ ""rte"", ""headline"", ""quote"" ], ""hasConfig"": false, ""controls"": [ { ""value"": "" " + gridContent + @""", ""editor"": { ""name"": ""Rich text editor"", ""alias"": ""rte"", ""view"": ""rte"", ""render"": null, ""icon"": ""icon - article"", ""config"": {} } } ] } ], ""label"": ""Modal Content Editorial"", ""hasConfig"": false, ""id"": ""a120f627 - e08d - 850d - 5497 - 2b307e17310e"" } ] } ] }");
+        node.SetValue("contentGrid", @"{ ""name"": ""1 column layout"", ""sections"": [ { ""grid"": 12, ""rows"": [ { ""name"": ""Full Row"", ""areas"": [ { ""grid"": 12, ""allowAll"": false, ""allowed"": [ ""rte"", ""headline"", ""quote"" ], ""hasConfig"": false, ""controls"": [ { ""value"": "" " + gridContent + @""", ""editor"": { ""name"": ""Rich text editor"", ""alias"": ""rte"", ""view"": ""rte"", ""render"": null, ""icon"": ""icon - article"", ""config"": {} } } ] } ], ""label"": ""Modal Content Editorial"", ""hasConfig"": false, ""id"": ""a120f627-e08d-850d-5497-2b307e17310e"" } ] } ] }");
 
 
         #endregion
@@ -139,7 +146,7 @@ public class ImportContentController : UmbracoApiController
         node.SetValue("TileType", typeValue);
         node.SetValue("TileContentOrigination", originationValue);
 
-        node.SetValue("ContentTitle", title);
+        node.SetValue("ContentTitle", ""); // repurposed for CTA
 
         node.SetValue("TileExternalUrl", link);
 
@@ -212,8 +219,9 @@ public class ImportContentController : UmbracoApiController
                 }
                 catch (Exception e)
                 {
+                    toPrint.Add(new[] { "Line that's erroring " + line });
                     toPrint.Add(new[] { "ERROR: " + e.StackTrace });
-                    toPrint.Add(new[] { "casetopic: " + caseTheme });
+                    //toPrint.Add(new[] { "casetopic: " + caseTheme });
                 }
             }
 
