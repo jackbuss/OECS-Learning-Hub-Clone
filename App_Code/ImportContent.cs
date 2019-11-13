@@ -16,6 +16,7 @@ using System.Net.Http.Formatting;
 using Umbraco.Core.Services;
 using System.Net;
 
+
 /// <summary>
 /// Summary description for ImportContent
 /// </summary>
@@ -50,7 +51,7 @@ public class ImportContentController : UmbracoApiController
         {
             tileType = "External Link";
         }
-        else if(type.ToLower() == "paper")
+        else if (type.ToLower() == "paper")
         {
             tileType = "Academic Paper";
         }
@@ -93,7 +94,10 @@ public class ImportContentController : UmbracoApiController
             {
                 toPrint.Add(new[] { "VIDEO" });
                 String rt;
-                WebRequest request = WebRequest.Create($"https://localhost:44384/umbraco/Api/UnristrictedRteEmbed/GetEmbed?height=240&url={link}&width=360");
+                var uri = UmbracoContext.HttpContext.Request.Url;
+                
+                WebRequest request = WebRequest.Create($"{uri.Scheme}://{uri.Authority}/umbraco/Api/UnristrictedRteEmbed/GetEmbed?height=240&url={link}&width=360");
+
                 ((System.Net.HttpWebRequest)request).UserAgent =
                 "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)";
 
@@ -150,7 +154,14 @@ public class ImportContentController : UmbracoApiController
 
         node.SetValue("TileExternalUrl", link);
 
-        cs.SaveAndPublish(node);
+        if (!String.IsNullOrWhiteSpace(gridContent))
+        {
+            cs.SaveAndPublish(node);
+        }
+        else
+        {
+            cs.Save(node);
+        }
 
         return node;
     }
@@ -246,7 +257,7 @@ public class DeleteContentController : UmbracoApiController
             var cs = Services.ContentService;
             var ct = Services.ContentTypeService;
             var dtContentTileId = ct.Get("dtContentTile").Id;
-            
+
             var filter = SqlContext.Query<IContent>().Where(x => x.ContentTypeId == dtContentTileId);
             var tiles = cs.GetPagedDescendants(id: cs.GetById(new Guid(a)).Id, pageIndex: 0, pageSize: int.MaxValue, totalRecords: out totalChildren, filter: filter);
 
@@ -260,6 +271,8 @@ public class DeleteContentController : UmbracoApiController
         else
         {
             toPrint.Add(new[] { "guid incorrect" });
+            var uri = UmbracoContext.HttpContext.Request.Url;
+            toPrint.Add(new[] { $"{uri.Scheme}://{uri.Authority}" });
 
         }
 
