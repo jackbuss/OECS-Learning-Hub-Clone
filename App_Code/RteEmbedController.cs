@@ -70,7 +70,7 @@ namespace TWS.ThinkBlue.Core
 
     public class MarkupFinder
     {
-        public int OEmbedStatus { get; set; }
+        public string OEmbedStatus { get; set; }
         public bool SupportsDimensions { get; set; }
         public string Markup { get; set; }
     }

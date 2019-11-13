@@ -231,3 +231,38 @@ public class ImportContentController : UmbracoApiController
     }
 
 }
+
+public class DeleteContentController : UmbracoApiController
+{
+    private List<String[]> toPrint = new List<String[]>();
+    public IEnumerable<String[]> GetDelete(string a)
+    {
+        //702f7185-50cb-49ff-9df0-b123d93b2874
+        var tilesParent = Umbraco.Content(a);
+
+        if (tilesParent != null)
+        {
+            long totalChildren = 0;
+            var cs = Services.ContentService;
+            var ct = Services.ContentTypeService;
+            var dtContentTileId = ct.Get("dtContentTile").Id;
+            
+            var filter = SqlContext.Query<IContent>().Where(x => x.ContentTypeId == dtContentTileId);
+            var tiles = cs.GetPagedDescendants(id: cs.GetById(new Guid(a)).Id, pageIndex: 0, pageSize: int.MaxValue, totalRecords: out totalChildren, filter: filter);
+
+            foreach (var item in tiles.Where(x => x.GetValue<string>("tileContentOrigination") == "[\"External\"]"))
+            {
+                toPrint.Add(new[] { $"{item.ContentType.Name} -- {item.Name} :: {item.GetValue<string>("tileContentOrigination")}" });
+                // remove without recycling
+                cs.Delete(item);
+            }
+        }
+        else
+        {
+            toPrint.Add(new[] { "guid incorrect" });
+
+        }
+
+        return toPrint;
+    }
+}
