@@ -35,3 +35,7 @@
 .custom-rb label {
     cursor: pointer;
 }
+
+.search-text{
+    font-size: 24px !important;
+}

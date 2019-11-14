@@ -25,9 +25,9 @@
     @Html.HiddenFor(m => m.PageSize)
     @Html.AntiForgeryToken();
 
-    <div class="input-group bg-info p-2">
+    <div class="input-group p-2">
         @Html.LabelFor(m => m.SearchTerm, "What would you like to search for?", new { @class = "sr-only" })
-        @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search", @class = "form-control", autocomplete = "off" })
+        @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search", @class = "form-control search-text", autocomplete = "off" })
     </div>
 
     <div id="search-filters" class="collapse show">
@@ -58,30 +58,30 @@
     if (filterList.Any())
     {
         <div class="card border-0 bg-transparent">
-            <div class="card-header bg-white" id="heading@(title)">
-                <p class="mb-0">Browse by @(title)</p>
+            <div class="@*card-header*@ bg-white pl-2" id="heading@(title)">
+                <p class="mb-0 font-weight-bold">Browse by @(title)</p>
             </div>
             <div aria-labelledby="heading@(title)">
-                <div class="card-body bg-info">
+                <div class="card-body">
                     <div class="row p-1">
                         @for (int i = 0; i < filterList.Count; i++)
                         {
-                            var fOptions = "";// "&tint=255,255,255,165";
-                            IPublishedContent bannerImage = null;
+                            //var fOptions = "";// "&tint=255,255,255,165";
+                            //IPublishedContent bannerImage = null;
 
                             string filterValue = $"{field}|{filterList[i].Value}";
 
 
-                            if (isImage)
-                            {
-                                DtListPage item = Umbraco.Content(filterList[i].Id) as DtListPage;
-                                bannerImage = (item.BannerImage != null ? item.BannerImage : Umbraco.Media(Guid.Parse("e2fdcf23-4e61-46ef-9837-7e88ca180132")));
-                            }
+                            //if (isImage)
+                            //{
+                            //    DtListPage item = Umbraco.Content(filterList[i].Id) as DtListPage;
+                            //    bannerImage = (item.BannerImage != null ? item.BannerImage : Umbraco.Media(Guid.Parse("e2fdcf23-4e61-46ef-9837-7e88ca180132")));
+                            //}
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-0">
-                                <div class="text-white custom-rb">
+                                <div class="text-primary custom-rb vertical-align-items d-inline-block">
                                     @Html.RadioButtonFor(m => m.Browse, filterValue, new { id = filterList[i].Value.Replace(" ", "_") })
-                                    <label for="@filterList[i].Value.Replace(" ","_")" class="w-100 d-inline-flex align-items-center">
-                                        @if (isImage)
+                                    <label for="@filterList[i].Value.Replace(" ","_")" class="w-100 align-items-center">
+                                        @*@if (isImage)
                                         {
                                             <picture>
                                                 <source srcset="@(bannerImage.GetCropUrl(cropAlias: "Square", width: 240, furtherOptions: fOptions))" media="(min-width: 1200px)" />
@@ -93,8 +93,9 @@
                                         else
                                         {
                                             <span id="icon" class="text-primary pb-2 pt-2">@renderThemeIcon(filterList[i].Value, 2)</span>
-                                        }
-                                        <span class="col-8">@(filterList[i].Value)</span>
+                                        }*@
+                                        @(filterList[i].Value)
+                                        @*<span class="col-8">@(filterList[i].Value)</span>*@
                                     </label>
                                 </div>
                             </div>
