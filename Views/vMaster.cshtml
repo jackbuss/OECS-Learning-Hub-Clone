@@ -4,6 +4,8 @@
 @{
     Layout = null;
 
+    
+
     Html.RequiresCss(new CssFile("~/styles/bootstrap-4.3.1.min.css") { ForceProvider = "HeadRenderer", Priority = 1 });
     Html.RequiresCss(new CssFile("~/styles/cookieconsent-3.1.0.min.css") { ForceProvider = "HeadRenderer", Priority = 2 });
     Html.RequiresCssFolder("/css", "core-*.css", 10, 1, null, "HeadRenderer");
@@ -28,6 +30,7 @@
     <link rel="canonical" href="@(Model.Url(mode: UrlMode.Absolute))">
     <link rel="manifest" href="~/site.webmanifest">
     @{Html.RenderPartial("Meta/FacebookOG");}
+    @*@{Html.RenderPartial("GoogleSitemap");}*@
     @{Html.RenderPartial("Meta/TwitterCard");}
     @{Html.RenderPartial("Meta/FavIcons");}
     <!-- Core Css -->

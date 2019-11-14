@@ -1,0 +1,64 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@{
+    Response.ContentType = "text/xml";
+    Layout = null;
+
+}
+@using Umbraco.Core.Models.PublishedContent
+@using Umbraco.Web
+
+
+@*<?xml version="1.0" encoding="UTF-8" ?>*@
+
+
+
+@*
+    This snippet makes a list of links of all visible pages of the site, as nested unordered HTML lists.
+
+    How it works:
+    - It uses a custom Razor helper called Traverse() to select and display the markup and links.
+*@
+
+@{
+    var selection = Model.Root(); }
+
+
+
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    @* Render the sitemap by passing the root node to the traverse helper, below *@
+    @Traverse(selection)
+
+
+
+</urlset>
+
+@* Helper method to traverse through all descendants *@
+@helper Traverse(IPublishedContent node)
+{
+    @* Update the level to reflect how deep you want the sitemap to go *@
+    const int maxLevelForSitemap = 4;
+
+    @* Select visible children *@
+    var selection = node.Children.Where(x =>/* x.IsVisible() && */x.Level <= maxLevelForSitemap).ToArray();
+
+    @* If any items are returned, render a list *@
+    if (selection.Length > 0)
+    {
+        foreach (var item in selection)
+        {
+            <url>
+
+                <loc>@item.Url</loc>
+
+                <changefreq>daily</changefreq>
+
+            </url>
+
+            @Traverse(item)
+        }
+    }
+}

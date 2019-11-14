@@ -14,6 +14,7 @@
     "IsElementType": false,
     "AllowedChildContentTypes": [
       "umb://document-type/15dfd700abf74534b3eb29a20c51083f",
+      "umb://document-type/21c1210283d04cfdb7d4ae575a910e82",
       "umb://document-type/5d8cf4dced0a477d83d46c09ad275af6",
       "umb://document-type/a76e33fbd587411395942e6e25abc603",
       "umb://document-type/e0680db28e3e4f94bdd1f583b670fdfb"
@@ -64,6 +65,11 @@
       "Mode": 0
     },
     {
+      "Udi": "umb://document-type/21c1210283d04cfdb7d4ae575a910e82",
+      "Ordering": false,
+      "Mode": 0
+    },
+    {
       "Udi": "umb://document-type/5d8cf4dced0a477d83d46c09ad275af6",
       "Ordering": false,
       "Mode": 0
@@ -92,5 +98,5 @@
   "Name": "Home Page",
   "Alias": "dtHomePage",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
-  "__version": "3.1.5"
+  "__version": "3.2.0"
 }
