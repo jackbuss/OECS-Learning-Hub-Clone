@@ -1,0 +1,58 @@
+{
+  "DefaultTemplate": "umb://template/2fb9604d5d4a4b2f9d9f861b32667073",
+  "AllowedTemplates": [
+    "umb://template/2fb9604d5d4a4b2f9d9f861b32667073"
+  ],
+  "Icon": "icon-application-error color-pink",
+  "Thumbnail": "folder.png",
+  "Description": null,
+  "IsContainer": false,
+  "Permissions": {
+    "AllowVaryingByCulture": false,
+    "AllowVaryingBySegment": false,
+    "AllowedAtRoot": false,
+    "IsElementType": false,
+    "AllowedChildContentTypes": []
+  },
+  "Parent": null,
+  "CompositionContentTypes": [],
+  "PropertyGroups": [
+    {
+      "Key": "f9133802-7c67-435e-ba22-5452afdfc658",
+      "Name": "Main Content",
+      "SortOrder": 0,
+      "PropertyTypes": [
+        {
+          "Key": "21724c23-67b9-4837-8169-3c6e056e31fc",
+          "Alias": "error404Details",
+          "DataType": "umb://data-type/e61274b6f7784ecb80dbeea7b3e38f98",
+          "Description": null,
+          "Mandatory": true,
+          "Name": "Error Content Area",
+          "SortOrder": 0,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        }
+      ]
+    }
+  ],
+  "PropertyTypes": [],
+  "Udi": "umb://document-type/025841ba97094121860c2f2571dd03be",
+  "Dependencies": [
+    {
+      "Udi": "umb://data-type/e61274b6f7784ecb80dbeea7b3e38f98",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://template/2fb9604d5d4a4b2f9d9f861b32667073",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "Name": "Error Page",
+  "Alias": "errorPage",
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
+  "__version": "3.2.0"
+}

@@ -13,6 +13,7 @@
     "AllowedAtRoot": true,
     "IsElementType": false,
     "AllowedChildContentTypes": [
+      "umb://document-type/025841ba97094121860c2f2571dd03be",
       "umb://document-type/15dfd700abf74534b3eb29a20c51083f",
       "umb://document-type/21c1210283d04cfdb7d4ae575a910e82",
       "umb://document-type/5d8cf4dced0a477d83d46c09ad275af6",
@@ -52,6 +53,11 @@
     {
       "Udi": "umb://data-type/f73f89d8ca744cb783f288fdf38a8bdb",
       "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://document-type/025841ba97094121860c2f2571dd03be",
+      "Ordering": false,
       "Mode": 0
     },
     {

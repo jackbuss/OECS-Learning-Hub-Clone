@@ -1,0 +1,12 @@
+{
+  "EditorAlias": "Umbraco.TinyMCE",
+  "DatabaseType": 0,
+  "Configuration": {"editor":{"toolbar":["ace","styleselect","bold","italic","alignleft","aligncenter","alignright","bullist","numlist","outdent","indent","link","umbmediapicker","umbmacro","umbembeddialog"],"stylesheets":[],"maxImageSize":500,"mode":"classic"},"hideLabel":false,"ignoreUserStartNodes":false,"mediaParentId":null},
+  "Parent": null,
+  "Udi": "umb://data-type/e61274b6f7784ecb80dbeea7b3e38f98",
+  "Dependencies": [],
+  "Name": "Error Page - Content Area - Rich Text Editor",
+  "Alias": null,
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
+  "__version": "3.2.0"
+}
