@@ -1,4 +1,7 @@
-﻿$('#modal').on('show.bs.modal', function (event) {
+﻿var YTAPI = false;
+var tilId;
+
+$('#modal').on('show.bs.modal', function (event) {
 
     var modal = $(this);
     var modalbody = modal.find('.modal-body');
@@ -9,10 +12,10 @@
     if (button.length > 0) {
         // Load in the content
         modalbody.load(button.attr('href') + '?m=1', function (response, status, xhr) {
-            if (status == "success") {
+            if (status === "success") {
 
                 if (modalbody.find(".embed-responsive-item").length > 0) {
-                    var tileId = button.data("key");
+                    tileId = button.data("key");
 
                     var iframe = $(".embed-responsive-item");
                     if (iframe.attr("src").includes("vimeo.com")) {
@@ -22,8 +25,15 @@
                             injectEnd(tileId);
                         });
                     } else if (iframe.attr("src").includes("youtube.com")) {
-
-
+                        if (!YTAPI) {
+                            var tag = document.createElement('script');
+                            tag.id = 'yt-playerApi';
+                            tag.src = 'https://www.youtube.com/iframe_api';
+                            $('body').append(tag);
+                        } else {
+                            // already have the api loaded, we don't need to load again
+                            onYouTubeIframeAPIReady();
+                        }
 
                     }
 
@@ -39,7 +49,7 @@
 
 function injectEnd(id) {
     var cookie = getCookie("viewedVideos"); // get existing cookie
-    if (cookie == "") {
+    if (cookie === "") {
         setCookie("viewedVideos", id, 30);
     } else if (!(cookie.includes(id))) {
         setCookie("viewedVideos", cookie + "," + id, 30);
@@ -63,7 +73,7 @@ function getCookie(cname) {
         while (c.charAt(0) == ' ') {
             c = c.substring(1);
         }
-        if (c.indexOf(name) == 0) {
+        if (c.indexOf(name) === 0) {
             return c.substring(name.length, c.length);
         }
     }
@@ -78,3 +88,19 @@ $('#modal').on('hide.bs.modal', function (event) {
     modalbody.html("<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> Loading...");
     modaltitle.text('');
 });
+
+
+function onYouTubeIframeAPIReady() {
+    YTAPI = true;
+    player = new YT.Player('yt-in-modal', {
+        events: {
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerStateChange(event) {    
+    if (event.data === YT.PlayerState.ENDED) {
+        injectEnd(tileId);
+    }
+}

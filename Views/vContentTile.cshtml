@@ -46,33 +46,20 @@ else
 
         @if (Model.TileExternalVideo != null)
         {
+            var uri = Request.Url;
             <div class="embed-responsive embed-responsive-16by9 rounded">
-                @Html.Raw(Model.TileExternalVideo.EmbedCode.ToHtmlString().Replace("<iframe", "<iframe class=\"embed-responsive-item\"").Replace("?feature=oembed", "?feature=oembed&rel=0&enablejsapi=1&version=3"))
+                @Html.Raw(Model.TileExternalVideo.EmbedCode.ToHtmlString().Replace("<iframe", "<iframe id='yt-in-modal' class=\"embed-responsive-item\"").Replace("feature=oembed", $"feature=oembed&rel=0&enablejsapi=1&version=3&origin={uri.Scheme}://{uri.Authority}&"))
             </div>
         }
         else if (item.BannerImage != null)
         {
-            var fOptions = "";//"&tint=255,255,255,165";
             <picture>
-                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 960, furtherOptions: fOptions))" media="(min-width: 1200px)" />
-                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 600, furtherOptions: fOptions))" media="(min-width: 996px)" />
-                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 576, furtherOptions: fOptions))" media="(min-width: 576px)" />
-                <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 576, furtherOptions: fOptions))" alt="@(item.BannerImage.Name)" class="card-img-top rounded" />
+                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 960))" media="(min-width: 1200px)" />
+                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 600))" media="(min-width: 996px)" />
+                <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 576))" media="(min-width: 576px)" />
+                <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Landscape", width: 576))" alt="@(item.BannerImage.Name)" class="card-img-top rounded" />
             </picture>
         }
-        @*<div class="d-flex flex-column justify-content-end text-white p-1">
-                @if (Model.TileExternalVideo == null)
-                {
-                    <div class="text-white mb-auto p-2">@renderThemeIcon(item.TileType, 4)</div>
-                }
-                <div class="p-2 w-100 rounded-bottom text-white">
-                    <p class="card-text mb-1">@(item.Parent.Name.ToUpper())</p>
-                    <h3 class="card-title">@(item.Name)</h3>
-                </div>
-            </div>*@
-
-
-
     </div>
 }
 
