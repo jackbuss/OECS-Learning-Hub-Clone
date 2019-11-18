@@ -25,14 +25,14 @@
 
         }, 300));
 
-        $("#search-filters .custom-rb [type=radio]").on("click", function (e) {
+        $("#search-filters .custom-radio [type=radio]").on("click", function (e) {
             $("#search-filters").collapse("hide"); // collapse the search menu when filteroption selected
-            $('#BrowseTheme').html('<em>Browsing by ' + e.target.id.replace(/_/g, " ") + '</em>');
+            $('#BrowseTheme').html('Browsing by ' + e.target.id.replace(/_/g, " "));
             var form = $(e.target).closest('form');
             $(form).submit();
         });
 
-        $('#search-toggler').on('click', function () {
+        $('#search-toggler').on('click', function (e) {
 
             $('#search-form-wrapper').collapse('show');
             $('input:radio[name=Browse]:checked').prop('checked', false);
@@ -40,7 +40,7 @@
             $('#search-filters').collapse("show");
             $('#BrowseTheme').html('');
 
-            var form = $(e.target).closest('form');
+            var form = $('#menu-search-form');            
             $(form).submit();
         });
 
