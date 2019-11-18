@@ -4,7 +4,7 @@
 @{
     Layout = null;
 
-    
+
 
     Html.RequiresCss(new CssFile("~/styles/bootstrap-4.3.1.min.css") { ForceProvider = "HeadRenderer", Priority = 1 });
     Html.RequiresCss(new CssFile("~/styles/cookieconsent-3.1.0.min.css") { ForceProvider = "HeadRenderer", Priority = 2 });
@@ -20,6 +20,7 @@
     Html.RequiresJsFolder("~/scripts/sitewide", "*", 2, 2, null, "FootRenderer");
 
     Html.RequiresJs(new JavascriptFile("~/js/vendor/cookieconsent-3.1.0.js") { ForceProvider = "LazyLoadRenderer", });
+
 
 }<!doctype html>
 <html lang="en">
