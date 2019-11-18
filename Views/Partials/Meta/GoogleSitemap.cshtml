@@ -43,21 +43,27 @@
     const int maxLevelForSitemap = 4;
 
     @* Select visible children *@
-    var selection = node.Children.Where(x =>/* x.IsVisible() && */x.Level <= maxLevelForSitemap).ToArray();
+    var selection = node.Children.Where(x =>/* x.IsVisible() && */x.Level <= maxLevelForSitemap);
 
     @* If any items are returned, render a list *@
-    if (selection.Length > 0)
+    if (selection.Any())
     {
         foreach (var item in selection)
         {
-            <url>
+            if (item.ContentType.Alias == DtContentTile.ModelTypeAlias)
+            {
+                <url>
 
-                <loc>@item.Url</loc>
+                    <loc>@Request.Url.Scheme://@Request.Url.Authority@item.Url</loc>
 
-                <changefreq>daily</changefreq>
+                    <changefreq>daily</changefreq>
 
-            </url>
+                    <lastmod>@item.UpdateDate.ToString("yyyy-MM-dd")</lastmod>
 
+                </url>
+
+
+            }
             @Traverse(item)
         }
     }

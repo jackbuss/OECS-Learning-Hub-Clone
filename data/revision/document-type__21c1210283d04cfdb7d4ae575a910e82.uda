@@ -1,9 +1,7 @@
 {
-  "DefaultTemplate": "umb://template/53487fa19a114f0b8c05e2725537fdf4",
-  "AllowedTemplates": [
-    "umb://template/53487fa19a114f0b8c05e2725537fdf4"
-  ],
-  "Icon": "icon-document",
+  "DefaultTemplate": null,
+  "AllowedTemplates": [],
+  "Icon": "icon-sitemap color-black",
   "Thumbnail": "folder.png",
   "Description": null,
   "IsContainer": false,
@@ -19,15 +17,9 @@
   "PropertyGroups": [],
   "PropertyTypes": [],
   "Udi": "umb://document-type/21c1210283d04cfdb7d4ae575a910e82",
-  "Dependencies": [
-    {
-      "Udi": "umb://template/53487fa19a114f0b8c05e2725537fdf4",
-      "Ordering": true,
-      "Mode": 0
-    }
-  ],
-  "Name": "Sitemap",
-  "Alias": "sitemap",
+  "Dependencies": [],
+  "Name": "Sitemap Page",
+  "Alias": "sitemapPage",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.ContentType.DocumentTypeArtifact",
   "__version": "3.2.0"
 }

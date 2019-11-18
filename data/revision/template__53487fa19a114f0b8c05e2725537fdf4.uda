@@ -1,16 +1,16 @@
 {
-  "File": "umb://template-file/Sitemap.cshtml",
+  "File": "umb://template-file/vSitemap.cshtml",
   "Master": null,
   "Udi": "umb://template/53487fa19a114f0b8c05e2725537fdf4",
   "Dependencies": [
     {
-      "Udi": "umb://template-file/Sitemap.cshtml",
+      "Udi": "umb://template-file/vSitemap.cshtml",
       "Ordering": true,
       "Mode": 0
     }
   ],
   "Name": "Sitemap",
-  "Alias": "Sitemap",
+  "Alias": "vSitemap",
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.TemplateArtifact",
   "__version": "3.2.0"
 }

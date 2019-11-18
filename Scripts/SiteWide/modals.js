@@ -1,5 +1,5 @@
 ﻿var YTAPI = false;
-var tilId;
+var tileId;
 
 $('#modal').on('show.bs.modal', function (event) {
 
