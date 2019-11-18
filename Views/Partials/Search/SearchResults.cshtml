@@ -140,7 +140,7 @@
 {
     <div class="col-12 col-xs-12 col-md-8 col-lg-6 p-2">
         <div class="card bg-@(style) border-0 min-vh-30">
-            <a class="text-white" href="@item.Url" @(item.TileType == "Video" ? $"data-key={@item.Key}" : "") data-toggle="modal" data-target="#modal" title="@(item.Name)">
+            <a class="text-white" href="@item.Url" @(item.TileType == "Video" ? $"data-key={@item.Key} " : "")data-toggle="modal" data-target="#modal" title="@(item.Name)">
                 @if (item.BannerImage != null)
                 {
                     <picture>
@@ -173,7 +173,7 @@
 {
     <div class="col-6 col-xs-6 col-md-4 col-lg-3 p-2">
         <div class="card">
-            <a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">
+            <a class="" href="@item.Url" @(item.TileType == "Video" ? $"data-key={@item.Key} " : "")data-toggle="modal" data-target="#modal" title="@(item.Name)">
                 <div class="card-img">
                     @if (item.BannerImage != null)
                     {
@@ -211,7 +211,7 @@
 {
     <div class="col-12 col-xs-12 col-md-6 p-2">
         <div class="card">
-            <a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">
+            <a class="" href="@item.Url" @(item.TileType == "Video" ? $"data-key={@item.Key} " : "")data-toggle="modal" data-target="#modal" title="@(item.Name)">
                 <div class="row no-gutters h-100">
                     @if (item.BannerImage != null)
                     {
@@ -242,7 +242,7 @@
 {
     <div class="col-12 col-xs-12 col-md-6 pl-2 pr-2">
         <div class="card border-top-0 border-left-0 border-right-0 rounded-0">
-            <a class="" href="@item.Url" data-toggle="modal" data-target="#modal" title="@(item.Name)">
+            <a class="" href="@item.Url" @(item.TileType == "Video" ? $"data-key={@item.Key} " : "")data-toggle="modal" data-target="#modal" title="@(item.Name)">
                 <div class="row no-gutters">
                     <div class="col-2 rounded pt-1 pb-2 d-flex align-items-center justify-content-center">
                         @if (item.BannerImage != null)
