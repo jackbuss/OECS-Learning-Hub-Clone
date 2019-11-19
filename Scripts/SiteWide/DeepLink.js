@@ -1,6 +1,6 @@
 ﻿; (function (tbDeepLink, undefined) {
     //private
-    var modalbody = $(document).find('.modal-body');
+    var modalbody = $('#modal').find('.modal-body');
 
     $(function () {
         $(document).on("click", "a.suggestedContent", function (e) {
