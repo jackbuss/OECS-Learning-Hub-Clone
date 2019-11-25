@@ -73,6 +73,18 @@
           "VariesBySegment": false
         },
         {
+          "Key": "897bdc62-3041-4dc9-9a4d-f7d21bc5e555",
+          "Alias": "tileAuthor",
+          "DataType": "umb://data-type/e30960a877b04547b7593d892ecb4eff",
+          "Description": null,
+          "Mandatory": false,
+          "Name": "Tile Author",
+          "SortOrder": 8,
+          "Validation": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false
+        },
+        {
           "Key": "a750067f-163c-4a31-8205-f4242927a4f2",
           "Alias": "tileType",
           "DataType": "umb://data-type/6593d277c576441e8dadf99b76f31d94",
@@ -119,6 +131,11 @@
     },
     {
       "Udi": "umb://data-type/bdc8c3843aff4fe8a677085633d839a2",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://data-type/e30960a877b04547b7593d892ecb4eff",
       "Ordering": true,
       "Mode": 0
     },
