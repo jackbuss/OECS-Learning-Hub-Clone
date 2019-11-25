@@ -89,16 +89,20 @@ else
         @if (Model.TileAuthor.Any())
         {
             <div class="card-text mt-4">
-                <dl class="row no-gutters mb-0">
-                    <dt class="col-6 text-right mb-0">Author:</dt>
-                    @foreach (var author in Model.TileAuthor)
-                    {
-                        <dd class="col-6 pl-1 mb-0">@(author)</dd>
-                    }
-                </dl>
+                <div class="row no-gutters text-center">
+                    <div class="col-md-6 text-md-right"><label for="#authors"><strong>Authors:</strong></label></div>
+                    <div class="col-md-6 pl-1 text-md-left">
+                        <ul class="list-unstyled mb-0" id="authors">
+                            @foreach (var author in Model.TileAuthor)
+                            {
+
+                                <li>@(author)</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
             </div>
         }
-
 
     </div>
 </div>
