@@ -1,0 +1,12 @@
+{
+  "EditorAlias": "Umbraco.Tags",
+  "DatabaseType": 1,
+  "Configuration": {"group":"Authors","storageType":1,"Delimiter":"\u0000"},
+  "Parent": null,
+  "Udi": "umb://data-type/e30960a877b04547b7593d892ecb4eff",
+  "Dependencies": [],
+  "Name": "Tile Author - Tags",
+  "Alias": null,
+  "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
+  "__version": "3.2.0"
+}
