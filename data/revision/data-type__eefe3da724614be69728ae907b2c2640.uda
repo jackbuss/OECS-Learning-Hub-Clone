@@ -1,12 +1,12 @@
 {
   "EditorAlias": "Umbraco.ListView",
   "DatabaseType": 1,
-  "Configuration": {"pageSize":12,"orderBy":"name","orderDirection":"asc","includeProperties":[{"alias":"tileContentOrigination","header":"Origination","isSystem":0},{"alias":"tileType","header":"Type","isSystem":0}],"layouts":[{"name":"List","path":"views/propertyeditors/listview/layouts/list/list.html","icon":"icon-list","isSystem":1,"selected":true},{"name":"grid","path":"views/propertyeditors/listview/layouts/grid/grid.html","icon":"icon-thumbnails-small","isSystem":1,"selected":true}],"bulkActionPermissions":{"allowBulkPublish":true,"allowBulkUnpublish":true,"allowBulkCopy":true,"allowBulkMove":true,"allowBulkDelete":true},"tabName":null,"showContentFirst":false},
+  "Configuration": {"pageSize":12,"orderBy":"name","orderDirection":"asc","includeProperties":[{"alias":"tileContentOrigination","header":"Origination","isSystem":0},{"alias":"tileType","header":"Type","isSystem":0},{"alias":"sortOrder","header":null,"isSystem":1}],"layouts":[{"name":"List","path":"views/propertyeditors/listview/layouts/list/list.html","icon":"icon-list","isSystem":1,"selected":true},{"name":"grid","path":"views/propertyeditors/listview/layouts/grid/grid.html","icon":"icon-thumbnails-small","isSystem":1,"selected":true}],"bulkActionPermissions":{"allowBulkPublish":true,"allowBulkUnpublish":true,"allowBulkCopy":true,"allowBulkMove":true,"allowBulkDelete":true},"tabName":null,"showContentFirst":false},
   "Parent": null,
   "Udi": "umb://data-type/eefe3da724614be69728ae907b2c2640",
   "Dependencies": [],
   "Name": "List View - dtListPage",
   "Alias": null,
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
-  "__version": "3.1.5"
+  "__version": "3.2.0"
 }
