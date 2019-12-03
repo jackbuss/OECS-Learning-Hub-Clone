@@ -44,6 +44,17 @@
             $(form).submit();
         });
 
+        $(document).on("click", 'button[id^="theme"]', function () {
+            var theme = this.id.replace('theme-btn-', ''); 
+            $('#'+ theme ).prop('checked', true);
+            $('#SearchTerm').val('');
+            $('#search-filters').collapse("hide");
+            $('#BrowseTheme').html('Browsing by ' + theme.replace(/_/g, " "));
+
+            var form = $('#menu-search-form');
+            $(form).submit();
+        });
+
     });
     //public 
     tbSearch.loadMoreSuccess = function (data) {
