@@ -29,7 +29,7 @@
                 if (featuredTile != null)
                 {
                     <!-- start featured -->
-                    @renderFeaturedTile(featuredTile, "primary", fOptions);
+                    @renderFeaturedTile(featuredTile, "primary", fOptions, true);
                     <!-- end featured -->
                 }
             }
@@ -39,11 +39,12 @@
             foreach (var theme in tiles.Children<DtListPage>())
             {
 
-                <div class="card m-1">
-                    <div class="card-header text-primary bg-transparent">
+                <div class="card m-1 border-0 rounded-0 mt-4">
+                    <div class="card-header text-primary bg-transparent d-flex justify-content-between border-top-2 py-3 px-2">
                         <h3>@(theme.Name)</h3>
+                        <button id="theme-btn-@(theme.Name.Replace(" ", "_"))" class="btn btn-primary">View More</button>
                     </div>
-                    <div class="card-body pb-2">
+                    <div class="card-body py-2">
                         <div class="row">
                             @foreach (var tile in theme.Children<DtContentTile>
                                 ().Take(4))
@@ -59,16 +60,10 @@
                                 }
                             }
                         </div>
-                        <div class="card-text text-right">
-                            <button id="theme-btn-@(theme.Name.Replace(" ", "_"))" class="btn btn-primary mt-3">View More</button>
-                        </div>
                     </div>
-                   
-                    
+
                 </div>
-
             }
-
             <div class="col-12 mt-4">
                 <h2 class="text-primary">All Content</h2>
             </div>
@@ -96,7 +91,7 @@
                         // don't reshow the featured item
                         if (featuredTile != item)
                         {
-                            @renderFeaturedTile(item, style, fOptions)
+                            @renderFeaturedTile(item, style, fOptions, false)
                         }
                     }
                     else
@@ -181,16 +176,19 @@
     <span class="sr-only">@(TileType)</span>
 }
 
-@helper renderFeaturedTile(DtContentTile item, string style, string fOptions)
+@helper renderFeaturedTile(DtContentTile item, string style, string fOptions, bool hero)
 {
-    <div class="col-12 col-xs-12 col-md-8 col-lg-6 p-2">
+
+    var heroClass = hero ? "" : " col-md-8 col-lg-6";
+    var aspect = hero ? "Landscape" : "Square";
+    <div class="col-12 col-xs-12@(heroClass) p-2">
         <div class="card bg-@(style) border-0 min-vh-30">
             <a class="text-white" href="@item.Url" @(item.TileType == "Video" ? $"data-key={@item.Key} " : "") data-toggle="modal" data-target="#modal" title="@(item.Name)">
                 @if (item.BannerImage != null)
                 {
                     <picture>
-                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 960, furtherOptions:fOptions))" media="(min-width: 1200px)" />
-                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 600, furtherOptions:fOptions))" media="(min-width: 996px)" />
+                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: aspect, width: 960, furtherOptions:fOptions))" media="(min-width: 1200px)" />
+                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: aspect, width: 600, furtherOptions:fOptions))" media="(min-width: 996px)" />
                         <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576, furtherOptions:fOptions))" media="(min-width: 576px)" />
                         <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: "Square", width: 576,furtherOptions:fOptions))" alt="@(item.BannerImage.Name)" class="card-img-top rounded" />
                     </picture>

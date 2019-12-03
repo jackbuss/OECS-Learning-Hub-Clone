@@ -1,3 +1,4 @@
 .z-100 { z-index: 100; }
 .min-vh-30 { min-height: 30vh; }
 .min-vh-20 { min-height: 20vh; }
+.border-top-2 {border-top: 2px solid #dee2e6 !important; }
