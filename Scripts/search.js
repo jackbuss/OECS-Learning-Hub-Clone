@@ -44,7 +44,7 @@
             $(form).submit();
         });
 
-        $(document).on("click", 'button[id^="theme"]', function () {
+        $(document).on("click", 'a[id^="theme-btn-"]', function () {
             var theme = this.id.replace('theme-btn-', ''); 
             $('#'+ theme ).prop('checked', true);
             $('#SearchTerm').val('');
