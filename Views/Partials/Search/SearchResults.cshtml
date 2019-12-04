@@ -40,9 +40,9 @@
             {
 
                 <div class="card m-1 border-0 rounded-0 mt-2">
-                    <div class="card-header text-primary bg-transparent d-flex justify-content-between align-items-baseline pt-0 pb-2 px-2">
-                        <h5><strong>@(theme.Name)</strong></h5>
-                        <a id="theme-btn-@(theme.Name.Replace(" ", "_"))" class="text-primary small" href="#">View All</a>
+                    <div class="card-header text-white bg-info d-flex justify-content-between align-items-baseline px-2 py-2">
+                        <h5 class="mb-0">@(theme.Name)</h5>
+                        <a id="theme-btn-@(theme.Name.Replace(" ", "_"))" class="text-white small" href="#">View All</a>
                     </div>
                     <div class="card-body py-2">
                         <div class="row">
@@ -64,8 +64,8 @@
 
                 </div>
             }
-            <div class="col-12 mt-4">
-                <h2 class="text-primary"><strong>All Content</strong></h2>
+            <div class="col-12 mt-4 rounded-top bg-info py-2">
+                <h4 class="text-white mb-0">All Content</h4>
             </div>
         }
 
@@ -179,10 +179,10 @@
 @helper renderFeaturedTile(DtContentTile item, string style, string fOptions, bool hero)
 {
 
-var heroClass = hero ? "" : " col-md-8 col-lg-6";
-var aspect = hero ? "Landscape" : "Landscape";
-var bgstyle = item.BannerImage != null ? "" : $" bg-{style}";
-var forcedheight = item.BannerImage != null ? "" : " min-vh-30";
+    var heroClass = hero ? "" : " col-md-8 col-lg-6";
+    var aspect = hero ? "Landscape" : "Landscape";
+    var bgstyle = item.BannerImage != null ? "" : $" bg-{style}";
+    var forcedheight = item.BannerImage != null ? "" : " min-vh-30";
 
     <div class="col-12 col-xs-12@(heroClass) p-2">
         <div class="card@(bgstyle) border-0@(forcedheight)">
