@@ -14,23 +14,47 @@
         if (Model.SearchResults.FeaturedResults != null && Model.SearchResults.PageNumber == 1
                 && String.IsNullOrWhiteSpace(Model.Browse) && String.IsNullOrWhiteSpace(Model.SearchTerm))
         {
-            if (Model.SearchResults.FeaturedResults.Any())
+            var featuredResults = Model.SearchResults.FeaturedResults;
+            if (featuredResults.Any())
             {
-                featuredTile = Model.SearchResults.FeaturedResults.First() as DtContentTile;
+                featuredTile = featuredResults.First() as DtContentTile;
                 //inject the top featured rather than include in the search
 
-                List<String> cookieList = new List<String>();
-                if (Request.Cookies["viewedVideos"] != null)
-                {
-                    String[] cookie = Request.Cookies["viewedVideos"].Value.Split(',');
-                    cookieList = cookie.ToList();
-                    featuredTile = Model.SearchResults.FeaturedResults.Where(x => !cookieList.Contains(x.Key.ToString())).FirstOrDefault() as DtContentTile;
-                }
-                if (featuredTile != null)
+                //List<String> cookieList = new List<String>();
+                //if (Request.Cookies["viewedVideos"] != null)
+                //{
+                //    String[] cookie = Request.Cookies["viewedVideos"].Value.Split(',');
+                //    cookieList = cookie.ToList();
+                //    featuredTile = featuredResults.Where(x => !cookieList.Contains(x.Key.ToString())).FirstOrDefault() as DtContentTile;
+                //}
+                if (featuredTile != null && featuredResults.Count() < 2)
                 {
                     <!-- start featured -->
-                    @renderFeaturedTile(featuredTile, "primary", fOptions, true);
+                    @renderFeaturedTile(featuredTile, "primary", fOptions, true)
                     <!-- end featured -->
+                }
+                else
+                {
+                    <div id="carouselFeatured" class="carousel slide" data-ride="false" data-wrap="false">
+                        <div class="carousel-inner">
+                            @foreach (var tile in featuredResults)
+                            {
+                                var active = tile == featuredResults.First() ? " active" : "";
+                                var featuredContentTile = tile as DtContentTile;
+                                <div class="carousel-item@(active)">
+                                    @renderFeaturedTile(featuredContentTile, "primary", fOptions, true)
+                                </div>
+                            }
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselFeatured" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselFeatured" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
                 }
             }
 
@@ -190,9 +214,9 @@
                 @if (item.BannerImage != null)
                 {
                     <picture>
-                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: aspect, width: 960, furtherOptions:fOptions))" media="(min-width: 1200px)" />
-                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: aspect, width: 600, furtherOptions:fOptions))" media="(min-width: 996px)" />
-                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: aspect, width: 576, furtherOptions:fOptions))" media="(min-width: 576px)" />
+                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: aspect, width: hero?1200:960, furtherOptions:fOptions))" media="(min-width: 1200px)" />
+                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: aspect, width: hero?1200:600, furtherOptions:fOptions))" media="(min-width: 996px)" />
+                        <source srcset="@(item.BannerImage.GetCropUrl(cropAlias: aspect, width: hero?996:576, furtherOptions:fOptions))" media="(min-width: 576px)" />
                         <img srcset="@(item.BannerImage.GetCropUrl(cropAlias: aspect , width: 576,furtherOptions:fOptions))" alt="@(item.BannerImage.Name)" class="card-img-top rounded" />
                     </picture>
                 }
