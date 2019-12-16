@@ -1,8 +1,7 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
 @using Umbraco.Web
 @{
-    string img = Request.Url.GetLeftPart(UriPartial.Authority) + "/images/g400152_n90.jpg?anchor=center&amp;mode=crop&amp;width=480&amp;height=480&amp;rnd=131971069800000000";
-
+    string img = null;
     var mediaNodes = Model.Value<IEnumerable<IPublishedContent>>("bannerImage", fallback:Fallback.ToAncestors);
 
     if (mediaNodes != null)
