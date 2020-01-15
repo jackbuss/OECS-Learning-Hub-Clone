@@ -17076,7 +17076,7 @@
             <summary>
             Corrects the property type variations for the given entity
             to make sure the property type variation is compatible with the
-            variation set on the entity itself.        
+            variation set on the entity itself.
             </summary>
             <param name="entity">Entity to correct properties for</param>
         </member>

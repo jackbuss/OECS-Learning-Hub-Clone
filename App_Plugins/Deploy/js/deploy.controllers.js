@@ -257,7 +257,7 @@ angular.module('umbraco.deploy')
 (function () {
     "use strict";
 
-    function PartialRestoreDialogController($scope, deploySignalrService, deployService, angularHelper, deployConfiguration, deployHelper, backdropService, navigationService) {
+    function PartialRestoreDialogController($scope, deploySignalrService, deployService, angularHelper, deployConfiguration, deployHelper, backdropService, navigationService, editorService) {
 
         var vm = this;
         var timestampFormat = 'MMMM Do YYYY, HH:mm:ss';
@@ -266,14 +266,14 @@ angular.module('umbraco.deploy')
         vm.config = deployConfiguration;
         vm.restoreWorkspace = {};
         vm.restore = {};
-        vm.loading = true;
         vm.restoreButtonState = "init";
-        vm.dropDownOpen = false;
-
-        vm.selectable = $scope.currentNode.id === "-1";
-        if (vm.selectable === false) {
-            vm.loading = false;
+        vm.workspaceDropDownOpen = false;
+        
+        resetRestoreNode();
+        vm.toggleIncludeChildren = function() {
+            vm.includeChildren = !vm.includeChildren;
         }
+
         vm.feedbackMessageLevel = '';
 
         vm.changeDestination = changeDestination;
@@ -282,6 +282,17 @@ angular.module('umbraco.deploy')
         vm.closeDialog = closeDialog;
 
         var nodeUdis = [];
+
+        vm.pickRemoteNode = pickRemoteNode;
+
+        function resetRestoreNode() {
+            vm.restoreNodeIsExternal = false;
+            vm.restoreNode = null;
+            if ($scope.currentNode.id !== "-1") {
+                vm.restoreNode = $scope.currentNode;
+            }
+            vm.includeChildren = true;
+        }
 
         function onInit() {
             // reset restore progress
@@ -292,14 +303,7 @@ angular.module('umbraco.deploy')
                 //var lastWorkspaceIndex = vm.config.Workspaces.length - 1;
                 vm.restoreWorkspace = _.last(vm.config.RestoreWorkspaces);//[lastWorkspaceIndex];
             }
-
-            if (vm.selectable === true) {
-                vm.loading = true;
-                deployService.getSitemap(vm.restoreWorkspace.Url).then(function(data) {
-                    vm.sitemap = data;
-                    vm.loading = false; 
-                });
-            }
+            
             if(deployService.feedbackMessageLevel) {
                 deployService.feedbackMessageLevel().then(function(data) {
                     vm.feedbackMessageLevel = data.FeedbackMessageLevel;
@@ -319,18 +323,34 @@ angular.module('umbraco.deploy')
         function thawContextMenu() {
             backdropService.close();
         }
-
+        
         function changeDestination(workspace) {
             vm.restoreWorkspace = workspace;
-            if (vm.selectable === true) {
-                vm.loading = true;
-                deployService.getSitemap(vm.restoreWorkspace.Url).then(function(data) {
-                    vm.sitemap = data;
-                    vm.loading = false;
-                });
-            }
+            resetRestoreNode();
         }
 
+        function pickRemoteNode(workspace) {
+
+            var partialItemPicker = {
+                section: "content",
+                treeAlias: "deployExternalContentTree",
+                entityType: "Document",
+                multiPicker: false,
+                title: "Select a remote node",
+                customTreeParams: "workspace="+workspace.Url, 
+                select: function(node) {
+                    vm.restoreNodeIsExternal = true;
+                    vm.restoreNode = node;
+                    editorService.close();
+                },
+                close: function () {
+                    editorService.close();
+                }
+            };
+
+            editorService.treePicker(partialItemPicker);
+        }
+        
         function startRestore(workspace) {
 
             var restoreNodes = [];
@@ -338,21 +358,13 @@ angular.module('umbraco.deploy')
             vm.restoreButtonState = "busy";
             freezeContextMenu();
 
-            if (vm.selectable === true) {
-                _.each(nodeUdis,
-                    function (o, i) {
-                        restoreNodes.push({ id: o, includeDescendants: true });
-                    });
-
-            } else {
-                restoreNodes = [
-                    {
-                        id: $scope.currentNode.id,
-                        udi: $scope.currentNode.udi,
-                        includeDescendants: true
-                    }
-                ];
-            }
+            restoreNodes = [
+                {
+                    id: vm.restoreNode.id,
+                    udi: vm.restoreNode.udi,
+                    includeDescendants: vm.includeChildren
+                }
+            ];
 
             deployService.partialRestore(workspace.Url, restoreNodes, vm.enableWorkItemLogging)
                 .then(function(data) {
