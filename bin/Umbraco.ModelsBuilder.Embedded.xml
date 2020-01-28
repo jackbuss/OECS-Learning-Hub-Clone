@@ -540,7 +540,7 @@
             Provides extension methods to models.
             </summary>
         </member>
-        <member name="M:Umbraco.Web.PublishedElementExtensions.Value``2(``0,System.Linq.Expressions.Expression{System.Func{``0,``1}},System.String,System.String,Umbraco.Core.Models.PublishedContent.Fallback,``1)">
+        <member name="M:Umbraco.Web.PublishedElementExtensions.ValueFor``2(``0,System.Linq.Expressions.Expression{System.Func{``0,``1}},System.String,System.String,Umbraco.Core.Models.PublishedContent.Fallback,``1)">
             <summary>
             Gets the value of a property.
             </summary>
