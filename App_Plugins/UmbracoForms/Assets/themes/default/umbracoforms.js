@@ -22,7 +22,7 @@
         configureUmbracoFormsValidation();
 
         for (var i = 0; i < formsCollection.length; i++) {
-            init({ form: formsCollection[i]});
+            init({ form: JSON.parse(unescape(formsCollection[i]))});
         }
     }
 
