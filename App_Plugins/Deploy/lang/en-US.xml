@@ -6,4 +6,7 @@
   <area alias="general">
     <key alias="Deploy">Deploy</key>
   </area>
+  <area alias="sections">
+    <key alias="deploy">Deploy</key>
+  </area>
 </language>

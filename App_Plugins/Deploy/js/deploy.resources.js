@@ -16,11 +16,10 @@
             instantDeploy: instantDeploy,
             restore: restore,
             partialRestore: partialRestore,
-            getSitemap: getSitemap,
             getStatus: getStatus,
             getUdiRange: getUdiRange,
             getCurrentUserFeedbackLevel: getCurrentUserFeedbackLevel
-    };
+        };
 
         return resource;
 
@@ -30,7 +29,7 @@
 
             var data = {
                 TargetUrl: targetUrl,
-                EnableLogging : enableWorkItemLogging,
+                EnableLogging: enableWorkItemLogging,
                 IsLocal: isLocal,
                 IsDeveloper: isDeveloper,
                 DeploySchemaFiles: deploySchemaFiles
@@ -54,12 +53,12 @@
             };
 
             return $http.post(baseUrl + 'InstantDeploy', data)
-                .then(function (response) {
-                    return response.data;
-                },
-                function (response) {
-                    return $q.reject(response.data);
-                });
+                .then(function(response) {
+                        return response.data;
+                    },
+                    function(response) {
+                        return $q.reject(response.data);
+                    });
         }
 
         function restore(targetUrl, enableWorkItemLogging) {
@@ -87,21 +86,10 @@
             };
 
             return $http.post(baseUrl + 'PartialRestore', data)
-                .then(function (response) {
-                    return response.data;
-                },
-                    function (response) {
-                        return $q.reject(response.data);
-                    });
-        }
-
-        function getSitemap(targetUrl) {
-            // url hack...
-            return $http.get(targetUrl + '/umbraco/backoffice/Deploy/Ui/GetSitemap')
-                .then(function (response) {
-                    return response.data;
-                },
-                    function (response) {
+                .then(function(response) {
+                        return response.data;
+                    },
+                    function(response) {
                         return $q.reject(response.data);
                     });
         }
@@ -140,10 +128,10 @@
 
         function getCurrentUserFeedbackLevel() {
             return $http.get(baseUrl + 'GetCurrentUserFeedbackLevel')
-                .then(function (response) {
+                .then(function(response) {
                         return response.data;
                     },
-                    function (response) {
+                    function(response) {
                         return $q.reject(response.data);
                     });
         }
@@ -177,41 +165,45 @@
         function clearQueue() {
 
             return $http.post(baseUrl + 'ClearQueue')
-                .then(function (response) {
-                    return response.data;
-                }, function (response) {
-                    return $q.reject(response.data);
-                });
+                .then(function(response) {
+                        return response.data;
+                    },
+                    function(response) {
+                        return $q.reject(response.data);
+                    });
         }
 
         function addToQueue(item) {
 
             return $http.post(baseUrl + 'AddToQueue', item)
-                .then(function (response) {
-                    return response.data;
-                }, function (response) {
-                    return $q.reject(response.data);
-                });
+                .then(function(response) {
+                        return response.data;
+                    },
+                    function(response) {
+                        return $q.reject(response.data);
+                    });
         }
 
         function removeFromQueue(item) {
 
             return $http.post(baseUrl + 'RemoveFromQueue', item)
-                .then(function (response) {
-                    return response.data;
-                }, function (response) {
-                    return $q.reject(response.data);
-                });
+                .then(function(response) {
+                        return response.data;
+                    },
+                    function(response) {
+                        return $q.reject(response.data);
+                    });
         }
 
         function getQueue() {
 
             return $http.get(baseUrl + 'GetQueue')
-                .then(function (response) {
-                    return response.data;
-                }, function (response) {
-                    return $q.reject(response.data);
-                });
+                .then(function(response) {
+                        return response.data;
+                    },
+                    function(response) {
+                        return $q.reject(response.data);
+                    });
         }
     }
 })();

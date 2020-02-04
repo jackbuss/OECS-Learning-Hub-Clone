@@ -332,12 +332,12 @@ angular.module('umbraco.deploy')
         function pickRemoteNode(workspace) {
 
             var partialItemPicker = {
-                section: "content",
-                treeAlias: "deployExternalContentTree",
+                section: "deploy",
+                treeAlias: "externalContent",
                 entityType: "Document",
                 multiPicker: false,
                 title: "Select a remote node",
-                customTreeParams: "workspace="+workspace.Url, 
+                customTreeParams: "workspace="+workspace.Url,
                 select: function(node) {
                     vm.restoreNodeIsExternal = true;
                     vm.restoreNode = node;
