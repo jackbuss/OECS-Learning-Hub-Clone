@@ -2,3 +2,7 @@
 .min-vh-30 { min-height: 30vh; }
 .min-vh-20 { min-height: 20vh; }
 .border-top-2 {border-top: 2px solid #dee2e6 !important; }
+
+.oecs-info{
+    background-color: rgba(0, 255, 135, 1);
+}
