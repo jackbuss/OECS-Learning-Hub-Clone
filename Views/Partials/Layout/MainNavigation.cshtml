@@ -36,9 +36,12 @@
         </div>
     </div>
 
-    <div class="collapse text-primary" id="search-form-wrapper" data-parent="#topNavigation">
+    @{/*<div class="collapse text-primary" id="search-form-wrapper" data-parent="#topNavigation  ">
         @{ Html.RenderAction("RenderSearchForm", "Search", searchParams);}
-    </div>
+    </div>*/}
+
+    @{ Html.RenderAction("RenderSearchForm", "Search", searchParams);}
+
 
     <div class="collapse text-primary" id="info-menu" data-parent="#topNavigation">
         <div class="container">

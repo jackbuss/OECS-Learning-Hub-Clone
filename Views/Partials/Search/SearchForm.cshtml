@@ -30,10 +30,22 @@
         @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search", @class = "form-control search-text", autocomplete = "off" })
     </div>
 
-    <div id="search-filters" class="collapse show">
-        @renderBrowseOptions(Model.SearchThemes, true, "Theme", "tileTheme")
-        @renderBrowseOptions(Model.SearchTypes, false, "Media", "tileType")
-        @renderBrowseOptions(Model.SearchPersonas, false, "Interest", "tilePersonna")
+
+    <div class="row">
+        <div class="button-holder d-inline text-right col-12">
+            <button id="search-toggler" class="navbar-toggler p-1" type="button" aria-controls="search-form-wrapper" aria-expanded="false" aria-label="Toggle Search">
+                Browse all...
+                <span class="sr-only">?</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="collapse text-primary" id="search-form-wrapper" data-parent="#topNavigation  ">
+        <div id="search-filters" class="collapse show">
+            @renderBrowseOptions(Model.SearchThemes, true, "Theme", "tileTheme")
+            @renderBrowseOptions(Model.SearchTypes, false, "Media", "tileType")
+            @renderBrowseOptions(Model.SearchPersonas, false, "Interest", "tilePersonna")
+        </div>
     </div>
 
     @*<button id="search-button" class="btn btn-primary float-right mt-2 mb-2" type="submit">Explore</button>*@
@@ -69,8 +81,8 @@
                             string filterValue = $"{field}|{filterList[i].Value}";
                             <div class="col-6 col-sm-6 col-md-4 col-lg-3 p-0">
                                 <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block">
-                                    @Html.RadioButtonFor(m => m.Browse, filterValue, new { id = filterList[i].Value.Replace(" ", "_"), @class="custom-control-input" })
-                                    
+                                    @Html.RadioButtonFor(m => m.Browse, filterValue, new { id = filterList[i].Value.Replace(" ", "_"), @class = "custom-control-input" })
+
                                     <label for="@filterList[i].Value.Replace(" ","_")" class="w-100 align-items-center custom-control-label">
                                         @(filterList[i].Value)
                                     </label>
