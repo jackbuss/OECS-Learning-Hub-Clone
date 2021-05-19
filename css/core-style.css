@@ -10,3 +10,22 @@
 .oecs-text{
     color: #000f47 !important;
 }
+
+.navbutton{
+    width: 100%;
+    margin-top: 10px;
+}
+
+.button-radio {
+    opacity: 0 !important;
+    position: fixed !important;
+    width: 0 !important;
+}
+
+.header-label {
+    background-color: #97d700;
+    padding: 10px 20px;
+    /*font-family: sans-serif, Arial;
+    font-size: 16px;*/
+    border-radius: 4px;
+}

@@ -30,21 +30,56 @@
         @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search", @class = "form-control search-text", autocomplete = "off" })
     </div>
 
+    <div id="search-filters" class="row">
+        <div class="col-12 col-md-3 mx-auto text-center">
+            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block w-100 mx-auto">
+                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Economy", new { id = "Economy", @class = "custom-control-input button-radio" })
+                <label for="Economy" class="w-100 align-items-center header-label text-white mx-auto">
+                    Economy
+                </label>
+            </div>
+            @*<button type="button" id="Economy" name="Browse" value="tileType|Course" class="filter-button btn oecs-info text-white mx-auto navbutton">Economy</button>*@
+        </div>
+        <div class="col-12 col-md-3 mx-auto text-center">
+            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block w-100 mx-auto">
+                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Environment", new { id = "Environment", @class = "custom-control-input button-radio" })
+                <label for="Environment" class="w-100 align-items-center header-label text-white mx-auto">
+                    Environment
+                </label>
+            </div>
+            @*<button type="button" class="btn oecs-info text-white mx-auto navbutton">Environment</button>*@
+        </div>
+        <div class="col-12 col-md-3 mx-auto text-center">
+            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block w-100 mx-auto">
+                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Social", new { id = "Social", @class = "custom-control-input button-radio" })
+                <label for="Social" class="w-100 align-items-center header-label text-white mx-auto">
+                    Social
+                </label>
+            </div>
+            @*<button type="button" class="btn oecs-info text-white mx-auto navbutton">Social</button>*@
+        </div>
+        <div class="col-12 col-md-3 mx-auto text-center">
+            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block w-100 mx-auto">
+                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Projects", new { id = "Projects", @class = "custom-control-input button-radio" })
+                <label for="Projects" class="w-100 align-items-center header-label text-white mx-auto">
+                    Projects
+                </label>
+            </div>
+            @*<button type="button" class="btn oecs-info text-white mx-auto navbutton">Projects</button>*@
+        </div>
+    </div>
 
-    <div class="row">
+    <div class="pt-2 row">
         <div class="button-holder d-inline text-right col-12">
-            <button id="search-toggler" class="navbar-toggler p-1" type="button" aria-controls="search-form-wrapper" aria-expanded="false" aria-label="Toggle Search">
-                Browse all...
-                <span class="sr-only">?</span>
-            </button>
+            <button class="btn browse-button">Browse all...</button>
         </div>
     </div>
 
     <div class="collapse text-primary" id="search-form-wrapper" data-parent="#topNavigation  ">
         <div id="search-filters" class="collapse show">
-            @renderBrowseOptions(Model.SearchThemes, true, "Theme", "tileTheme")
+            @*renderBrowseOptions(Model.SearchThemes, true, "Theme", "tileTheme")*@
             @renderBrowseOptions(Model.SearchTypes, false, "Media", "tileType")
-            @renderBrowseOptions(Model.SearchPersonas, false, "Interest", "tilePersonna")
+            @*renderBrowseOptions(Model.SearchPersonas, false, "Interest", "tilePersonna")*@
         </div>
     </div>
 
