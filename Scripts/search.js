@@ -34,10 +34,10 @@
 
         $('#search-toggler').on('click', function (e) {
 
-            $('#search-form-wrapper').collapse('show');
+            $('#search-form-wrapper').collapse('toggle');
             $('input:radio[name=Browse]:checked').prop('checked', false);
             $('#SearchTerm').val('');
-            $('#search-filters').collapse("show");
+            //$('#search-filters').collapse("toggle");
             $('#BrowseTheme').html('');
 
             var form = $('#menu-search-form');            
