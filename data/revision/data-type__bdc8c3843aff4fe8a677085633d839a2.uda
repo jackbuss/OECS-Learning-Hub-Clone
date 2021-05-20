@@ -1,12 +1,12 @@
 {
   "EditorAlias": "Umbraco.CheckBoxList",
   "DatabaseType": 1,
-  "Configuration": {"items":[{"id":1,"value":"Policy"},{"id":2,"value":"Education"},{"id":3,"value":"Action"},{"id":4,"value":"Science"},{"id":5,"value":"Training"},{"id":6,"value":"Community"}]},
+  "Configuration": {"items":[{"id":1,"value":"Environmental Sustainability"},{"id":2,"value":"Economic Affairs"},{"id":3,"value":"Human and Social"},{"id":4,"value":"Projects/Initiatives"}]},
   "Parent": null,
   "Udi": "umb://data-type/bdc8c3843aff4fe8a677085633d839a2",
   "Dependencies": [],
   "Name": "Tile Personas",
   "Alias": null,
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
-  "__version": "3.1.5"
+  "__version": "3.3.1"
 }

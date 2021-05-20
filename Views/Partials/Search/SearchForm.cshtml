@@ -30,38 +30,38 @@
         @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search", @class = "form-control search-text", autocomplete = "off" })
     </div>
 
-    <div id="search-filters" class="row">
-        <div class="col-12 col-md-3 mx-auto text-center">
-            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block w-100 mx-auto">
-                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Economy", new { id = "Economy", @class = "custom-control-input button-radio" })
-                <label for="Economy" class="w-100 align-items-center header-label text-white mx-auto">
+    <div id="search-filters" class="row pt-2">
+        <div class="col-12 col-md-3 mx-auto text-center p-0">
+            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
+                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Economic Affairs", new { id = "Economic_Affairs", @class = "custom-control-input button-radio" })
+                <label for="Economic_Affairs" class="w-100 align-items-center header-label text-white mx-auto">
                     Economy
                 </label>
             </div>
             @*<button type="button" id="Economy" name="Browse" value="tileType|Course" class="filter-button btn oecs-info text-white mx-auto navbutton">Economy</button>*@
         </div>
-        <div class="col-12 col-md-3 mx-auto text-center">
-            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block w-100 mx-auto">
-                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Environment", new { id = "Environment", @class = "custom-control-input button-radio" })
-                <label for="Environment" class="w-100 align-items-center header-label text-white mx-auto">
+        <div class="col-12 col-md-3 mx-auto text-center p-0">
+            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
+                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Environmental Sustainability", new { id = "Environmental_Sustainability", @class = "custom-control-input button-radio" })
+                <label for="Environmental_Sustainability" class="w-100 align-items-center header-label text-white mx-auto">
                     Environment
                 </label>
             </div>
             @*<button type="button" class="btn oecs-info text-white mx-auto navbutton">Environment</button>*@
         </div>
-        <div class="col-12 col-md-3 mx-auto text-center">
-            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block w-100 mx-auto">
-                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Social", new { id = "Social", @class = "custom-control-input button-radio" })
-                <label for="Social" class="w-100 align-items-center header-label text-white mx-auto">
+        <div class="col-12 col-md-3 mx-auto text-center p-0">
+            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
+                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Human and Social", new { id = "Human_and_Social", @class = "custom-control-input button-radio" })
+                <label for="Human_and_Social" class="w-100 align-items-center header-label text-white mx-auto">
                     Social
                 </label>
             </div>
             @*<button type="button" class="btn oecs-info text-white mx-auto navbutton">Social</button>*@
         </div>
-        <div class="col-12 col-md-3 mx-auto text-center">
-            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block w-100 mx-auto">
-                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Projects", new { id = "Projects", @class = "custom-control-input button-radio" })
-                <label for="Projects" class="w-100 align-items-center header-label text-white mx-auto">
+        <div class="col-12 col-md-3 mx-auto text-center p-0">
+            <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
+                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Projects/Initiatives", new { id = "Projects/Initiatives", @class = "custom-control-input button-radio" })
+                <label for="Projects/Initiatives" class="w-100 align-items-center header-label text-white mx-auto">
                     Projects
                 </label>
             </div>
