@@ -1,7 +1,7 @@
 {
   "EditorAlias": "Umbraco.CheckBoxList",
   "DatabaseType": 1,
-  "Configuration": {"items":[{"id":1,"value":"Ecosystems Management"},{"id":2,"value":"Business Development"},{"id":3,"value":"Social Development"},{"id":5,"value":"Agriculture"},{"id":7,"value":"Statistics"},{"id":8,"value":"Tourism"},{"id":9,"value":"Trade"},{"id":10,"value":"Yachting"},{"id":11,"value":"Biodiversity"},{"id":13,"value":"Climate and Disaster Resilience"},{"id":14,"value":"Energy"},{"id":15,"value":"Oceans Governance"},{"id":16,"value":"Health"},{"id":17,"value":"Gender Equality"},{"id":19,"value":"Pharmaceuticals"},{"id":20,"value":"Youth"},{"id":21,"value":"Education"}]},
+  "Configuration": {"items":[{"id":5,"value":"Agriculture"},{"id":11,"value":"Biodiversity"},{"id":2,"value":"Business Development"},{"id":13,"value":"Climate and Disaster Resilience"},{"id":1,"value":"Ecosystems Management"},{"id":21,"value":"Education"},{"id":14,"value":"Energy"},{"id":17,"value":"Gender Equality"},{"id":16,"value":"Health"},{"id":15,"value":"Oceans Governance"},{"id":19,"value":"Pharmaceuticals"},{"id":3,"value":"Social Development"},{"id":7,"value":"Statistics"},{"id":9,"value":"Trade"},{"id":8,"value":"Tourism"},{"id":10,"value":"Yachting"},{"id":20,"value":"Youth"}]},
   "Parent": null,
   "Udi": "umb://data-type/bdc8c3843aff4fe8a677085633d839a2",
   "Dependencies": [],
