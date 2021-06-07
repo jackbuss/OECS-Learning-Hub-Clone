@@ -31,3 +31,8 @@
 .top-button-width{
     width: 85%;
 }
+
+.academy-button {
+    background-color: #97d700 !important;
+    border-radius: 30px !important;
+}
