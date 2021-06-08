@@ -11,6 +11,10 @@
     Html.EnableClientValidation();
     Html.EnableUnobtrusiveJavaScript();
 
+    List<String> economy = new List<String> { "Agricultire", "Business Development", "Statistics", "Tourism", "Trade", "Yachting" };
+    List<String> environment = new List<String> { "Biodiversity", "Ecosystems Management", "Climate and Disaster Resilience", "Energy", "Oceans Governance" };
+    List<String> social = new List<String> { "Health", "Gender Equality", "Social Development", "Pharmaceuticals", "Youth", "Education" };
+
 }
 
 @using (Ajax.BeginForm("SubmitSearchForm", "Search", null, new AjaxOptions
@@ -60,9 +64,9 @@
         </div>
         <div class="col-12 col-md-3 mx-auto text-center p-0">
             <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
-                @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Projects/Initiatives", new { id = "Projects/Initiatives", @class = "custom-control-input button-radio" })
-                <label for="Projects/Initiatives" class="w-100 align-items-center header-label text-white mx-auto">
-                    Projects
+                @Html.RadioButtonFor(m => m.Browse, "", new { id = "viewall", @class = "custom-control-input button-radio" })
+                <label for="viewall" class="w-100 align-items-center header-label text-white mx-auto">
+                    View All
                 </label>
             </div>
             @*<button type="button" class="btn oecs-info text-white mx-auto navbutton">Projects</button>*@
@@ -71,14 +75,17 @@
 
     <div class="row">
         <div class="button-holder d-inline text-right col-12">
-            <button class="btn browse-button">Browse all...</button>
+            <button class="btn browse-button">Filter by...</button>
         </div>
     </div>
 
     <div class="collapse text-primary" id="search-form-wrapper" data-parent="#topNavigation  ">
         <div id="search-filters" class="collapse show">
-            @renderBrowseOptions(Model.SearchThemes, true, "Project", "tileTheme")
+            @*renderBrowseOptions(Model.SearchThemes, true, "Project", "tileTheme")*@
             @renderBrowseOptions(Model.SearchTypes, false, "Media", "tileType")
+            @renderCustomOptions(economy, "Economic Affairs")
+            @renderCustomOptions(environment, "Environment Sustainability")
+            @renderCustomOptions(social, "Human and Social")
             @*renderBrowseOptions(Model.SearchPersonas, false, "Interest", "tilePersonna")*@
         </div>
     </div>
@@ -100,13 +107,46 @@
     <span class="sr-only">@(TileType)</span>
 }
 
+@helper renderCustomOptions(List<String> list, String title)
+{
+
+    if (list.Any())
+    {
+        <div class="card border-0 bg-transparent pt-2">
+            <div class="bg-white pl-2" id="heading@(title)">
+                <p class="mb-0 font-weight-bold">Filter by @(title)</p>
+            </div>
+            <div aria-labelledby="heading@(title)">
+                <div class="card-body pt-1 pb-1">
+                    <div class="row p-1">
+                        @for (int i = 0; i < list.Count; i++)
+                        {
+                            string filterValue = $"tilePersonna|{list[i]}";
+                            <div class="col-6 col-sm-6 col-md-4 col-lg-3 p-0">
+                                <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block">
+                                    @Html.RadioButtonFor(m => m.Browse, filterValue, new { id = list[i].Replace(" ", "_"), @class = "custom-control-input" })
+
+                                    <label for="@list[i].Replace(" ","_")" class="w-100 align-items-center custom-control-label">
+                                        @(list[i])
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+
 @helper renderBrowseOptions(List<TWS.ThinkBlue.Models.FilterModel> filterList, bool isImage, string title, string field)
 {
     if (filterList.Any())
     {
         <div class="card border-0 bg-transparent pt-2">
             <div class="bg-white pl-2" id="heading@(title)">
-                <p class="mb-0 font-weight-bold">Browse by @(title)</p>
+                <p class="mb-0 font-weight-bold">Filter by @(title)</p>
             </div>
             <div aria-labelledby="heading@(title)">
                 <div class="card-body pt-1 pb-1">
