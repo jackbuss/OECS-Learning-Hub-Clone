@@ -82,10 +82,10 @@
     <div class="collapse text-primary" id="search-form-wrapper" data-parent="#topNavigation  ">
         <div id="search-filters" class="collapse show">
             @*renderBrowseOptions(Model.SearchThemes, true, "Project", "tileTheme")*@
-            @renderBrowseOptions(Model.SearchTypes, false, "Media", "tileType")
             @renderCustomOptions(economy, "Economic Affairs")
             @renderCustomOptions(environment, "Environment Sustainability")
             @renderCustomOptions(social, "Human and Social")
+            @renderBrowseOptions(Model.SearchTypes, false, "Media", "tileType")
             @*renderBrowseOptions(Model.SearchPersonas, false, "Interest", "tilePersonna")*@
         </div>
     </div>
