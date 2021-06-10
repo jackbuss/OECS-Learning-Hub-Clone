@@ -29,7 +29,7 @@
     @Html.HiddenFor(m => m.PageSize)
     @Html.AntiForgeryToken();
 
-    <div class="input-group p-2">
+    <div class="input-group mb-2">
         @Html.LabelFor(m => m.SearchTerm, "What would you like to search for?", new { @class = "sr-only" })
         @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search for learning resources from the OECS", @class = "form-control search-text", autocomplete = "off" })
     </div>
@@ -38,7 +38,7 @@
         <div class="col-12 col-md-3 mx-auto text-center p-0">
             <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
                 @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Economic Affairs", new { id = "Economic_Affairs", @class = "custom-control-input button-radio" })
-                <label for="Economic_Affairs" class="w-100 align-items-center header-label text-white mx-auto">
+                <label for="Economic_Affairs" class="w-100 align-items-center header-label text-white mx-auto px-5">
                     Economy
                 </label>
             </div>
