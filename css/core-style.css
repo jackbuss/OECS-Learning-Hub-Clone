@@ -41,3 +41,7 @@ input#SearchTerm::placeholder {
     font-size: 1rem;
     text-align: left;
 }
+
+input#SearchTerm{
+    font-size: 1rem !important;
+}

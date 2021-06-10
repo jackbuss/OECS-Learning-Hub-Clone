@@ -11,11 +11,13 @@
             e.preventDefault();
             //close up the browse options and remove any selection
             $('#search-filters').collapse("hide");
+            $('#search-form-wrapper').collapse("hide");
             $('input:radio[name=Browse]:checked').prop('checked', false);
 
             if ($(this).val() === '') {
                 //show the browse options when search empty
-                $('#search-filters').collapse("show");
+                //$('#search-filters').collapse("show");
+
             }
 
             $('#BrowseTheme').html('');
