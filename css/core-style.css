@@ -45,3 +45,7 @@ input#SearchTerm::placeholder {
 input#SearchTerm{
     font-size: 1rem !important;
 }
+
+.browse-button{
+    cursor: pointer;
+}
