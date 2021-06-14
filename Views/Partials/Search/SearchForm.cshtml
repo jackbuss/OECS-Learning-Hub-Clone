@@ -34,7 +34,7 @@
         @Html.TextBoxFor(m => m.SearchTerm, new { placeholder = "Search for learning resources from the OECS", @class = "form-control search-text", autocomplete = "off" })
     </div>
 
-    <div id="search-filters w-100" class="row pt-2">
+    <div id="search-filters" class="row pt-2">
         <div class="col-12 col-md-3 mx-auto text-center p-0">
             <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
                 @Html.RadioButtonFor(m => m.Browse, "tilePersonna|Economic Affairs", new { id = "Economic_Affairs", @class = "custom-control-input button-radio" })
