@@ -83,7 +83,7 @@
     <div id="carouselFeatured" class="carousel slide" data-interval="5000" data-ride="carousel" @*data-wrap="false"*@>
         <div class="carousel-inner">
             @{
-                var typedMultiNodeTreePicker = Umbraco.Content(new Guid("b9d91068-d0ab-4833-b5bd-15e1374ece9a")).Value<IEnumerable<IPublishedContent>>("featuredTiles");
+                var typedMultiNodeTreePicker = Umbraco.Content(new Guid("4fd64fc5-5bf0-4d02-9663-c44deb861992")).Value<IEnumerable<IPublishedContent>>("featuredTiles");
                 foreach (var item in typedMultiNodeTreePicker)
                 {
 
