@@ -1,7 +1,7 @@
 {
   "EditorAlias": "Umbraco.DropDown.Flexible",
   "DatabaseType": 1,
-  "Configuration": {"multiple":false,"items":[{"id":2,"value":"Course"},{"id":3,"value":"E-Book"},{"id":4,"value":"Event"},{"id":6,"value":"Network"},{"id":7,"value":"News"},{"id":10,"value":"Video"},{"id":9,"value":"External Link"},{"id":11,"value":"Briefing"},{"id":12,"value":"Report"},{"id":13,"value":"Learning Resource"},{"id":14,"value":"Teaching Resource"},{"id":15,"value":"Infographic"},{"id":16,"value":"Policy Document"},{"id":17,"value":"Webinar"},{"id":18,"value":"Academic Paper"}]},
+  "Configuration": {"multiple":false,"items":[{"id":2,"value":"Public Course"},{"id":3,"value":"E-Book"},{"id":10,"value":"Video"},{"id":9,"value":"External Link"},{"id":12,"value":"Report"},{"id":13,"value":"Learning Resource"},{"id":14,"value":"Teaching Resource"},{"id":15,"value":"Infographic"},{"id":17,"value":"Webinar"},{"id":18,"value":"Academic Paper"},{"id":19,"value":"Paid Course"},{"id":20,"value":"Professional Course"}]},
   "Parent": "umb://data-type-container/688c53790e464b73ace78323f46ffc86",
   "Udi": "umb://data-type/6593d277c576441e8dadf99b76f31d94",
   "Dependencies": [
@@ -14,5 +14,5 @@
   "Name": "Tile Content Types",
   "Alias": null,
   "__type": "Umbraco.Deploy,Umbraco.Deploy.Artifacts.DataTypeArtifact",
-  "__version": "3.2.0"
+  "__version": "3.3.1"
 }
