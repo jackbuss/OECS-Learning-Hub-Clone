@@ -37,6 +37,7 @@
     border-radius: 30px !important;
 }
 
+
 input#SearchTerm::placeholder {
     font-size: 1rem;
     text-align: left;
