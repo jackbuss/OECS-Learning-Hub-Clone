@@ -123,20 +123,23 @@ function changeColour(element) {
 
 $('.economy-button').on("click", async function () {
     changeColour('.economy-button-label');
-    collapseAllAndShow("#economy-collapse");
+    //collapseAllAndShow("#economy-collapse");
+    $('#economy-collapse').collapse('show');
 });
 
 $('.environment-button').on("click", async function () {
     changeColour('.environment-button-label');
-    collapseAllAndShow("#environment-collapse");
+    //collapseAllAndShow("#environment-collapse");
+    $('#environment-collapse').collapse('show');
 });
 
 $('.social-button').on("click", async function () {
     changeColour(".social-button-label");
-    collapseAllAndShow("#social-collapse");
+    $('#social-collapse').collapse('show');
 });
 
 $('.resources-button').on("click", async function () {
     changeColour(".resources-button-label");
-    collapseAllAndShow("#resources-collapse");
+    //collapseAllAndShow("#resources-collapse");
+    $('#resources-collapse').collapse('show');
 });
