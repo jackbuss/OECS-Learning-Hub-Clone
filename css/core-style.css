@@ -50,3 +50,7 @@ input#SearchTerm{
 .browse-button{
     cursor: pointer;
 }
+
+.green-selected{
+    background-color: gold !important;
+}

@@ -11,9 +11,9 @@
     Html.EnableClientValidation();
     Html.EnableUnobtrusiveJavaScript();
 
-    List<String> economy = new List<String> { "Agriculture", "Business Development", "Statistics", "Tourism", "Trade", "Yachting" };
-    List<String> environment = new List<String> { "Biodiversity", "Ecosystems Management", "Climate and Disaster Resilience", "Energy", "Oceans Governance" };
-    List<String> social = new List<String> { "Health", "Gender Equality", "Social Development", "Pharmaceuticals", "Youth", "Education" };
+    List<String> economy = new List<String> { "Agriculture and Fisheries", "Business Development", "Statistics", "Tourism", "Trade", "Yachting" };
+    List<String> environment = new List<String> { "Biodiversity", "Blue Economy", "Climate Change", "Energy", "Oceans" };
+    List<String> social = new List<String> { "Health", "Gender Equality", "Social Protection", "Pharmaceuticals", "Youth", "Education" };
 
 }
 
@@ -37,8 +37,8 @@
     <div id="search-filters" class="row pt-2">
         <div class="col-12 col-md-3 mx-auto text-center p-0">
             <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
-                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Economic Affairs", new { id = "Economic_Affairs", @class = "custom-control-input button-radio" })
-                <label for="Economic_Affairs" class="w-100 align-items-center header-label text-white mx-auto px-5">
+                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Economic Affairs", new { id = "Economic_Affairs", @class = "custom-control-input button-radio economy-button" })
+                <label for="Economic_Affairs" class="w-100 align-items-center header-label text-white mx-auto px-5 economy-button-label">
                     Economy
                 </label>
             </div>
@@ -46,8 +46,8 @@
         </div>
         <div class="col-12 col-md-3 mx-auto text-center p-0">
             <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
-                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Environmental Sustainability", new { id = "Environmental_Sustainability", @class = "custom-control-input button-radio" })
-                <label for="Environmental_Sustainability" class="w-100 align-items-center header-label text-white mx-auto">
+                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Environmental Sustainability", new { id = "Environmental_Sustainability", @class = "custom-control-input button-radio environment-button" })
+                <label for="Environmental_Sustainability" class="w-100 align-items-center header-label text-white mx-auto environment-button-label">
                     Environment
                 </label>
             </div>
@@ -55,8 +55,8 @@
         </div>
         <div class="col-12 col-md-3 mx-auto text-center p-0">
             <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
-                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Human and Social", new { id = "Human_and_Social", @class = "custom-control-input button-radio" })
-                <label for="Human_and_Social" class="w-100 align-items-center header-label text-white mx-auto">
+                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Human and Social", new { id = "Human_and_Social", @class = "custom-control-input button-radio social-button" })
+                <label for="Human_and_Social" class="w-100 align-items-center header-label text-white mx-auto social-button-label">
                     Social
                 </label>
             </div>
@@ -64,20 +64,15 @@
         </div>
         <div class="col-12 col-md-3 mx-auto text-center p-0">
             <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
-                @Html.RadioButtonFor(m => m.Browse, "", new { id = "viewall", @class = "custom-control-input button-radio" })
-                <label for="viewall" class="w-100 align-items-center header-label text-white mx-auto">
-                    View All
+                @Html.RadioButtonFor(m => m.Browse, "", new { id = "viewall", @class = "custom-control-input button-radio resources-button" })
+                <label for="viewall" class="w-100 align-items-center header-label text-white mx-auto resources-button-label">
+                    Resources
                 </label>
             </div>
             @*<button type="button" class="btn oecs-info text-white mx-auto navbutton">Projects</button>*@
         </div>
     </div>
 
-    <div class="row">
-        <div class="button-holder d-inline text-right col-12">
-            <a class="btn browse-button">Filter by...</a>
-        </div>
-    </div>
 
     <div class="collapse text-primary" id="search-form-wrapper" data-parent="#topNavigation  ">
         <div id="search-filters" class="collapse show">
@@ -85,8 +80,32 @@
             @renderCustomOptions(economy, "Economic Affairs")
             @renderCustomOptions(environment, "Environment Sustainability")
             @renderCustomOptions(social, "Human and Social")
-            @renderBrowseOptions(Model.SearchTypes, false, "Media", "tileType")
+            @renderBrowseOptions(Model.SearchTypes, false, "Resources", "tileType")
             @*renderBrowseOptions(Model.SearchPersonas, false, "Interest", "tilePersonna")*@
+        </div>
+    </div>
+
+    <div class="collapse text-primary green-collapse" id="economy-collapse" data-parent="#topNavigation  ">
+        <div id="search-filters" class="collapse show">
+            @renderCustomOptions(economy, "Economic Affairs")
+        </div>
+    </div>
+
+    <div class="collapse text-primary green-collapse" id="environment-collapse" data-parent="#topNavigation  ">
+        <div id="search-filters" class="collapse show">
+            @renderCustomOptions(environment, "Environment Sustainability")
+        </div>
+    </div>
+
+    <div class="collapse text-primary green-collapse" id="social-collapse" data-parent="#topNavigation  ">
+        <div id="search-filters" class="collapse show">
+            @renderCustomOptions(social, "Human and Social")
+        </div>
+    </div>
+
+    <div class="collapse text-primary green-collapse" id="resources-collapse" data-parent="#topNavigation  ">
+        <div id="search-filters" class="collapse show">
+            @renderBrowseOptions(Model.SearchTypes, false, "Resources", "tileType")
         </div>
     </div>
 
@@ -114,7 +133,7 @@
     {
         <div class="card border-0 bg-transparent pt-2">
             <div class="bg-white pl-2" id="heading@(title)">
-                <p class="mb-0 font-weight-bold">Filter by @(title)</p>
+                <p class="mb-0 font-weight-bold">@(title)</p>
             </div>
             <div aria-labelledby="heading@(title)">
                 <div class="card-body pt-1 pb-1">
