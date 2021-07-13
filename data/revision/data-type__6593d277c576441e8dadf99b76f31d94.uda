@@ -1,7 +1,7 @@
 {
   "EditorAlias": "Umbraco.DropDown.Flexible",
   "DatabaseType": 1,
-  "Configuration": {"multiple":false,"items":[{"id":27,"value":"Course - paid"},{"id":28,"value":"Course - professional"},{"id":29,"value":"Course - public"},{"id":3,"value":"E-Book"},{"id":9,"value":"External Link"},{"id":15,"value":"Infographic"},{"id":13,"value":"Learning Resource"},{"id":12,"value":"Report"},{"id":14,"value":"Teaching Resource"},{"id":10,"value":"Video"},{"id":17,"value":"Webinar"},{"id":19,"value":"Paid Course"},{"id":20,"value":"Professional Course"},{"id":25,"value":"Health"},{"id":2,"value":"Public Course"}]},
+  "Configuration": {"multiple":false,"items":[{"id":27,"value":"Course - paid"},{"id":28,"value":"Course - professional"},{"id":29,"value":"Course - public"},{"id":3,"value":"E-Book"},{"id":9,"value":"External Link"},{"id":15,"value":"Infographic"},{"id":13,"value":"Learning Resource"},{"id":12,"value":"Report"},{"id":14,"value":"Teaching Resource"},{"id":10,"value":"Video"},{"id":17,"value":"Webinar"},{"id":19,"value":"Paid Course"},{"id":20,"value":"Professional Course"},{"id":2,"value":"Public Course"}]},
   "Parent": "umb://data-type-container/688c53790e464b73ace78323f46ffc86",
   "Udi": "umb://data-type/6593d277c576441e8dadf99b76f31d94",
   "Dependencies": [
