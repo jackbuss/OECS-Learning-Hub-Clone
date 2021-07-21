@@ -189,10 +189,11 @@
     var aspect = hero ? "Landscape" : "Landscape";
     var bgstyle = item.BannerImage != null ? "" : $" bg-{style}";
     var forcedheight = item.BannerImage != null ? "" : " min-vh-30";
+    var url = "https://lrc.oecs.int" + item.Url;
 
     <div class="col-12 col-xs-12@(heroClass) p-2">
         <div class="card@(bgstyle) border-0@(forcedheight)">
-            <a class="text-white" href="https://lrc.oecs.int@item.Url" @(item.TileType == "Video" ? $"data-key={@item.Key} " : "") data-toggle="modal" data-target="#modal" title="@(item.Name)">
+            <a class="text-white" href="@(url)" @(item.TileType == "Video" ? $"data-key={@item.Key} " : "") data-toggle="modal" data-target="#modal" title="@(item.Name)">
                 @if (item.BannerImage != null)
                 {
                     <picture>
