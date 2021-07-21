@@ -189,7 +189,7 @@
     var aspect = hero ? "Landscape" : "Landscape";
     var bgstyle = item.BannerImage != null ? "" : $" bg-{style}";
     var forcedheight = item.BannerImage != null ? "" : " min-vh-30";
-    var url = "https://lrc.oecs.int" + item.Url;
+    var url = item.Url;
 
     <div class="col-12 col-xs-12@(heroClass) p-2">
         <div class="card@(bgstyle) border-0@(forcedheight)">
