@@ -193,7 +193,7 @@
 
     <div class="col-12 col-xs-12@(heroClass) p-2">
         <div class="card@(bgstyle) border-0@(forcedheight)">
-            <a class="text-white" href="@(url)" @(item.TileType == "Video" ? $"data-key={@item.Key} " : "") data-toggle="modal" data-target="#modal" title="@(item.Name)">
+            <a class="text-white" href="@(url)" target="_blank" @(item.TileType == "Video" ? $"data-key={@item.Key} " : "") title="@(item.Name)">
                 @if (item.BannerImage != null)
                 {
                     <picture>
@@ -214,7 +214,7 @@
                     }
                     <div class="p-2 w-100 rounded-bottom text-white">
                         <p class="card-text mb-1 text-white">@(item.Parent.Name.ToUpper())</p>
-                        <h3 class="card-title text-white">@(item.Name) @(item.Url)</h3>
+                        <h3 class="card-title text-white">@(item.Name)</h3>
                     </div>
                 </div>
             </a>
