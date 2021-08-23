@@ -1,7 +1,7 @@
 {
   "EditorAlias": "Umbraco.DropDown.Flexible",
   "DatabaseType": 1,
-  "Configuration": {"multiple":false,"items":[{"id":27,"value":"Course - paid"},{"id":28,"value":"Course - professional"},{"id":29,"value":"Course - public"},{"id":3,"value":"E-Book"},{"id":9,"value":"External Link"},{"id":15,"value":"Infographic"},{"id":13,"value":"Learning Resource"},{"id":12,"value":"Report"},{"id":14,"value":"Teaching Resource"},{"id":10,"value":"Video"},{"id":17,"value":"Webinar"},{"id":30,"value":"Learning Hub"}]},
+  "Configuration": {"multiple":false,"items":[{"id":31,"value":"Curriculum"},{"id":32,"value":"Leadership"},{"id":33,"value":"Professional Development"},{"id":34,"value":"Management"},{"id":35,"value":"Unit Plan"},{"id":36,"value":"Lesson Plan"},{"id":37,"value":"Standards-based Assessment"},{"id":38,"value":"Unit Assessment"}]},
   "Parent": "umb://data-type-container/688c53790e464b73ace78323f46ffc86",
   "Udi": "umb://data-type/6593d277c576441e8dadf99b76f31d94",
   "Dependencies": [

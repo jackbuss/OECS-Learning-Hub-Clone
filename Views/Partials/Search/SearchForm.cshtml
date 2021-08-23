@@ -11,9 +11,9 @@
     Html.EnableClientValidation();
     Html.EnableUnobtrusiveJavaScript();
 
-    List<String> economy = new List<String> { "Agriculture and Fisheries", "Blue Economy", "Tourism", "Trade" };
-    List<String> environment = new List<String> { "Biodiversity", "Climate Change", "Energy", "Oceans" };
-    List<String> social = new List<String> { "Education", "Health", "Social Protection", "Youth", };
+    List<String> primary = new List<String> { "Early Childhood/Pre-school", "Kindergarten", "Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Special Education - Primary" };
+    List<String> secondary = new List<String> { "Form 1", "Form 2", "Form 3", "Form 4", "Form 5", "Special Education - Secondary"};
+    List<String> tertiary = new List<String> { "Technical Education", "Vocational Education", "Vocational Training", "Technical Training", "Tertiary Institutions", "Non-Tertiary Institutions"};
 
 }
 
@@ -37,27 +37,27 @@
     <div id="search-filters" class="row pt-2">
         <div class="col-12 col-md-3 mx-auto text-center p-0">
             <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
-                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Economic Affairs", new { id = "Economic_Affairs", @class = "custom-control-input button-radio economy-button" })
+                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Primary", new { id = "Economic_Affairs", @class = "custom-control-input button-radio economy-button" })
                 <label for="Economic_Affairs" class="w-100 align-items-center header-label text-white mx-auto px-5 economy-button-label">
-                    Economy
+                    Primary
                 </label>
             </div>
             @*<button type="button" id="Economy" name="Browse" value="tileType|Course" class="filter-button btn oecs-info text-white mx-auto navbutton">Economy</button>*@
         </div>
         <div class="col-12 col-md-3 mx-auto text-center p-0">
             <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
-                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Environmental Sustainability", new { id = "Environmental_Sustainability", @class = "custom-control-input button-radio environment-button" })
+                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Secondary", new { id = "Environmental_Sustainability", @class = "custom-control-input button-radio environment-button" })
                 <label for="Environmental_Sustainability" class="w-100 align-items-center header-label text-white mx-auto environment-button-label">
-                    Environment
+                    Secondary
                 </label>
             </div>
             @*<button type="button" class="btn oecs-info text-white mx-auto navbutton">Environment</button>*@
         </div>
         <div class="col-12 col-md-3 mx-auto text-center p-0">
             <div class="text-primary custom-control custom-radio vertical-align-items d-inline-block top-button-width mx-auto p-0">
-                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Human and Social", new { id = "Human_and_Social", @class = "custom-control-input button-radio social-button" })
+                @Html.RadioButtonFor(m => m.Browse, "tileTheme|Tertiary", new { id = "Human_and_Social", @class = "custom-control-input button-radio social-button" })
                 <label for="Human_and_Social" class="w-100 align-items-center header-label text-white mx-auto social-button-label">
-                    Social
+                    Tertiary
                 </label>
             </div>
             @*<button type="button" class="btn oecs-info text-white mx-auto navbutton">Social</button>*@
@@ -77,9 +77,9 @@
     <div class="collapse text-primary" id="search-form-wrapper" data-parent="#topNavigation  ">
         <div id="search-filters" class="collapse show">
             @*renderBrowseOptions(Model.SearchThemes, true, "Project", "tileTheme")*@
-            @renderCustomOptions(economy, "Economic Affairs")
-            @renderCustomOptions(environment, "Environment Sustainability")
-            @renderCustomOptions(social, "Human and Social")
+            @renderCustomOptions(primary, "Economic Affairs")
+            @renderCustomOptions(secondary, "Environment Sustainability")
+            @renderCustomOptions(tertiary, "Human and Social")
             @renderBrowseOptions(Model.SearchTypes, false, "Resources", "tileType")
             @*renderBrowseOptions(Model.SearchPersonas, false, "Interest", "tilePersonna")*@
         </div>
@@ -87,19 +87,19 @@
 
     <div class="collapse text-primary green-collapse" id="economy-collapse" data-parent="#topNavigation  ">
         <div id="search-filters" class="collapse show">
-            @renderCustomOptions(economy, "Economic Affairs")
+            @renderCustomOptions(primary, "Economic Affairs")
         </div>
     </div>
 
     <div class="collapse text-primary green-collapse" id="environment-collapse" data-parent="#topNavigation  ">
         <div id="search-filters" class="collapse show">
-            @renderCustomOptions(environment, "Environment Sustainability")
+            @renderCustomOptions(secondary, "Environment Sustainability")
         </div>
     </div>
 
     <div class="collapse text-primary green-collapse" id="social-collapse" data-parent="#topNavigation  ">
         <div id="search-filters" class="collapse show">
-            @renderCustomOptions(social, "Human and Social")
+            @renderCustomOptions(tertiary, "Human and Social")
         </div>
     </div>
 
