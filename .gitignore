@@ -53,3 +53,4 @@ App_Plugins/UmbracoForms/[Ii]nstalled
 node_modules/
 bower_components/
 bin/Umbraco.Web.PublishedModels.dll
+!media/BlobStorage.web.*.xdt.config
