@@ -249,7 +249,7 @@
                     'This website uses cookies to ensure you get the best experience on our website.',
                 dismiss: 'Got it!',
                 allow: 'Allow cookies',
-                deny: 'Decline',
+                deny: 'Set cookie preferences',
                 link: 'Set preferences',
                 href: '#',
                 close: '&#x274c;',
@@ -271,9 +271,9 @@
                 dismiss:
                     '<a aria-label="dismiss cookie message" role=button tabindex="0" class="cc-btn cc-dismiss">{{dismiss}}</a>',
                 allow:
-                    '<a aria-label="allow cookies" role=button tabindex="0"  class="cc-btn cc-allow">{{allow}}</a>',
+                    '<a aria-label="allow cookies" role=button tabindex="0"  class="cc-btn cc-allow enable-cookies">{{allow}}</a>',
                 deny:
-                    '<a aria-label="deny cookies" role=button tabindex="0" class="cc-btn cc-deny">{{deny}}</a>',
+                    '<a aria-label="deny cookies" role=button tabindex="0" class="cc-btn cc-deny" data-toggle="modal" data-target="#cookieModal">{{deny}}</a>',
                 link:
                     '<a aria-label="learn more about cookies" role=button tabindex="0" class="cc-link" href="{{href}}" rel="noopener noreferrer nofollow" target="{{target}}">{{link}}</a>',
                 close:
@@ -302,7 +302,7 @@
             },
 
             // select your type of popup here
-            type: 'info', // refers to `compliance` (in other words, the buttons that are displayed)
+            type: 'opt-in', // refers to `compliance` (in other words, the buttons that are displayed)
 
             // define layout layouts here
             layouts: {
@@ -357,7 +357,7 @@
 
             // used to disable link on existing layouts
             // replaces element messagelink with message and removes content of link
-            showLink: true,
+            showLink: false,
 
             // set value as scroll range to enable
             dismissOnScroll: false,
@@ -1748,7 +1748,7 @@
     window.cookieconsent = cc;
 
     // auto instatiate as via lazy load we don't get auto-evocation via script#id discovery
-   cc.initialise({
+    cc.initialise({
         "palette": {
             "popup": {
                 "background": "#efefef",

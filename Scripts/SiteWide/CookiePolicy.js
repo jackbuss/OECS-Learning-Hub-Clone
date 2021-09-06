@@ -25,6 +25,15 @@
         document.cookie = "cookies=" + cookies;
     }
 
+    function injectAllCookies() {
+        $("body").append("<script id=\"gAnalytics1\" async src=\"https://www.googletagmanager.com/gtag/js?id=UA-148482803-1\"></script><script id=\"gAnalytics2\" language=\"javascript\" src=\"/Scripts/GoogleAnalytics.js\"></script>");
+    }
+
+    $(document).on("click", ".enable-cookies", function () {
+        injectAllCookies();
+        cookiePolicyAgree("googleAnalytics");
+    });
+
     $(document).on("click", "#submitCookiePreference", function (e) {
         document.cookie = "cookies=; expires=Thu, 01 Jan 1970 00:00:01 GMT;'";
         var checked = "";
